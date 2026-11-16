@@ -5,8 +5,6 @@ const pk = require('../package.json');
 const owner = process.env.GH_OWNER, repo = process.env.GH_REPO || 'ucbr-app';
 const config = { ...pk.build };
 if (owner) config.publish = [{ provider: 'github', owner, repo, releaseType: 'release' }];
-// No GitHub Actions (CI) já publica a release com o GITHUB_TOKEN do próprio repositório.
-const publicar = process.env.CI && owner ? 'always' : 'never';
-builder.build({ targets: builder.Platform.WINDOWS.createTarget('nsis', builder.Arch.x64), config, publish: publicar })
+builder.build({ targets: builder.Platform.WINDOWS.createTarget('nsis', builder.Arch.x64), config, publish: 'never' })
   .then(f => console.log('pronto:', f.join('\n'), owner ? `\natualização automática: github.com/${owner}/${repo}` : '\n(sem atualização automática: defina GH_OWNER)'))
   .catch(e => { console.error(e); process.exit(1); });
