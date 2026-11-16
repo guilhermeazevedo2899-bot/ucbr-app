@@ -38,6 +38,7 @@ const PADRAO = {
   avisoMsg: true,            // aviso do Windows para mensagem nova
   avisoSala: true,           // aviso quando alguém entra numa sala de voz
   fecharBandeja: true,       // X esconde perto do relógio
+  killfeed: true,            // lê o killfeed do DayZ na tela (1.58)
   iniciarComWindows: true,
   iniciarEscondido: true,
 };
@@ -73,6 +74,9 @@ function criarJanela() {
     backgroundColor: '#0b0b0d', show: false, title: 'U.C.B.R',
     icon: fs.existsSync(ICONE_ICO) ? ICONE_ICO : ICONE,
     autoHideMenuBar: true,
+    // Barra de cima desenhada pelo app: a cor acompanha a aparência que cada um escolheu
+    titleBarStyle: 'hidden',
+    titleBarOverlay: { color: '#0b0c0f', symbolColor: '#f5f5f5', height: 32 },
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true, sandbox: false,
@@ -255,7 +259,7 @@ ipcMain.handle('desk:info', () => ({ versao: app.getVersion(), hook: !!hook, cfg
 ipcMain.handle('desk:salvar', (_e, novo) => {
   const ok = Object.keys(PADRAO);
   for (const k of ok) if (k in (novo || {})) CFG[k] = novo[k];
-  salvarCfg(); aplicarInicio(); atualizarMenu();
+  salvarCfg(); aplicarInicio(); atualizarMenu(); ajustarLeitor();
   return CFG;
 });
 ipcMain.handle('desk:capturar', () => new Promise(res => {
@@ -265,6 +269,11 @@ ipcMain.handle('desk:capturar', () => new Promise(res => {
   setTimeout(() => { if (capturando === res) { capturando = null; res(undefined); } }, 15000);
 }));
 ipcMain.on('desk:mostrar', mostrar);
+const RE_COR = /^#[0-9a-f]{6}$/i;
+ipcMain.on('desk:barra', (_e, b) => {
+  if (!win || !b || !RE_COR.test(b.cor || '') || !RE_COR.test(b.simbolo || '')) return;
+  try { win.setTitleBarOverlay({ color: b.cor, symbolColor: b.simbolo, height: 32 }); } catch {}
+});
 ipcMain.on('desk:badge', (_e, n) => {
   naoLidas = Math.max(0, n | 0);
   if (!win) return;
@@ -278,6 +287,40 @@ ipcMain.on('desk:aviso', (_e, a) => {
   n.on('click', () => { mostrar(); if (a.abrir) enviar('abrirAviso', a.abrir); });
   n.show();
 });
+
+/* ------------------------------ killfeed do DayZ (1.58) ------------------------------ */
+// Uma janela escondida olha só o canto do killfeed na janela do DayZ e lê o texto (OCR) aqui no PC.
+let leitor = null, kfTimer = null, kfFonteId = null, kfStatus = 'desligado';
+function ajustarLeitor() {
+  if (CFG.killfeed && !leitor) {
+    leitor = new BrowserWindow({ show: false, width: 400, height: 300, skipTaskbar: true,
+      webPreferences: { preload: path.join(__dirname, 'leitor', 'preload-leitor.js'), contextIsolation: true, backgroundThrottling: false } });
+    leitor.loadFile(path.join(__dirname, 'leitor', 'leitor.html'));
+    leitor.on('closed', () => { leitor = null; kfFonteId = null; });
+    leitor.webContents.on('render-process-gone', (_e, d) => { log('leitor caiu', d); try { leitor?.destroy(); } catch {} leitor = null; kfFonteId = null; setTimeout(ajustarLeitor, 5000); });
+    kfTimer = setInterval(procurarDayZ, 5000);
+    setTimeout(procurarDayZ, 3000);
+  } else if (!CFG.killfeed && leitor) {
+    clearInterval(kfTimer); kfTimer = null;
+    try { leitor.destroy(); } catch {} leitor = null; kfFonteId = null; kfMudou('desligado');
+  }
+}
+async function procurarDayZ() {
+  if (!leitor) return;
+  try {
+    const fontes = await desktopCapturer.getSources({ types: ['window'], thumbnailSize: { width: 0, height: 0 } });
+    const dz = fontes.find(f => /^DayZ(\s|$)/i.test(f.name)) || fontes.find(f => /\bDayZ\b/i.test(f.name) && !/U\.C\.B\.R|Chrome|Edge|Firefox|Opera|Discord|Steam|Launcher/i.test(f.name));
+    const id = dz ? dz.id : null;
+    if (id !== kfFonteId) { kfFonteId = id; leitor.webContents.send('kf:fonte', dz ? { id: dz.id, nome: dz.name } : null); }
+  } catch (e) { log('procurarDayZ', e); }
+}
+function kfMudou(s) { kfStatus = s; enviar('kfStatus', s); }
+ipcMain.on('kf:status', (_e, s) => kfMudou(String(s).slice(0, 30)));
+ipcMain.on('kf:kill', (_e, k) => {
+  if (!k || typeof k.matou !== 'string' || typeof k.morreu !== 'string') return;
+  enviar('killfeed', { matou: k.matou.slice(0, 40), morreu: k.morreu.slice(0, 40), dist: Number.isFinite(k.dist) ? k.dist : null, conf: k.conf | 0, ts: Date.now() });
+});
+ipcMain.handle('desk:kfStatus', () => kfStatus);
 
 /* --------------------------------- atualizações -------------------------------- */
 let updater = null;
@@ -329,8 +372,9 @@ app.whenReady().then(() => {
   montarBandeja();
   iniciarHook();
   aplicarInicio();
+  ajustarLeitor();
   setTimeout(() => procurarAtualizacao(false), 15000);
   setInterval(() => procurarAtualizacao(false), 6 * 3600 * 1000);
 });
-app.on('before-quit', () => { saindo = true; try { hook?.stop(); } catch {} });
+app.on('before-quit', () => { saindo = true; try { hook?.stop(); } catch {} try { leitor?.destroy(); } catch {} });
 app.on('window-all-closed', () => { if (saindo) app.quit(); });

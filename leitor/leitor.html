@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Leitor do killfeed</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; media-src 'self' blob: mediastream:; img-src 'self' blob: data:">
+</head><body>
+<video id="v" muted playsinline></video>
+<canvas id="c"></canvas>
+<script src="lib/tesseract.min.js"></script>
+<script>
+// Lê o killfeed do DayZ (canto de cima à direita) direto da imagem da janela, como o OBS.
+// Não toca no jogo: só olha a tela. Tudo roda aqui no PC, sem internet.
+'use strict';
+const v = document.getElementById('v'), cv = document.getElementById('c'), cx = cv.getContext('2d', { willReadFrequently: true });
+const AREA = { x: 0.60, w: 0.40, y: 0.0, h: 0.30 };   // região do killfeed (fração da janela)
+let fonte = null, stream = null, ocr = null, ocupado = false, ultimaAssin = '', vistos = new Map(), ultStatus = '';
+const status = s => { if (s !== ultStatus) { ultStatus = s; kfPonte.status(s); } };
+
+async function iniciarOCR() {
+  if (ocr) return ocr;
+  ocr = await Tesseract.createWorker('eng', 1, {
+    workerPath: new URL('lib/worker.min.js', location.href).href, corePath: new URL('lib/', location.href).href, langPath: new URL('lib/', location.href).href, gzip: true,
+    workerBlobURL: false, cacheMethod: 'none',
+  });
+  await ocr.setParameters({ tessedit_pageseg_mode: '6', preserve_interword_spaces: '1' });
+  return ocr;
+}
+
+async function trocarFonte(f) {
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  fonte = f; ultimaAssin = '';
+  if (!f) { status('sem-dayz'); return; }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { mandatory: { chromeMediaSource: 'desktop', chromeMediaSourceId: f.id, maxFrameRate: 2 } } });
+    v.srcObject = stream; await v.play();
+    status('lendo');
+  } catch (e) { status('erro-captura'); }
+}
+
+// cor dominante do texto dentro de uma caixa: verde (quem matou), vermelho (quem morreu) ou neutro
+function corDe(img, b) {
+  let g = 0, r = 0;
+  const W = img.width;
+  for (let y = Math.max(0, b.y0); y < Math.min(img.height, b.y1); y++) for (let x = Math.max(0, b.x0); x < Math.min(W, b.x1); x++) {
+    const i = (y * W + x) * 4, R = img.data[i], G = img.data[i + 1], B = img.data[i + 2];
+    if (G > R + 30 && G > B + 5 && G > 90) g++;
+    else if (R > G + 50 && R > B + 25 && R > 110) r++;
+  }
+  if (g > 4 && g > r * 1.5) return 'v';
+  if (r > 4 && r > g * 1.5) return 'r';
+  return 'n';
+}
+const limpa = s => s.replace(/^[\s|]+|[\s|:;.,]+$/g, '').replace(/\s{2,}/g, ' ').trim();
+const norm = s => String(s).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]/g, '');
+
+function lerLinhas(data, img) {
+  const out = [];
+  for (const bl of data.blocks || []) for (const pa of bl.paragraphs || []) for (const li of pa.lines || []) {
+    const ws = (li.words || []).filter(w => w.text && w.text.trim());
+    if (ws.length < 2) continue;
+    const cor = ws.map(w => corDe(img, w.bbox));
+    // nome = do primeiro ao último pedaço da mesma cor (inclui o "|" fininho da tag no meio)
+    const faixa = c => { const i = cor.indexOf(c), j = cor.lastIndexOf(c); return i < 0 ? null : [i, j]; };
+    const fv = faixa('v'), fr = faixa('r');
+    if (!fv || !fr || fv[1] >= fr[0]) continue;              // quem matou vem antes de quem morreu
+    const mat = ws.slice(fv[0], fv[1] + 1), mor = ws.slice(fr[0], fr[1] + 1);
+    // o "|" da tag de quem morreu às vezes fica logo antes, sem cor
+    if (fr[0] > 0 && /^\|$/.test(ws[fr[0] - 1].text) && fr[0] - 1 > fv[1]) mor.unshift(ws[fr[0] - 1]);
+    const conf = [...mat, ...mor].reduce((t, w) => t + w.confidence, 0) / (mat.length + mor.length);
+    if (conf < 40) continue;
+    const matou = limpa(mat.map(w => w.text).join(' ')), morreu = limpa(mor.map(w => w.text).join(' '));
+    if (norm(matou).length < 2 || norm(morreu).length < 2 || matou.length > 40 || morreu.length > 40) continue;
+    const dm = li.text.match(/(\d{1,4})\s*[mM]\b/);
+    out.push({ matou, morreu, dist: dm ? +dm[1] : null, conf: Math.round(conf) });
+  }
+  return out;
+}
+
+async function ciclo() {
+  if (ocupado || !fonte || !stream || v.readyState < 2 || !v.videoWidth) return;
+  ocupado = true;
+  try {
+    const sw = v.videoWidth, sh = v.videoHeight;
+    const sx = Math.round(sw * AREA.x), sy = Math.round(sh * AREA.y), w = Math.round(sw * AREA.w), h = Math.round(sh * AREA.h);
+    const esc = sh <= 1100 ? 2 : 1.4;
+    cv.width = Math.round(w * esc); cv.height = Math.round(h * esc);
+    cx.imageSmoothingQuality = 'high';
+    cx.drawImage(v, sx, sy, w, h, 0, 0, cv.width, cv.height);
+    const img = cx.getImageData(0, 0, cv.width, cv.height);
+    // imagem preta = DayZ em tela cheia exclusiva (o Windows não deixa capturar)
+    let soma = 0, assin = '';
+    for (let i = 0; i < img.data.length; i += 4 * 997) { soma += img.data[i] + img.data[i + 1] + img.data[i + 2]; assin += (img.data[i] >> 5) + (img.data[i + 1] >> 5); }
+    if (soma < 30) { status('tela-preta'); return; }
+    status('lendo');
+    if (assin === ultimaAssin) return;   // nada mudou no canto: não gasta CPU
+    ultimaAssin = assin;
+    // só vale a pena ler se existe texto verde e vermelho no canto
+    let g = 0, r = 0;
+    for (let i = 0; i < img.data.length; i += 4 * 3) { const R = img.data[i], G = img.data[i + 1], B = img.data[i + 2]; if (G > R + 30 && G > B + 5 && G > 90) g++; else if (R > G + 50 && R > B + 25 && R > 110) r++; }
+    if (g < 20 || r < 20) return;
+    const o = await iniciarOCR();
+    const { data } = await o.recognize(cv, {}, { blocks: true, text: true });
+    const agora = Date.now();
+    for (const [k, t] of vistos) if (agora - t > 180000) vistos.delete(k);
+    for (const k of lerLinhas(data, img)) {
+      const chave = norm(k.matou) + '|' + norm(k.morreu);
+      if (vistos.has(chave)) continue;
+      vistos.set(chave, agora);
+      kfPonte.kill({ ...k, ts: agora });
+    }
+  } catch (e) { console.error(e); }
+  finally { ocupado = false; }
+}
+
+kfPonte.aoFonte(trocarFonte);
+setInterval(ciclo, 1000);
+// Para teste: window.lerImagem(url) lê uma imagem como se fosse a janela do DayZ
+window.lerImagem = async url => {
+  const im = new Image(); im.src = url; await im.decode();
+  cv.width = im.width; cv.height = im.height; cx.drawImage(im, 0, 0);
+  const img = cx.getImageData(0, 0, cv.width, cv.height);
+  const { data } = await (await iniciarOCR()).recognize(cv, {}, { blocks: true, text: true });
+  const palavras = [];
+  for (const bl of data.blocks || []) for (const pa of bl.paragraphs || []) for (const li of pa.lines || []) for (const w of li.words || []) palavras.push([w.text, Math.round(w.confidence), corDe(img, w.bbox)]);
+  return { texto: data.text, kills: lerLinhas(data, img), palavras };
+};
+</script>
+</body></html>

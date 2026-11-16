@@ -1,6 +1,6 @@
 {
   "name": "ucbr",
-  "version": "1.57.0",
+  "version": "1.58.0",
   "description": "Plataforma do clã U.C.B.R",
   "main": "main.js",
   "scripts": {
@@ -35,6 +35,7 @@
       "site/**/*",
       "package.json",
       "!node_modules/uiohook-napi/prebuilds/{darwin-*,linux-*,win32-arm64}/**",
+      "leitor/**/*",
       "!node_modules/uiohook-napi/{src,libuiohook}/**"
     ],
     "directories": {

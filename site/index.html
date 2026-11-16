@@ -328,6 +328,31 @@ main{background:radial-gradient(ellipse at 50% 130%,rgba(var(--a),.08),transpare
 .thumb video{width:100%;height:100%;object-fit:cover;background:#000}
 .thumb .av{width:44px;height:44px;font-size:15px}
 .thumb .tag{font-size:11.5px;padding:2px 6px;left:6px;bottom:6px}
+/* 1.58: barra de cima do app do PC (cor da aparência) + killfeed */
+html.desk{padding-top:32px;box-sizing:border-box;height:100%;background:var(--bg0)}
+html.desk #app{height:calc(100vh - 32px);height:calc(100dvh - 32px)}
+#deskBar{display:none}
+html.desk #deskBar{position:fixed;top:0;left:0;right:0;height:32px;z-index:2147483000;display:flex;align-items:center;gap:8px;padding:0 150px 0 10px;background:var(--deskbar,#0b0c0f);box-shadow:0 1px 0 rgba(var(--a),.35);-webkit-app-region:drag;user-select:none;color:var(--txt2);font:600 12px/1 inherit;letter-spacing:.04em}
+#deskBar img{width:20px;height:20px;border-radius:50%;box-shadow:0 0 0 1px rgba(var(--a),.7),0 0 10px rgba(var(--a),.35)}
+#deskBar b{font:400 14px/1 var(--brand);letter-spacing:.5px;color:var(--txt)}
+#deskBar .kfst{margin-left:auto;display:none;align-items:center;gap:6px;font-size:11px;color:var(--txt3)}
+#deskBar .kfst.on{display:inline-flex}
+#deskBar .kfst i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+#deskBar .kfst.alerta i{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.kfsec{margin:0 0 26px;padding:16px 18px;border-radius:16px;background:rgba(255,255,255,.025);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+.kfsec h3{display:flex;align-items:center;gap:8px;margin:0 0 4px}
+.kfsec .kfauto{font:700 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--onaccent);background:var(--accent);border-radius:5px;padding:3px 6px}
+.kfsec p.kfdica{margin:0 0 12px;color:var(--txt3);font-size:13px}
+.kfnums{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 12px;font-size:13px;color:var(--txt2)}
+.kfnums b{font-size:20px;color:var(--txt);font-variant-numeric:tabular-nums;margin-right:4px}
+.kfnums .ac b{color:var(--accent)}.kfnums .kftop b{font-size:15px}
+.kflista{display:flex;flex-direction:column;gap:4px;max-height:360px;overflow:auto}
+.kfl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.18);font-size:14px}
+.kfl .kfi{font-size:15px}
+.kfl .kfm{color:var(--ok);font-weight:700}.kfl .kfx{color:var(--red);font-weight:700}
+.kfl.morte{background:rgba(224,72,62,.08)}
+.kfl small{color:var(--txt3);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.kfl button{margin-left:6px}
 /* 1.57: app do PC */
 #pttTag{display:none;align-self:center;font:700 11px/1 inherit;letter-spacing:.08em;padding:6px 9px;border-radius:999px;border:1px solid var(--line);color:var(--txt3);background:var(--bg2);transition:color .12s,border-color .12s,box-shadow .12s,background .12s;user-select:none}
 body.ptt #pttTag{display:inline-block}
@@ -1681,6 +1706,7 @@ h2,h3{text-wrap:balance}
 <body>
 
 <!-- ============ LOGIN ============ -->
+<div id="deskBar" aria-hidden="true"><img alt="" id="deskBarLogo"><b>U.C.B.R</b><span class="kfst" id="deskKf" title="Leitor do killfeed do DayZ"><i></i><span>Killfeed</span></span></div>
 <section id="login">
   <div class="lgfundo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="card">
@@ -2115,6 +2141,8 @@ h2,h3{text-wrap:balance}
     <div class="dkrow"><span>Ligar/desligar microfone</span><button type="button" class="dktecla" data-k="muteTecla">Definir</button></div>
     <div class="dkrow"><span>Ligar/desligar fone</span><button type="button" class="dktecla" data-k="deafTecla">Definir</button></div>
     <p class="dica">Funciona com o DayZ na frente. Vale tecla do teclado ou botão lateral do mouse. Esc apaga o atalho.</p>
+    <label class="chk"><input type="checkbox" id="dkKf"> Ler o killfeed do DayZ e registrar as kills do clã</label>
+    <p class="dica" id="dkKfSt">Olha só o canto de cima à direita da janela do DayZ, como o OBS. Não mexe no jogo. Jogue em janela sem borda (tela cheia exclusiva fica preta para o app).</p>
     <label class="chk"><input type="checkbox" id="dkMsg"> Aviso do Windows para mensagem nova</label>
     <label class="chk"><input type="checkbox" id="dkSala"> Aviso quando alguém entrar numa sala de voz</label>
     <label class="chk"><input type="checkbox" id="dkIni"> Abrir junto com o Windows (perto do relógio)</label>
@@ -2148,7 +2176,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.57',
+  versao: '1.58',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '15/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -2426,7 +2454,7 @@ function start() {
   S.startedAt = Date.now();
   abrirSalaPrincipal();
   renderStatic(); renderAll(); showText(S.ch);
-  checarAssinatura(); carregarVaquinhas(); carregarPlacar();
+  checarAssinatura(); carregarVaquinhas(); carregarPlacar(); carregarKF();
 }
 // Sala principal (presença, chat, avisos). Pode ser reaberta quando alguém fica preso em "conectando".
 function abrirSalaPrincipal() {
@@ -2720,6 +2748,12 @@ function aplicarTema(forcada) {
   r.setProperty('--onaccent', lum > 140 ? '#120a03' : '#ffffff');
   const f = FUNDOS[t.fundo] || FUNDOS.grafite;
   ['--bg0', '--bg1', '--bg2', '--bg3', '--bg4', '--line'].forEach((k, i) => r.setProperty(k, f[i]));
+  // 1.58: barra de cima do app do PC na cor da aparência escolhida
+  try {
+    const base = RE_COR.test(f[0]) ? f[0] : '#0b0c0f', barra = misturar(base, hexRgb(a), .08);
+    r.setProperty('--deskbar', barra);
+    window.ucbrDesktop?.barra({ cor: barra, simbolo: '#f5f5f5' });
+  } catch {}
 }
 aplicarTema();
 // cartão: vem de cada pessoa pela presença; tudo validado antes de virar estilo
@@ -2817,6 +2851,7 @@ async function iniciarOnline() {
     ch.on('broadcast', { event: 'pontos' }, () => { if (MAPA3D.pronto) carregarPontos(); });
     ch.on('broadcast', { event: 'vaquinha' }, () => carregarVaquinhas());
     ch.on('broadcast', { event: 'placar' }, () => carregarPlacar());
+    ch.on('broadcast', { event: 'killfeed' }, () => carregarKF());
     ch.on('broadcast', { event: 'assinou' }, () => { if (S.view === 'regras' && S.eu?.cargo === 'admin') carregarAssinaturas(); });
     ch.subscribe(st => { if (st === 'SUBSCRIBED') { S.rtUlt = ''; marcarOnline(); } });
   } catch (e) { console.warn('[online] servidor indisponível', e); }
@@ -3275,6 +3310,70 @@ function avisoPC(chave, titulo, corpo, abrir, espera = 8000) {
   DESK.aviso({ titulo, corpo, abrir });
   return true;
 }
+/* ---- 1.58: killfeed do DayZ lido pelo app ---- */
+const KF = { lista: [], ok: false, erro: '', carregado: false, status: 'desligado' };
+const KF_ST = { lendo: ['Lendo o killfeed', ''], 'sem-dayz': ['DayZ fechado', ''], 'tela-preta': ['DayZ em tela cheia: use janela sem borda', 'alerta'], 'erro-captura': ['Não consegui ver a janela do DayZ', 'alerta'], desligado: ['', ''] };
+function kfStatusUI(st) {
+  KF.status = st || 'desligado';
+  const el = $('#deskKf'); if (!el) return;
+  const [txt, cls] = KF_ST[KF.status] || [KF.status, ''];
+  el.classList.toggle('on', !!txt && DESK_CFG.killfeed !== false); el.classList.toggle('alerta', cls === 'alerta');
+  el.querySelector('span').textContent = txt; el.title = txt;
+  const d = $('#dkKfSt'); if (d && txt) d.dataset.st = txt;
+}
+// é do clã? nick marcado no placar, tag do clã ("UN |") ou nick igual ao do app
+function kfDoCla(nome) {
+  const c = typeof plDoCla === 'function' ? plDoCla({ n: nome }) : null;
+  if (c) return c;
+  const tag = (typeof plTag === 'function' && plTag()) || CONFIG.tagCla || 'UN |';
+  const n = String(nome).replace(/^[\s*•]+/, '').toLowerCase().replace(/\s+/g, ' '), t = tag.toLowerCase().replace(/\s+/g, ' ').trim();
+  return t && (n.startsWith(t) || n.replace(/\s/g, '').startsWith(t.replace(/\s/g, ''))) ? { uid: null, como: 'tag' } : null;
+}
+async function kfNovo(k) {
+  if (!S.uid || !k?.matou || !k?.morreu) return;
+  const mc = kfDoCla(k.matou), vc = kfDoCla(k.morreu);
+  if (!mc && !vc) return;   // só interessa kill ou morte de quem é do clã
+  const txt = `${k.matou} ☠ ${k.morreu}${k.dist ? ` · ${k.dist} m` : ''}`;
+  toast(mc && !vc ? `💀 Kill do clã: ${txt}` : vc && !mc ? `⚰️ Baixa do clã: ${txt}` : `☠ ${txt}`);
+  if (!sb) return;
+  const { error } = await sb.from('killfeed').insert({ matou: k.matou.slice(0, 40), morreu: k.morreu.slice(0, 40), dist: Number.isFinite(k.dist) && k.dist <= 5000 ? k.dist : null, matou_cla: !!mc, morreu_cla: !!vc });
+  if (error) { if (!/duplicate|repetid/i.test(error.message || '')) console.warn('[killfeed]', error.message); return; }
+  try { S.rtCh?.send?.({ type: 'broadcast', event: 'killfeed', payload: { uid: S.uid } }); } catch {}
+  carregarKF();
+}
+async function carregarKF() {
+  if (!sb || !S.uid) return;
+  const { data, error } = await sb.from('killfeed').select('id,matou,morreu,dist,matou_cla,morreu_cla,visto_por,em').order('em', { ascending: false }).limit(200);
+  KF.carregado = true;
+  if (error) { KF.ok = false; KF.erro = error.message; } else { KF.ok = true; KF.erro = ''; KF.lista = data || []; }
+  if (S.view === 'placar') renderPlacar();
+}
+async function apagarKF(id) {
+  if (!confirmar('Apagar essa kill do killfeed?')) return;
+  const { error } = await sb.from('killfeed').delete().eq('id', id);
+  if (error) return toast(error.message, 'err');
+  try { S.rtCh?.send?.({ type: 'broadcast', event: 'killfeed', payload: { uid: S.uid } }); } catch {}
+  carregarKF();
+}
+function kfHtml() {
+  const adm = S.eu?.cargo === 'admin';
+  let h = `<section class="kfsec" aria-label="Killfeed do clã"><h3 class="vqrot plsec">Killfeed do clã <span class="kfauto">automático</span></h3>`;
+  if (!KF.carregado) return h + '<p class="kfdica">Carregando…</p></section>';
+  if (!KF.ok) return h + `<p class="kfdica">${adm ? 'Para ativar, rode o SQL v1.58 (fim do supabase-setup.sql) no Supabase.' : 'O admin precisa ativar essa parte.'}</p></section>`;
+  h += `<p class="kfdica">Quem usa o app do PC registra sozinho as kills e mortes do clã que aparecem no killfeed do DayZ.</p>`;
+  const sem = Date.now() - 7 * 864e5, ult = KF.lista.filter(x => new Date(x.em) > sem);
+  const kills = ult.filter(x => x.matou_cla && !x.morreu_cla).length, mortes = ult.filter(x => x.morreu_cla && !x.matou_cla).length;
+  const porNick = {}; ult.filter(x => x.matou_cla && !x.morreu_cla).forEach(x => { porNick[x.matou] = (porNick[x.matou] || 0) + 1; });
+  const top = Object.entries(porNick).sort((a, b) => b[1] - a[1])[0];
+  h += `<div class="kfnums"><span class="ac"><b>${kills}</b>kills em 7 dias</span><span><b>${mortes}</b>mortes</span><span><b>${mortes ? (kills / mortes).toFixed(2) : kills}</b>K/D</span>${top ? `<span class="kftop">Quem mais matou: <b>${esc(top[0])}</b>${top[1]} kill(s)</span>` : ''}</div>`;
+  if (!KF.lista.length) return h + '<p class="kfdica">Nenhuma kill registrada ainda. Abra o app do PC e jogue com o DayZ em janela sem borda.</p></section>';
+  h += '<div class="kflista">';
+  for (const x of KF.lista.slice(0, 60)) {
+    const morte = x.morreu_cla && !x.matou_cla;
+    h += `<div class="kfl${morte ? ' morte' : ''}"><span class="kfi" aria-hidden="true">${morte ? '⚰️' : '💀'}</span><span><span class="${x.matou_cla ? 'kfm' : 'kfx'}">${esc(x.matou)}</span> matou <span class="${x.morreu_cla ? 'kfm' : 'kfx'}">${esc(x.morreu)}</span>${x.dist ? ` <small>· ${x.dist} m</small>` : ''}</span><small>${plQuando(x.em)}${adm ? `<button class="vqib txt" type="button" data-kfapaga="${x.id}" title="Apagar (leitura errada)">×</button>` : ''}</small></div>`;
+  }
+  return h + '</div></section>';
+}
 function deskAplicarCfg(c) {
   Object.assign(DESK_CFG, c || {});
   PTT.on = !!DESK_CFG.ptt && !!DESK_CFG.pttTecla; PTT.som = DESK_CFG.pttSom !== false; PTT.soltar = +DESK_CFG.pttSoltar || 200;
@@ -3287,6 +3386,7 @@ function deskRender() {
   sec.hidden = false;
   $('#dkPtt').checked = !!DESK_CFG.ptt; $('#dkPttSom').checked = DESK_CFG.pttSom !== false;
   $('#dkMsg').checked = DESK_CFG.avisoMsg !== false; $('#dkSala').checked = DESK_CFG.avisoSala !== false;
+  $('#dkKf').checked = DESK_CFG.killfeed !== false;
   $('#dkIni').checked = !!DESK_CFG.iniciarComWindows; $('#dkBand').checked = DESK_CFG.fecharBandeja !== false;
   sec.querySelectorAll('.dktecla').forEach(b => { if (!b.classList.contains('ouvindo')) b.textContent = DESK_CFG[b.dataset.k]?.nome || 'Definir'; });
 }
@@ -3299,6 +3399,12 @@ if (DESK) {
     if (desceu) { if (PTT.down) return; PTT.down = true; pttAplicar(); pttBipe(true); }
     else if (PTT.down) solta = setTimeout(() => { PTT.down = false; pttAplicar(); pttBipe(false); }, PTT.soltar);
   });
+  document.documentElement.classList.add('desk');
+  try { $('#deskBarLogo').src = LOGO; } catch {}
+  aplicarTema();
+  DESK.onKillfeed(kfNovo);
+  DESK.onKfStatus(kfStatusUI);
+  DESK.kfStatus().then(kfStatusUI).catch(() => {});
   DESK.onAtalho(k => { if (!S.uid) return; if (k === 'mute') toggleMute(); else if (k === 'deaf') toggleDeaf(); });
   DESK.onAbrirConfig(() => { if (S.uid) openSettings(); });
   DESK.onAbrirAviso(a => { if (!S.uid || !a) return; if (a.ch && TXT[a.ch]) showText(a.ch); else if (a.voz && VOZ[a.voz]) joinVoice(a.voz); });
@@ -3307,6 +3413,7 @@ if (DESK) {
     $('#dkPtt').onchange = e => { if (e.target.checked && !DESK_CFG.pttTecla) toast('Agora clique em "Definir" e aperte a tecla de falar.'); deskSalvar({ ptt: e.target.checked }); };
     $('#dkPttSom').onchange = e => deskSalvar({ pttSom: e.target.checked });
     $('#dkMsg').onchange = e => deskSalvar({ avisoMsg: e.target.checked });
+    $('#dkKf').onchange = e => { deskSalvar({ killfeed: e.target.checked }).then(() => kfStatusUI(e.target.checked ? KF.status : 'desligado')); };
     $('#dkSala').onchange = e => deskSalvar({ avisoSala: e.target.checked });
     $('#dkIni').onchange = e => deskSalvar({ iniciarComWindows: e.target.checked });
     $('#dkBand').onchange = e => deskSalvar({ fecharBandeja: e.target.checked });
@@ -4322,7 +4429,7 @@ function showPlacar() {
   $('#app').classList.remove('menu');
   $('#placarView').scrollTop = 0;
   renderAll();
-  carregarPlacar();
+  carregarPlacar(); carregarKF();
 }
 function plResumo() {
   const s = plAtual(), cla = plClaLista(s ? plComDelta(s) : []);
@@ -4384,7 +4491,10 @@ function renderPlacar() {
       if (adm) h += `<p class="pldica">Cole de novo sempre que o ranking do servidor mudar: o site mostra quem subiu e quantas kills cada um fez desde a última vez.</p>`;
     }
   }
+  const i = h.indexOf('</header>');
+  h = i >= 0 ? h.slice(0, i + 9) + kfHtml() + h.slice(i + 9) : h + kfHtml();
   box.innerHTML = h + '</div>';
+  box.querySelectorAll('[data-kfapaga]').forEach(b => b.onclick = () => apagarKF(+b.dataset.kfapaga));
 }
 function abrirPlMeu() {
   const eu = PL.manual.find(x => x.membro === S.uid), noTop = plAtual() && plComDelta(plAtual()).some(r => r.cla?.uid === S.uid);
