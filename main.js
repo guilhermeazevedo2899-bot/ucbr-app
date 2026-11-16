@@ -38,7 +38,7 @@ const PADRAO = {
   avisoMsg: true,            // aviso do Windows para mensagem nova
   avisoSala: true,           // aviso quando alguém entra numa sala de voz
   fecharBandeja: true,       // X esconde perto do relógio
-  killfeed: true,            // lê o killfeed do DayZ na tela (1.58)
+  lerKillfeed: false,        // lê o killfeed do DayZ na tela (desligado até a staff do servidor liberar)
   iniciarComWindows: true,
   iniciarEscondido: true,
 };
@@ -292,7 +292,7 @@ ipcMain.on('desk:aviso', (_e, a) => {
 // Uma janela escondida olha só o canto do killfeed na janela do DayZ e lê o texto (OCR) aqui no PC.
 let leitor = null, kfTimer = null, kfFonteId = null, kfStatus = 'desligado';
 function ajustarLeitor() {
-  if (CFG.killfeed && !leitor) {
+  if (CFG.lerKillfeed && !leitor) {
     leitor = new BrowserWindow({ show: false, width: 400, height: 300, skipTaskbar: true,
       webPreferences: { preload: path.join(__dirname, 'leitor', 'preload-leitor.js'), contextIsolation: true, backgroundThrottling: false } });
     leitor.loadFile(path.join(__dirname, 'leitor', 'leitor.html'));
@@ -300,7 +300,7 @@ function ajustarLeitor() {
     leitor.webContents.on('render-process-gone', (_e, d) => { log('leitor caiu', d); try { leitor?.destroy(); } catch {} leitor = null; kfFonteId = null; setTimeout(ajustarLeitor, 5000); });
     kfTimer = setInterval(procurarDayZ, 5000);
     setTimeout(procurarDayZ, 3000);
-  } else if (!CFG.killfeed && leitor) {
+  } else if (!CFG.lerKillfeed && leitor) {
     clearInterval(kfTimer); kfTimer = null;
     try { leitor.destroy(); } catch {} leitor = null; kfFonteId = null; kfMudou('desligado');
   }

@@ -2176,7 +2176,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.58',
+  versao: '1.59',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '15/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -3317,7 +3317,7 @@ function kfStatusUI(st) {
   KF.status = st || 'desligado';
   const el = $('#deskKf'); if (!el) return;
   const [txt, cls] = KF_ST[KF.status] || [KF.status, ''];
-  el.classList.toggle('on', !!txt && DESK_CFG.killfeed !== false); el.classList.toggle('alerta', cls === 'alerta');
+  el.classList.toggle('on', !!txt && !!DESK_CFG.lerKillfeed); el.classList.toggle('alerta', cls === 'alerta');
   el.querySelector('span').textContent = txt; el.title = txt;
   const d = $('#dkKfSt'); if (d && txt) d.dataset.st = txt;
 }
@@ -3386,7 +3386,7 @@ function deskRender() {
   sec.hidden = false;
   $('#dkPtt').checked = !!DESK_CFG.ptt; $('#dkPttSom').checked = DESK_CFG.pttSom !== false;
   $('#dkMsg').checked = DESK_CFG.avisoMsg !== false; $('#dkSala').checked = DESK_CFG.avisoSala !== false;
-  $('#dkKf').checked = DESK_CFG.killfeed !== false;
+  $('#dkKf').checked = !!DESK_CFG.lerKillfeed;
   $('#dkIni').checked = !!DESK_CFG.iniciarComWindows; $('#dkBand').checked = DESK_CFG.fecharBandeja !== false;
   sec.querySelectorAll('.dktecla').forEach(b => { if (!b.classList.contains('ouvindo')) b.textContent = DESK_CFG[b.dataset.k]?.nome || 'Definir'; });
 }
@@ -3413,7 +3413,7 @@ if (DESK) {
     $('#dkPtt').onchange = e => { if (e.target.checked && !DESK_CFG.pttTecla) toast('Agora clique em "Definir" e aperte a tecla de falar.'); deskSalvar({ ptt: e.target.checked }); };
     $('#dkPttSom').onchange = e => deskSalvar({ pttSom: e.target.checked });
     $('#dkMsg').onchange = e => deskSalvar({ avisoMsg: e.target.checked });
-    $('#dkKf').onchange = e => { deskSalvar({ killfeed: e.target.checked }).then(() => kfStatusUI(e.target.checked ? KF.status : 'desligado')); };
+    $('#dkKf').onchange = e => { deskSalvar({ lerKillfeed: e.target.checked }).then(() => kfStatusUI(e.target.checked ? KF.status : 'desligado')); };
     $('#dkSala').onchange = e => deskSalvar({ avisoSala: e.target.checked });
     $('#dkIni').onchange = e => deskSalvar({ iniciarComWindows: e.target.checked });
     $('#dkBand').onchange = e => deskSalvar({ fecharBandeja: e.target.checked });
