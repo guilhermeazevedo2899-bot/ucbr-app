@@ -245,6 +245,9 @@ textarea.inp{resize:vertical;min-height:56px;font:inherit}
 .anexo{margin-top:6px;max-width:min(420px,100%)}
 .anexo img,.anexo video{display:block;max-width:100%;max-height:340px;border-radius:10px;background:#000;border:1px solid var(--line)}
 .anexo img{cursor:zoom-in}
+.anexo .vidbt{border:0;cursor:pointer;font:600 14px Inter,system-ui,sans-serif;display:flex;flex-direction:column;gap:6px;color:var(--txt2);transition:background-color .15s ease}
+.anexo .vidbt span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-size:16px;padding-left:3px}
+.anexo .vidbt:hover{background:var(--bg4)}
 .anexo .load{display:grid;place-items:center;width:240px;height:140px;border-radius:10px;background:var(--bg3);color:var(--txt3);font-size:13px}
 #composer .prog{font-size:12px;color:var(--gold);padding:0 4px}
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:grid;place-items:center;z-index:80;cursor:zoom-out}
@@ -2372,7 +2375,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.60',
+  versao: '1.61',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '15/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -5793,7 +5796,19 @@ async function urlLocal(path, max = 25e6) {
 async function limparGuarda(g) { if (limparGuarda.t) return; limparGuarda.t = setTimeout(async () => { limparGuarda.t = 0; try { const k = await g.keys(); for (const r of k.slice(0, Math.max(0, k.length - 400))) await g.delete(r); } catch {} }, 4000); }
 function mostrarAnexos(box) {
   box.querySelectorAll('.anexo[data-path]').forEach(async el => {
-    const url = el.dataset.tipo === 'video' ? await urlAnexo(el.dataset.path) : await urlLocal(el.dataset.path);
+    // 1.61: vídeo só baixa quando a pessoa pede (e fica guardado no PC); antes cada vez que o canal abria, o vídeo vinha de novo do Supabase
+    if (el.dataset.tipo === 'video' && !locais.has(el.dataset.path)) {
+      const path = el.dataset.path; el.removeAttribute('data-path');
+      el.innerHTML = '<button type="button" class="load vidbt"><span>▶</span>Ver vídeo</button>';
+      el.querySelector('button').onclick = async () => {
+        el.innerHTML = '<div class="load">Baixando vídeo…</div>';
+        const u = await urlLocal(path, 120e6);
+        if (!u) { el.innerHTML = '<div class="load">Arquivo indisponível</div>'; return; }
+        el.innerHTML = `<video src="${esc(u)}" controls autoplay playsinline></video>`;
+      };
+      return;
+    }
+    const url = el.dataset.tipo === 'video' ? locais.get(el.dataset.path) : await urlLocal(el.dataset.path);
     if (!url) { el.innerHTML = '<div class="load">Arquivo indisponível</div>'; return; }
     const stick = box.scrollHeight - box.scrollTop - box.clientHeight < 120;
     if (el.dataset.tipo === 'video') el.innerHTML = `<video src="${esc(url)}" controls preload="metadata" playsinline></video>`;
@@ -6412,7 +6427,7 @@ async function preencherJanela(w) {
   else {
     corpo.innerHTML = '<div class="arqview">Carregando…</div>';
     const t = it.arquivo_tipo || '', box = corpo.firstChild;
-    const url = /^(video|audio)\//.test(t) || (it.arquivo_tam || 0) > 25e6 ? await urlAnexo(it.arquivo) : await urlLocal(it.arquivo);
+    const url = (it.arquivo_tam || 0) > 120e6 ? await urlAnexo(it.arquivo) : await urlLocal(it.arquivo, 120e6);
     if (!url) box.textContent = 'Não consegui abrir o arquivo.';
     else if (/pdf/.test(t)) box.innerHTML = `<iframe src="${esc(url)}" title="PDF"></iframe>`;
     else if (/^image\//.test(t)) box.innerHTML = `<img src="${esc(url)}" alt="">`;
