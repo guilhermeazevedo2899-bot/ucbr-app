@@ -163,12 +163,22 @@ function servirLocal(req) {
     return new Response(dados, { status: 200, headers: { 'content-type': TIPOS[path.extname(arq).toLowerCase()] || 'application/octet-stream', 'cache-control': 'no-cache', 'access-control-allow-origin': '*' } });
   } catch { return new Response('Não encontrado', { status: 404, headers: { 'content-type': 'text/plain; charset=utf-8' } }); }
 }
+// 1.60: o net.fetch perde o Referer ao repassar; sem ele o YouTube recusa o player (erro 153).
+// Repassa o pedido com o Referer de volta (só a origem, como o Chrome faz entre sites).
+function repassar(req) {
+  let ref = '';
+  try { if (req.referrer && /^https?:/.test(req.referrer)) { const r = new URL(req.referrer), d = new URL(req.url); ref = r.origin === d.origin ? r.href : r.origin + '/'; } } catch {}
+  if (!ref || req.headers.has('referer')) return net.fetch(req, { bypassCustomProtocolHandlers: true });
+  const h = new Headers(req.headers); h.set('referer', ref);
+  const temCorpo = !['GET', 'HEAD'].includes(req.method);
+  return net.fetch(req.url, { method: req.method, headers: h, body: temCorpo ? req.body : undefined, duplex: temCorpo ? 'half' : undefined, redirect: req.redirect, bypassCustomProtocolHandlers: true });
+}
 function configurarSessao() {
   const s = session.defaultSession;
   const HOST = new URL(APP_URL).host;
   s.protocol.handle('https', req => {
     try { if (new URL(req.url).host === HOST) return servirLocal(req); } catch {}
-    return net.fetch(req, { bypassCustomProtocolHandlers: true });
+    return repassar(req);
   });
   const nossa = url => { try { return DENTRO.includes(new URL(url).origin) || url.startsWith('file:'); } catch { return false; } };
   s.setPermissionRequestHandler((wc, perm, cb, det) => {
