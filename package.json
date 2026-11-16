@@ -1,0 +1,84 @@
+{
+  "name": "ucbr",
+  "version": "1.57.0",
+  "description": "Plataforma do clã U.C.B.R",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "node ferramentas/build.js"
+  },
+  "keywords": [],
+  "author": "Guilherme Azevedo",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "electron": "^38.8.6",
+    "electron-builder": "^26.18.0",
+    "resedit": "^2.0.3"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.11",
+    "uiohook-napi": "^1.5.5"
+  },
+  "productName": "U.C.B.R",
+  "build": {
+    "appId": "br.ucbr.app",
+    "productName": "U.C.B.R",
+    "copyright": "Guilherme Azevedo",
+    "files": [
+      "main.js",
+      "preload.js",
+      "preload-seletor.js",
+      "seletor.html",
+      "offline.html",
+      "build/icon.png",
+      "build/icon.ico",
+      "site/**/*",
+      "package.json",
+      "!node_modules/uiohook-napi/prebuilds/{darwin-*,linux-*,win32-arm64}/**",
+      "!node_modules/uiohook-napi/{src,libuiohook}/**"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "asarUnpack": [
+      "node_modules/uiohook-napi/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false,
+      "artifactName": "UCBR-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "U.C.B.R",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "UCBR-Setup.${ext}"
+    },
+    "afterPack": "./build-afterpack.js",
+    "publish": null,
+    "protocols": [
+      {
+        "name": "U.C.B.R",
+        "schemes": [
+          "ucbr"
+        ]
+      }
+    ],
+    "npmRebuild": false
+  }
+}
