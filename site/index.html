@@ -1966,16 +1966,19 @@ h2,h3{text-wrap:balance}
 /* 1.63: segurar a carta, girar em 3D e trocar de lugar */
 #stage .pcard.pc2{user-select:none;-webkit-user-select:none}
 #stage .pcard.pc2 img{-webkit-user-drag:none}
-.pcard.pc2.segura,.semanim .pcard.pc2.segura{z-index:30;cursor:grabbing;transition:box-shadow .25s ease!important;transform:perspective(900px) translate3d(0,-12px,0) scale(1.07) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))!important;
+.pcard.pc2.segura,.semanim .pcard.pc2.segura{z-index:30;cursor:grabbing;pointer-events:none;transition:box-shadow .25s ease!important;transform:translate3d(var(--mx,0px),var(--my,0px),0) perspective(900px) scale(1.08) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) rotateZ(var(--rz,0deg))!important;
   box-shadow:0 34px 70px rgba(0,0,0,.6),0 0 0 1.5px var(--cb),0 0 50px color-mix(in srgb,var(--cb) 45%,transparent)!important}
 .pcard.pc2.segura .pglare{opacity:1}
-.pcard.pc2.solta{transition:transform .75s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease!important}
+.pcard.pc2.solta{transform:translate3d(var(--mx,0px),var(--my,0px),0) perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s cubic-bezier(.34,1.4,.64,1),box-shadow .3s ease!important}
+.pcard.pc2.alvo{box-shadow:0 0 0 2px var(--accent),0 0 30px color-mix(in srgb,var(--accent) 40%,transparent)!important}
 .pcard .pgrip{position:absolute;top:8px;left:8px;z-index:4;width:30px;height:30px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:rgba(0,0,0,.42);color:rgba(255,255,255,.8);font-size:17px;line-height:1;cursor:grab;opacity:0;transition:opacity .15s ease,background-color .15s ease;touch-action:none}
 .pcard.pc2:hover .pgrip,.pcard .pgrip:focus-visible{opacity:1}.pcard .pgrip:hover{background:rgba(0,0,0,.65)}
 .pcard.pc2.movendo{opacity:.3;transform:scale(.96)!important}
 .cartafantasma{position:fixed!important;margin:0!important;pointer-events:none;z-index:9999;transform:rotate(-3deg) scale(1.04)!important;transition:none!important;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1.5px var(--cb)!important;opacity:.95}
-#app>#temaCarta{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .4s ease;border-radius:0}
-body.temacarta #app>#temaCarta{opacity:.9}
+#voiceView{isolation:isolate}
+#voiceView>#temaCarta{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .35s ease;border-radius:0}
+body.temacarta #voiceView>#temaCarta{opacity:1}
+body.temacarta #voiceView{background:#050506}
 @media (prefers-reduced-motion:reduce){.fx *,.fx::before,.fx::after{animation:none!important}.pcard.pc2{transform:none!important}}
 </style>
 </head>
@@ -2079,7 +2082,6 @@ body.temacarta #app>#temaCarta{opacity:.9}
 
 <!-- ============ APP ============ -->
 <div id="app" hidden>
-  <div id="temaCarta" class="fx" aria-hidden="true"></div>
   <nav id="rail"><button class="srv" id="srvIcon" type="button" title="Início" aria-label="Voltar ao início"></button><div class="rail-sep"></div><button class="rbtn" id="railHome" type="button" data-home title="Início" aria-label="Início"></button><button class="rbtn" id="railMapa" type="button" data-map title="Mapa" aria-label="Mapa"></button><button class="rbtn gartic" id="railGartic" type="button" data-rabisco title="Rabisco: jogo de desenhar e adivinhar" aria-label="Rabisco"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1-.1-2.2 1.1-2.2H17a4 4 0 0 0 4-4c0-5-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button><button class="rbtn" id="railRegras" type="button" data-regras title="Regras do clã" aria-label="Regras do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></button><button class="rbtn" id="railVaq" type="button" data-vaq title="Vaquinha do clã" aria-label="Vaquinha do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.6 6.2C6.3 5.6 5.4 4.3 5.5 2.8"/><path d="M16.4 6.2c1.3-.6 2.2-1.9 2.1-3.4"/><path d="M7 9.2 3 8c.2 1.8 1.6 3 3.6 3"/><path d="M17 9.2 21 8c-.2 1.8-1.6 3-3.6 3"/><path d="M7 12.6V9.4C7 7 9.2 5.4 12 5.4s5 1.6 5 4v3.2"/><rect x="6.3" y="12" width="11.4" height="8.4" rx="4.2"/><circle cx="9.7" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="14.3" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="10" cy="16.2" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="16.2" r=".9" fill="currentColor" stroke="none"/></svg><span class="vqponto" hidden></span></button><button class="rbtn" id="railPlacar" type="button" data-placar title="Placar PvP do clã" aria-label="Placar PvP do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></button><button class="rbtn zap" id="railZap" type="button" data-zap title="Grupo do WhatsApp" aria-label="Grupo do WhatsApp"></button></nav>
 
   <aside id="side">
@@ -2150,6 +2152,7 @@ body.temacarta #app>#temaCarta{opacity:.9}
     </section>
 
     <section id="voiceView" hidden>
+      <div id="temaCarta" class="fx" aria-hidden="true"></div>
       <div id="vfundo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div id="muPlayerBox" aria-hidden="true"><div id="muPlayer"></div></div>
       <div id="stage"></div>
@@ -2465,7 +2468,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.63',
+  versao: '1.64',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '20/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -3146,7 +3149,7 @@ function cartaHtml(o) {
 })();
 // 1.63: segurar a carta da sala: gira em 3D para todo lado e o app inteiro fica com o tema da pessoa até soltar.
 // A alcinha ⠿ no canto arrasta a carta para outro lugar (a ordem fica salva só no seu PC).
-const CARTA = { el: null, uid: '', pid: 0, x0: 0, y0: 0, ativo: false, timer: 0, engole: false, sujo: false };
+const CARTA = { el: null, uid: '', pid: 0, x0: 0, y0: 0, ativo: false, timer: 0, engole: false, sujo: false, vx: 0, vy: 0, rx: 0, ry: 0, alvo: null };
 const ORD = { el: null, fant: null, pid: 0, dx: 0, dy: 0, lista: null };
 const cartaDe = uid => everyone().find(p => p.uid === uid)?.cd || null;
 function cartaTema(uid, liga) {
@@ -3158,9 +3161,19 @@ function cartaTema(uid, liga) {
   aplicarTema(RE_COR.test(cd?.c || '') ? cd.c : undefined);
   document.body.classList.add('temacarta');
 }
+function cartaQuadro() {
+  const c = CARTA.el; if (!c || !CARTA.ativo) return;
+  CARTA.vx *= .88; CARTA.vy *= .88; // sem mexer, volta a ficar reta
+  CARTA.rx += (Math.max(-45, Math.min(45, -CARTA.vy * 3.2)) - CARTA.rx) * .18;
+  CARTA.ry += (Math.max(-45, Math.min(45, CARTA.vx * 3.2)) - CARTA.ry) * .18;
+  c.style.setProperty('--rx', CARTA.rx.toFixed(1) + 'deg'); c.style.setProperty('--ry', CARTA.ry.toFixed(1) + 'deg'); c.style.setProperty('--rz', (CARTA.ry * .15).toFixed(1) + 'deg');
+  c.style.setProperty('--gx', (50 + CARTA.ry).toFixed(1) + '%'); c.style.setProperty('--gy', (50 - CARTA.rx).toFixed(1) + '%');
+  requestAnimationFrame(cartaQuadro);
+}
 function cartaPegar() {
   const c = CARTA.el; if (!c || CARTA.ativo) return;
-  clearTimeout(CARTA.timer); CARTA.ativo = true;
+  clearTimeout(CARTA.timer); CARTA.ativo = true; CARTA.vx = CARTA.vy = CARTA.rx = CARTA.ry = 0; CARTA.alvo = null;
+  requestAnimationFrame(cartaQuadro);
   try { c.setPointerCapture(CARTA.pid); } catch {}
   c.classList.remove('solta'); c.classList.add('segura');
   cartaTema(CARTA.uid, true);
@@ -3170,9 +3183,20 @@ function cartaSoltar() {
   const c = CARTA.el, era = CARTA.ativo; CARTA.el = null; CARTA.ativo = false;
   if (!c || !era) return;
   CARTA.engole = true; setTimeout(() => { CARTA.engole = false; }, 80);
-  c.classList.remove('segura'); c.classList.add('solta');
-  ['--rx', '--ry', '--ty'].forEach(k => c.style.removeProperty(k));
-  setTimeout(() => c.classList.remove('solta'), 800);
+  const antes = c.getBoundingClientRect(), alvo = CARTA.alvo; CARTA.alvo = null; alvo?.classList.remove('alvo');
+  c.classList.remove('segura');
+  ['--mx', '--my', '--rx', '--ry', '--rz', '--ty'].forEach(k => c.style.removeProperty(k));
+  if (alvo && alvo.isConnected) {
+    const ar = alvo.getBoundingClientRect(), r0 = c.getBoundingClientRect();
+    (ar.top > r0.top + 4 || (Math.abs(ar.top - r0.top) <= 4 && ar.left > r0.left)) ? alvo.after(c) : alvo.before(c);
+    salvarOrdem(c.parentElement);
+  }
+  const depois = c.getBoundingClientRect();
+  c.style.transition = 'none';
+  c.style.setProperty('--mx', (antes.left + antes.width / 2 - depois.left - depois.width / 2) + 'px'); c.style.setProperty('--my', (antes.top + antes.height / 2 - depois.top - depois.height / 2) + 'px');
+  c.classList.add('solta'); void c.offsetWidth; c.style.transition = '';
+  c.style.setProperty('--mx', '0px'); c.style.setProperty('--my', '0px');
+  setTimeout(() => { c.classList.remove('solta'); c.style.removeProperty('--mx'); c.style.removeProperty('--my'); }, 650);
   cartaTema('', false);
   if (CARTA.sujo) { CARTA.sujo = false; setTimeout(renderStage, 120); }
 }
@@ -3221,9 +3245,12 @@ function cartaArrastarFim() {
     if (!CARTA.el || ev.pointerId !== CARTA.pid) return;
     const dx = ev.clientX - CARTA.x0, dy = ev.clientY - CARTA.y0;
     if (!CARTA.ativo) { if (Math.hypot(dx, dy) < 6) return; cartaPegar(); }
-    const ry = Math.max(-180, Math.min(180, dx * .6)), rx = Math.max(-80, Math.min(80, -dy * .6)), c = CARTA.el;
-    c.style.setProperty('--ry', ry.toFixed(1) + 'deg'); c.style.setProperty('--rx', rx.toFixed(1) + 'deg');
-    c.style.setProperty('--gx', (50 + ry / 3.6).toFixed(1) + '%'); c.style.setProperty('--gy', (50 - rx / 1.6).toFixed(1) + '%');
+    const c = CARTA.el;
+    c.style.setProperty('--mx', dx + 'px'); c.style.setProperty('--my', dy + 'px');
+    CARTA.vx += ((ev.movementX || 0) - CARTA.vx) * .5; CARTA.vy += ((ev.movementY || 0) - CARTA.vy) * .5;
+    // carta embaixo do mouse: vira o lugar para onde ela vai ao soltar
+    const alvo = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('#stage .pcard.pc2[data-uid]');
+    if (alvo !== CARTA.alvo) { CARTA.alvo?.classList.remove('alvo'); CARTA.alvo = alvo && alvo !== c && alvo.parentElement === c.parentElement ? alvo : null; CARTA.alvo?.classList.add('alvo'); }
   });
   const fim = ev => { if (ORD.el && ev.pointerId === ORD.pid) return cartaArrastarFim(); if (CARTA.el && ev.pointerId === CARTA.pid) cartaSoltar(); };
   addEventListener('pointerup', fim); addEventListener('pointercancel', fim);
