@@ -1274,6 +1274,13 @@ p,.dica,small{text-wrap:pretty}
 .cvselo{flex:none;font:700 10px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#160a00;background:rgb(var(--a));border-radius:6px;padding:6px 8px}
 .cvdica{margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);text-align:center;color:var(--txt3);font-size:13.5px}
 .cvdica b{color:var(--txt2)}
+.cvdica p{margin:0}
+.cvdica .cvtenho{margin-top:10px}
+.cvcolar{margin-top:12px;text-align:left}
+.cvcolar .f{margin-top:0}
+.cvlinha{display:flex;gap:8px}
+.cvlinha .inp{flex:1;min-width:0}
+.cverro{display:block;min-height:18px;margin-top:6px;color:#ff8a85;font-size:13px}
 .cvlista{display:grid;gap:8px;margin-top:12px}
 .cvitem{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg0);box-shadow:0 0 0 1px var(--line) inset}
 .cvitem.novo{box-shadow:0 0 0 1.5px rgb(var(--a)) inset;background:rgba(var(--a),.07)}
@@ -1918,7 +1925,15 @@ h2,h3{text-wrap:balance}
       <div class="campo ic-lock"><input class="inp" id="inSenha" type="password" required autocomplete="current-password" placeholder="••••••••"><button type="button" class="olho" id="verSenha" aria-label="Mostrar senha" title="Mostrar senha"></button></div>
       <button class="btn primary lgentrar" type="submit"><span>Entrar</span></button>
       <button class="linkbtn" type="button" id="goEsqueci">Esqueci minha senha</button>
-      <p class="cvdica" id="cvDica" hidden>Quer entrar no clã? Peça o <b>link de convite</b> a um admin do U.C.B.R.</p>
+      <div class="cvdica" id="cvDica" hidden>
+        <p>Quer entrar no clã? Peça o <b>link de convite</b> a um admin do U.C.B.R.</p>
+        <button class="btn ghost sm cvtenho" type="button" id="cvTenho">Já tenho um convite</button>
+        <div class="cvcolar" id="cvColar" hidden>
+          <label class="f" for="cvInput">Cole o link ou o código do convite</label>
+          <div class="cvlinha"><input class="inp" id="cvInput" maxlength="300" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://ucbr.pages.dev/#convite=..."><button class="btn acc sm" type="button" id="cvUsar">Continuar</button></div>
+          <small class="cverro" id="cvErro" role="alert"></small>
+        </div>
+      </div>
     </form>
 
     <form id="fCadastro" class="authf" autocomplete="on" hidden>
@@ -2375,9 +2390,9 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.61',
+  versao: '1.62',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
-  dataVersao: '15/11/2026',
+  dataVersao: '19/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
   idUnico: 'cla-dayz-comms-v1-9q4x',
   // Grupo do WhatsApp (botão na barra da esquerda, no Início e em #boas-vindas). Troque a imagem whatsapp-qr.png se quiser.
@@ -5492,6 +5507,24 @@ $('#goEsqueci').onclick = () => { const v = $('#inEmail').value; $('#esEmail').v
 document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => authView('fEntrar'));
 $('#waitAgain').onclick = async () => { const { data: { session } } = await sb.auth.getSession(); session ? entrarComSessao(session.user) : authView('fEntrar'); };
 $('#waitOut').onclick = async () => { await sb?.auth.signOut(); authView('fEntrar'); };
+// 1.62: convite colado no login (para quem instalou o app e abriu direto, sem o link)
+const codigoDoConvite = t => { t = String(t || '').trim(); const m = /convite=([A-Za-z0-9]{8,32})/.exec(t); return m ? m[1] : /^[A-Za-z0-9]{8,32}$/.test(t) ? t : ''; };
+function usarConviteColado() {
+  const c = codigoDoConvite($('#cvInput').value);
+  if (!c) { $('#cvErro').textContent = 'Não reconheci esse convite. Copie o link inteiro que o admin mandou.'; $('#cvInput').focus(); return; }
+  $('#cvErro').textContent = ''; $('#cvInput').value = '';
+  abrirConvite(c);
+}
+$('#cvTenho').onclick = () => { const b = $('#cvColar'); b.hidden = !b.hidden; if (!b.hidden) $('#cvInput').focus(); };
+$('#cvUsar').onclick = usarConviteColado;
+$('#cvInput').addEventListener('input', () => { $('#cvErro').textContent = ''; });
+$('#cvInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); usarConviteColado(); } });
+// 1.62: o app fica aberto perto do relógio; quando o link do convite chega, só o #convite muda e a página não recarrega.
+addEventListener('hashchange', () => {
+  const c = codigoDoConvite(location.hash); if (!c || !sb) return;
+  if (S.uid) return toast('Você já está com uma conta aberta neste PC. Para usar o convite, saia da conta primeiro.', 'warn');
+  abrirConvite(c);
+});
 
 // Colunas que o site lê de membros (o e-mail fica de fora: só o dono vê, pela função emails_membros)
 const COLS_MEMBRO = 'id,nome_real,nick,avatar,cargo,status,observacoes,criado_em,titulo';
