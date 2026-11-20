@@ -245,6 +245,14 @@ textarea.inp{resize:vertical;min-height:56px;font:inherit}
 .anexo{margin-top:6px;max-width:min(420px,100%)}
 .anexo img,.anexo video{display:block;max-width:100%;max-height:340px;border-radius:10px;background:#000;border:1px solid var(--line)}
 .anexo img{cursor:zoom-in}
+.muvol{flex:1;min-width:0;display:inline-flex;align-items:center;gap:6px;padding:2px 8px 2px 2px;border-radius:10px;background:rgba(255,255,255,.04)}
+.muvol .ib{width:30px;height:30px;flex:none}
+.muvol #muVol{flex:1;min-width:50px;width:auto;accent-color:var(--accent)}
+.muvol output{min-width:36px;font:600 12px Inter,system-ui,sans-serif;color:var(--txt2);font-variant-numeric:tabular-nums;text-align:right}
+.mumodo{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:8px 0 0;border-radius:12px;background:rgba(0,0,0,.25)}
+.mumodo button{min-height:34px;border:0;border-radius:9px;background:transparent;color:var(--txt2);font:600 13px Inter,system-ui,sans-serif;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+.mumodo button.on{background:rgba(var(--a),.18);color:var(--txt);box-shadow:0 0 0 1px rgba(var(--a),.45) inset}
+.muvivo{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:6px;background:#e5393a;color:#fff;font:800 10.5px/17px Inter,system-ui,sans-serif;letter-spacing:.06em;vertical-align:1px}
 .anexo .vidbt{border:0;cursor:pointer;font:600 14px Inter,system-ui,sans-serif;display:flex;flex-direction:column;gap:6px;color:var(--txt2);transition:background-color .15s ease}
 .anexo .vidbt span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-size:16px;padding-left:3px}
 .anexo .vidbt:hover{background:var(--bg4)}
@@ -1456,11 +1464,62 @@ input[name="fiCheat"][value="sim"]:checked+span{background:rgba(229,57,53,.18);b
 .pmapaga{margin-right:auto;color:#ff7a70}
 
 /* 1.52: vaquinha do clã (layout 2: painel HUD com anel de progresso + ranking) */
+#recView{flex:1;overflow:auto;padding:28px clamp(16px,4vw,44px) 64px;background:radial-gradient(1000px 420px at 85% -14%,rgba(var(--a),.11),transparent 60%),radial-gradient(800px 340px at -10% 110%,rgba(var(--a),.05),transparent 60%)}
+.rcwrap{max-width:1040px;margin:0 auto}
+.rclista{display:grid;gap:16px}
+.rccard{position:relative;border-radius:20px;padding:18px;background:linear-gradient(165deg,rgba(255,255,255,.045),rgba(0,0,0,.28) 55%);box-shadow:0 0 0 1px rgba(255,255,255,.07) inset,0 18px 40px rgba(0,0,0,.3)}
+.rccard.maioria{box-shadow:0 0 0 1.5px rgba(61,220,132,.5) inset,0 18px 40px rgba(0,0,0,.3)}
+.rccard.contra{box-shadow:0 0 0 1.5px rgba(229,57,53,.5) inset,0 18px 40px rgba(0,0,0,.3)}
+.rccab{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center}
+.rccab .av{width:54px;height:54px;font-size:20px}
+.rccab h3{margin:0;font-size:20px;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rccab small{display:block;color:var(--txt3);font-size:13px;margin-top:3px}
+.rcveredito{font:700 12px/1 'Barlow Condensed',Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--txt2);white-space:nowrap}
+.rcveredito.sim{background:rgba(61,220,132,.14);color:#7be3a7}.rcveredito.nao{background:rgba(229,57,53,.18);color:#ff8a85}
+.rcgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;margin-top:16px}
+@media (max-width:820px){.rcgrid{grid-template-columns:1fr}}
+.rcficha{border-radius:14px;background:rgba(0,0,0,.26);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;padding:12px 14px}
+.rcficha .fcheat{margin:0 0 10px}
+.rcfatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.rcfatos div{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.03)}
+.rcfatos dt{font:700 11px/1.2 'Barlow Condensed',Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3)}
+.rcfatos dd{margin:4px 0 0;font-weight:700;font-size:14px}
+.rcporque{margin:10px 0 0;padding:10px 12px;border-left:3px solid rgb(var(--a));border-radius:0 10px 10px 0;background:rgba(var(--a),.07);color:var(--txt);font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.rcmais{margin-top:10px}.rcmais summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+.rcmais dl{margin:8px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13.5px}.rcmais dt{color:var(--txt3);font-size:12px}.rcmais dd{margin:0;overflow-wrap:anywhere}
+.rcsemficha{color:var(--txt2);font-size:14px;line-height:1.5}
+.rcvoto{display:flex;flex-direction:column;gap:12px}
+.rcplacar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
+.rcplacar b{font-size:22px}.rcplacar .s{color:#7be3a7}.rcplacar .n{color:#ff8a85}
+.rcbarra{display:flex;height:10px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.07)}
+.rcbarra i{display:block;transition:width .5s cubic-bezier(.23,1,.32,1)}.rcbarra .s{background:#3ddc84}.rcbarra .n{background:#e5393a}
+.rcquem{font-size:12.5px;color:var(--txt3)}
+.rcjuizes{display:flex;flex-wrap:wrap;gap:6px}
+.rcjuiz{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:999px;background:rgba(255,255,255,.05);font-size:13px}
+.rcjuiz .av{width:22px;height:22px;font-size:10px}
+.rcjuiz.sim{box-shadow:0 0 0 1px rgba(61,220,132,.5) inset}.rcjuiz.nao{box-shadow:0 0 0 1px rgba(229,57,53,.55) inset}
+.rcjuiz em{font-style:normal;color:var(--txt3)}
+.rcbts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rcbt{min-height:44px;border-radius:12px;border:0;cursor:pointer;font:700 14px Inter,system-ui,sans-serif;background:rgba(255,255,255,.05);color:var(--txt);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset;transition:background-color .15s ease,box-shadow .15s ease,transform .1s ease}
+.rcbt:active{transform:scale(.97)}
+.rcbt.sim:hover,.rcbt.sim.on{background:rgba(61,220,132,.16);box-shadow:0 0 0 1.5px #3ddc84 inset;color:#9ff0c2}
+.rcbt.nao:hover,.rcbt.nao.on{background:rgba(229,57,53,.18);box-shadow:0 0 0 1.5px #e5393a inset;color:#ffb0ab}
+.rccom{width:100%}
+.rcfinal{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}
+.rcfinal span{flex:1;min-width:150px;color:var(--txt3);font-size:12.5px}
 #vaqView{flex:1;overflow:auto;padding:28px clamp(16px,4vw,44px) 64px;background:radial-gradient(1000px 420px at 80% -12%,rgba(var(--a),.12),transparent 60%),radial-gradient(700px 300px at -10% 110%,rgba(var(--a),.06),transparent 60%)}
 .vqponto{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--bg0),0 0 10px rgba(var(--a),.8);margin-left:6px;flex:none}
 .vqponto[hidden]{display:none}
 #railVaq .vqponto{position:absolute;top:4px;right:4px;margin:0}
 .vqwrap{max-width:1040px;margin:0 auto}
+.vqabas{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;margin:0 0 16px;scrollbar-width:thin}
+.vqaba{flex:none;display:grid;gap:6px;min-width:170px;max-width:240px;padding:10px 14px;border:0;border-radius:14px;text-align:left;cursor:pointer;background:rgba(255,255,255,.04);color:var(--txt2);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;transition:background-color .15s ease,box-shadow .15s ease}
+.vqaba:hover{background:rgba(255,255,255,.07)}
+.vqaba.on{background:rgba(var(--a),.14);color:var(--txt);box-shadow:0 0 0 1.5px rgb(var(--a)) inset}
+.vqaba b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vqaba small{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-variant-numeric:tabular-nums}
+.vqaba .vqlin{height:4px}
+.rcbolha{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--onaccent);font:800 11px/20px Inter,system-ui,sans-serif;text-align:center}
 .vqrot{font-family:'Barlow Condensed',Inter,system-ui,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--txt3);margin:0}
 .vqkick{color:rgb(var(--a))}
 .vqtopo{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
@@ -1904,6 +1963,19 @@ h2,h3{text-wrap:balance}
 .semanim .fx *,.semanim .fx::before,.semanim .fx::after,.semanim .pav>i,.semanim .peq span,.semanim .coroa1,.semanim .coroa1::after,.semanim .orelha{animation:none!important}
 .semanim .fx :is(.p,.pata,.cor,.pet,.tiro,.vento,.zb,.est){display:none}
 .semanim .pcard.pc2{transform:none!important;transition:box-shadow .25s ease}
+/* 1.63: segurar a carta, girar em 3D e trocar de lugar */
+#stage .pcard.pc2{user-select:none;-webkit-user-select:none}
+#stage .pcard.pc2 img{-webkit-user-drag:none}
+.pcard.pc2.segura,.semanim .pcard.pc2.segura{z-index:30;cursor:grabbing;transition:box-shadow .25s ease!important;transform:perspective(900px) translate3d(0,-12px,0) scale(1.07) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))!important;
+  box-shadow:0 34px 70px rgba(0,0,0,.6),0 0 0 1.5px var(--cb),0 0 50px color-mix(in srgb,var(--cb) 45%,transparent)!important}
+.pcard.pc2.segura .pglare{opacity:1}
+.pcard.pc2.solta{transition:transform .75s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease!important}
+.pcard .pgrip{position:absolute;top:8px;left:8px;z-index:4;width:30px;height:30px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:rgba(0,0,0,.42);color:rgba(255,255,255,.8);font-size:17px;line-height:1;cursor:grab;opacity:0;transition:opacity .15s ease,background-color .15s ease;touch-action:none}
+.pcard.pc2:hover .pgrip,.pcard .pgrip:focus-visible{opacity:1}.pcard .pgrip:hover{background:rgba(0,0,0,.65)}
+.pcard.pc2.movendo{opacity:.3;transform:scale(.96)!important}
+.cartafantasma{position:fixed!important;margin:0!important;pointer-events:none;z-index:9999;transform:rotate(-3deg) scale(1.04)!important;transition:none!important;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1.5px var(--cb)!important;opacity:.95}
+#app>#temaCarta{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .4s ease;border-radius:0}
+body.temacarta #app>#temaCarta{opacity:.9}
 @media (prefers-reduced-motion:reduce){.fx *,.fx::before,.fx::after{animation:none!important}.pcard.pc2{transform:none!important}}
 </style>
 </head>
@@ -2007,7 +2079,8 @@ h2,h3{text-wrap:balance}
 
 <!-- ============ APP ============ -->
 <div id="app" hidden>
-  <nav id="rail"><button class="srv" id="srvIcon" type="button" title="Início" aria-label="Voltar ao início"></button><div class="rail-sep"></div><button class="rbtn" id="railHome" type="button" data-home title="Início" aria-label="Início"></button><button class="rbtn" id="railMapa" type="button" data-map title="Mapa" aria-label="Mapa"></button><button class="rbtn gartic" id="railGartic" type="button" data-rabisco title="Rabisco: jogo de desenhar e adivinhar" aria-label="Rabisco"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1-.1-2.2 1.1-2.2H17a4 4 0 0 0 4-4c0-5-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button><button class="rbtn" id="railRegras" type="button" data-regras title="Regras do clã" aria-label="Regras do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></button><button class="rbtn" id="railVaq" type="button" data-vaq title="Vaquinha do clã" aria-label="Vaquinha do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 9.5c.9.3 2 1 2 2.5"/><path d="M5 11c0-3.3 3.1-6 7-6 1.3 0 2.5.3 3.6.8L18 4.5v3.4c.6.8 1 1.6 1.2 2.6H21v3h-1.8c-.4 1-1 1.8-1.8 2.5V19h-2.6l-.5-1.4c-.7.2-1.5.3-2.3.3s-1.6-.1-2.3-.3L9.2 19H6.6v-3.1C5.6 14.8 5 13 5 11z"/><circle cx="15" cy="10" r=".9" fill="currentColor"/><path d="M10 7.5h3"/></svg><span class="vqponto" hidden></span></button><button class="rbtn" id="railPlacar" type="button" data-placar title="Placar PvP do clã" aria-label="Placar PvP do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></button><button class="rbtn zap" id="railZap" type="button" data-zap title="Grupo do WhatsApp" aria-label="Grupo do WhatsApp"></button></nav>
+  <div id="temaCarta" class="fx" aria-hidden="true"></div>
+  <nav id="rail"><button class="srv" id="srvIcon" type="button" title="Início" aria-label="Voltar ao início"></button><div class="rail-sep"></div><button class="rbtn" id="railHome" type="button" data-home title="Início" aria-label="Início"></button><button class="rbtn" id="railMapa" type="button" data-map title="Mapa" aria-label="Mapa"></button><button class="rbtn gartic" id="railGartic" type="button" data-rabisco title="Rabisco: jogo de desenhar e adivinhar" aria-label="Rabisco"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1-.1-2.2 1.1-2.2H17a4 4 0 0 0 4-4c0-5-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button><button class="rbtn" id="railRegras" type="button" data-regras title="Regras do clã" aria-label="Regras do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></button><button class="rbtn" id="railVaq" type="button" data-vaq title="Vaquinha do clã" aria-label="Vaquinha do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.6 6.2C6.3 5.6 5.4 4.3 5.5 2.8"/><path d="M16.4 6.2c1.3-.6 2.2-1.9 2.1-3.4"/><path d="M7 9.2 3 8c.2 1.8 1.6 3 3.6 3"/><path d="M17 9.2 21 8c-.2 1.8-1.6 3-3.6 3"/><path d="M7 12.6V9.4C7 7 9.2 5.4 12 5.4s5 1.6 5 4v3.2"/><rect x="6.3" y="12" width="11.4" height="8.4" rx="4.2"/><circle cx="9.7" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="14.3" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="10" cy="16.2" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="16.2" r=".9" fill="currentColor" stroke="none"/></svg><span class="vqponto" hidden></span></button><button class="rbtn" id="railPlacar" type="button" data-placar title="Placar PvP do clã" aria-label="Placar PvP do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></button><button class="rbtn zap" id="railZap" type="button" data-zap title="Grupo do WhatsApp" aria-label="Grupo do WhatsApp"></button></nav>
 
   <aside id="side">
     <header><button type="button" id="sideLogo" class="sidelogo" aria-label="Início"></button><span class="sidetit"><b id="srvName"></b><span class="online" id="onlineCount"></span></span><button type="button" class="sidemini" id="menuMini" title="Recolher menu" aria-label="Recolher menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg></button></header>
@@ -2049,6 +2122,7 @@ h2,h3{text-wrap:balance}
     <section id="regrasView" hidden></section>
     <section id="vaqView" hidden></section>
     <section id="placarView" hidden></section>
+    <section id="recView" hidden></section>
     <section id="textView">
       <div id="msgs"></div>
       <div id="typing"></div>
@@ -2107,12 +2181,13 @@ h2,h3{text-wrap:balance}
             <button type="button" class="btn ghost sm" id="muPausa" title="Pausar / continuar para todos">⏯</button>
             <button type="button" class="btn ghost sm" id="muPular" title="Pular para a próxima">⏭</button>
             <button type="button" class="btn ghost sm" id="muParar" title="Parar e limpar a fila">⏹</button>
-            <input type="range" id="muVol" min="0" max="100" title="Volume da música (só para você)">
+            <span class="muvol"><button type="button" class="ib" id="muMudo" title="Silenciar a música só para você" aria-label="Silenciar a música só para você">🔊</button><input type="range" id="muVol" min="0" max="100" aria-label="Volume da música (só para você)"><output id="muVolN">40%</output></span>
           </div>
+          <div class="mumodo" role="group" aria-label="Quem ouve a música"><button type="button" data-mumodo="sala" class="on" aria-pressed="true">👥 Para a sala</button><button type="button" data-mumodo="eu" aria-pressed="false">🎧 Só para mim</button></div>
           <form id="muForm" class="muadd"><input class="inp" id="muLink" placeholder="Cole o link do YouTube" autocomplete="off"><button class="btn acc sm">Tocar</button></form>
           <div class="muopc"><button type="button" class="btn ghost sm" id="muCine" title="Quando o vídeo está tocando e você fica parado, tudo some e fica só o vídeo com o equalizador">🎬 Modo cinema</button><button type="button" class="btn ghost sm" id="muCor" title="O site pega a cor do vídeo e usa como tema enquanto ele toca">🎨 Cor do vídeo</button></div>
           <ol class="mufila" id="muFila"></ol>
-          <small class="dica">Toca no navegador de cada um, sincronizado. Volume e mudo são só seus.</small>
+          <small class="dica" id="muDica">Toca no app de cada um, sincronizado. Volume e mudo são só seus. Lives do YouTube também funcionam.</small>
         </div>
       </div>
       <div id="vctl">
@@ -2390,9 +2465,9 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.62',
+  versao: '1.63',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
-  dataVersao: '19/11/2026',
+  dataVersao: '20/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
   idUnico: 'cla-dayz-comms-v1-9q4x',
   // Grupo do WhatsApp (botão na barra da esquerda, no Início e em #boas-vindas). Troque a imagem whatsapp-qr.png se quiser.
@@ -3062,12 +3137,106 @@ function cartaHtml(o) {
 (() => {
   const st = document.getElementById('stage'); if (!st || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   st.addEventListener('pointermove', ev => {
-    const c = ev.target.closest('.pcard.pc2'); if (!c || document.body.classList.contains('semanim') || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    const c = ev.target.closest('.pcard.pc2'); if (!c || c.classList.contains('segura') || document.body.classList.contains('semanim') || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
     const r = c.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
     c.style.setProperty('--ry', ((x - .5) * 12).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 10).toFixed(2) + 'deg'); c.style.setProperty('--ty', '-5px');
     c.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
   });
-  st.addEventListener('pointerout', ev => { const c = ev.target.closest('.pcard.pc2'); if (!c || c.contains(ev.relatedTarget)) return; ['--rx', '--ry', '--ty'].forEach(k => c.style.removeProperty(k)); });
+  st.addEventListener('pointerout', ev => { const c = ev.target.closest('.pcard.pc2'); if (!c || c.classList.contains('segura') || c.contains(ev.relatedTarget)) return; ['--rx', '--ry', '--ty'].forEach(k => c.style.removeProperty(k)); });
+})();
+// 1.63: segurar a carta da sala: gira em 3D para todo lado e o app inteiro fica com o tema da pessoa até soltar.
+// A alcinha ⠿ no canto arrasta a carta para outro lugar (a ordem fica salva só no seu PC).
+const CARTA = { el: null, uid: '', pid: 0, x0: 0, y0: 0, ativo: false, timer: 0, engole: false, sujo: false };
+const ORD = { el: null, fant: null, pid: 0, dx: 0, dy: 0, lista: null };
+const cartaDe = uid => everyone().find(p => p.uid === uid)?.cd || null;
+function cartaTema(uid, liga) {
+  const fundo = $('#temaCarta'); if (!fundo) return;
+  if (!liga) { document.body.classList.remove('temacarta'); aplicarTema(); return; }
+  const cd = cartaDe(uid), e = cd?.e && CARTOES.some(x => x.id === cd.e) ? cd.e : 'padrao', f = CARTOES.find(x => x.id === e).f;
+  fundo.className = 'fx fx-' + e; fundo.style.setProperty('--cf', f); fundo.style.background = f;
+  fundo.innerHTML = fxDe('tema|' + uid, e, 2.2);
+  aplicarTema(RE_COR.test(cd?.c || '') ? cd.c : undefined);
+  document.body.classList.add('temacarta');
+}
+function cartaPegar() {
+  const c = CARTA.el; if (!c || CARTA.ativo) return;
+  clearTimeout(CARTA.timer); CARTA.ativo = true;
+  try { c.setPointerCapture(CARTA.pid); } catch {}
+  c.classList.remove('solta'); c.classList.add('segura');
+  cartaTema(CARTA.uid, true);
+}
+function cartaSoltar() {
+  clearTimeout(CARTA.timer);
+  const c = CARTA.el, era = CARTA.ativo; CARTA.el = null; CARTA.ativo = false;
+  if (!c || !era) return;
+  CARTA.engole = true; setTimeout(() => { CARTA.engole = false; }, 80);
+  c.classList.remove('segura'); c.classList.add('solta');
+  ['--rx', '--ry', '--ty'].forEach(k => c.style.removeProperty(k));
+  setTimeout(() => c.classList.remove('solta'), 800);
+  cartaTema('', false);
+  if (CARTA.sujo) { CARTA.sujo = false; setTimeout(renderStage, 120); }
+}
+function ordemCartas() { if (!ORD.lista) { const l = LS.get('ordemCartas', []); ORD.lista = Array.isArray(l) ? l.filter(x => typeof x === 'string').slice(0, 200) : []; } return ORD.lista; }
+function cartaOrdem(a, b) { const l = ordemCartas(), i = l.indexOf(a.uid), j = l.indexOf(b.uid); return (i < 0 ? 1e6 : i) - (j < 0 ? 1e6 : j); }
+function salvarOrdem(grid) {
+  const agora = [...grid.querySelectorAll('.pcard.pc2[data-uid]')].map(x => x.dataset.uid).filter(Boolean);
+  ORD.lista = [...agora, ...ordemCartas().filter(u => !agora.includes(u))].slice(0, 200);
+  LS.set('ordemCartas', ORD.lista);
+}
+function cartaArrastar(c, ev) {
+  const r = c.getBoundingClientRect(), fant = c.cloneNode(true);
+  fant.classList.add('cartafantasma'); fant.classList.remove('speaking');
+  Object.assign(fant.style, { width: r.width + 'px', height: r.height + 'px', left: r.left + 'px', top: r.top + 'px' });
+  document.body.appendChild(fant);
+  Object.assign(ORD, { el: c, fant, pid: ev.pointerId, dx: ev.clientX - r.left, dy: ev.clientY - r.top });
+  c.classList.add('movendo');
+}
+function cartaArrastarFim() {
+  const c = ORD.el; if (!c) return;
+  ORD.fant?.remove(); ORD.el = ORD.fant = null; c.classList.remove('movendo');
+  if (c.parentElement) salvarOrdem(c.parentElement);
+  if (CARTA.sujo) { CARTA.sujo = false; renderStage(); }
+}
+(() => {
+  const st = document.getElementById('stage'); if (!st) return;
+  st.addEventListener('pointerdown', ev => {
+    if (ev.button !== 0) return;
+    const c = ev.target.closest('.pcard.pc2[data-uid]'); if (!c || !c.dataset.uid) return;
+    if (ev.target.closest('.pgrip')) { ev.preventDefault(); return cartaArrastar(c, ev); }
+    if (ev.target.closest('button,input,a,select,video,iframe')) return;
+    ev.preventDefault(); // sem arrastar a foto nem selecionar texto
+    Object.assign(CARTA, { el: c, uid: c.dataset.uid, pid: ev.pointerId, x0: ev.clientX, y0: ev.clientY, ativo: false });
+    CARTA.timer = setTimeout(cartaPegar, 230); // segurou parado: pega
+  });
+  addEventListener('pointermove', ev => {
+    if (ORD.el && ev.pointerId === ORD.pid) {
+      ORD.fant.style.left = ev.clientX - ORD.dx + 'px'; ORD.fant.style.top = ev.clientY - ORD.dy + 'px';
+      const alvo = document.elementFromPoint(ev.clientX, ev.clientY)?.closest('.pcard.pc2[data-uid]');
+      if (alvo && alvo !== ORD.el && alvo.parentElement === ORD.el.parentElement) {
+        const r = alvo.getBoundingClientRect(), depois = ev.clientX > r.left + r.width / 2;
+        if (depois ? alvo.nextElementSibling !== ORD.el : alvo.previousElementSibling !== ORD.el) depois ? alvo.after(ORD.el) : alvo.before(ORD.el);
+      }
+      return;
+    }
+    if (!CARTA.el || ev.pointerId !== CARTA.pid) return;
+    const dx = ev.clientX - CARTA.x0, dy = ev.clientY - CARTA.y0;
+    if (!CARTA.ativo) { if (Math.hypot(dx, dy) < 6) return; cartaPegar(); }
+    const ry = Math.max(-180, Math.min(180, dx * .6)), rx = Math.max(-80, Math.min(80, -dy * .6)), c = CARTA.el;
+    c.style.setProperty('--ry', ry.toFixed(1) + 'deg'); c.style.setProperty('--rx', rx.toFixed(1) + 'deg');
+    c.style.setProperty('--gx', (50 + ry / 3.6).toFixed(1) + '%'); c.style.setProperty('--gy', (50 - rx / 1.6).toFixed(1) + '%');
+  });
+  const fim = ev => { if (ORD.el && ev.pointerId === ORD.pid) return cartaArrastarFim(); if (CARTA.el && ev.pointerId === CARTA.pid) cartaSoltar(); };
+  addEventListener('pointerup', fim); addEventListener('pointercancel', fim);
+  addEventListener('blur', () => { cartaSoltar(); cartaArrastarFim(); });
+  // depois de segurar, soltar não abre o perfil
+  st.addEventListener('click', e => { if (CARTA.engole) { CARTA.engole = false; e.stopPropagation(); e.preventDefault(); } }, true);
+  // teclado: na alcinha, setas mudam a carta de lugar
+  st.addEventListener('keydown', e => {
+    const g = e.target.closest('.pgrip'); if (!g || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+    e.preventDefault(); const c = g.closest('.pcard.pc2'), antes = e.key === 'ArrowLeft' || e.key === 'ArrowUp';
+    const viz = antes ? c.previousElementSibling : c.nextElementSibling; if (!viz?.matches('.pcard.pc2')) return;
+    antes ? viz.before(c) : viz.after(c); salvarOrdem(c.parentElement); g.focus();
+  });
 })();
 const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
 const misturar = (h, alvo, t) => '#' + hexRgb(h).map((v, i) => Math.round(v + (alvo[i] - v) * t).toString(16).padStart(2, '0')).join('');
@@ -3190,6 +3359,7 @@ async function iniciarOnline() {
     ch.on('broadcast', { event: 'pontos' }, () => { if (MAPA3D.pronto) carregarPontos(); });
     ch.on('broadcast', { event: 'vaquinha' }, () => carregarVaquinhas());
     ch.on('broadcast', { event: 'placar' }, () => carregarPlacar());
+    ch.on('broadcast', { event: 'recrut' }, () => { if (S.eu?.cargo === 'admin') carregarRec(); });
     ch.on('broadcast', { event: 'killfeed' }, () => carregarKF());
     ch.on('broadcast', { event: 'assinou' }, () => { if (S.view === 'regras' && S.eu?.cargo === 'admin') carregarAssinaturas(); });
     ch.subscribe(st => { if (st === 'SUBSCRIBED') { S.rtUlt = ''; marcarOnline(); } });
@@ -3843,7 +4013,7 @@ function renderChannels() {
   const all = everyone();
   const adm = S.eu?.cargo === 'admin';
   const del = c => adm ? `<span class="edch" data-edch="${esc(c.id)}" title="Editar nome e ícone">✎</span><span class="delch" data-del="${esc(c.id)}" title="Excluir canal">×</span>` : '';
-  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button><button class="ch ${S.view === 'map' ? 'active' : ''}" data-map>${ICON.map}<span class="grow">Mapa</span></button><button class="ch" data-rabisco>${ICON_RABISCO}<span class="grow">Rabisco</span></button><button class="ch ${S.view === 'regras' ? 'active' : ''}" data-regras>${ICON_REGRAS}<span class="grow">Regras</span></button><button class="ch ${S.view === 'vaq' ? 'active' : ''}" data-vaq>${ICON_VAQ}<span class="grow">Vaquinha</span>${vaqFalta() ? '<span class="vqponto" aria-label="vaquinha aberta"></span>' : ''}</button><button class="ch ${S.view === 'placar' ? 'active' : ''}" data-placar>${ICON_PLACAR}<span class="grow">Placar PvP</span></button>${CONFIG.whatsapp ? `<button class="ch chzap" data-zap>${ICON.zap}<span class="grow">WhatsApp</span></button>` : ''}</div>`;
+  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button><button class="ch ${S.view === 'map' ? 'active' : ''}" data-map>${ICON.map}<span class="grow">Mapa</span></button><button class="ch" data-rabisco>${ICON_RABISCO}<span class="grow">Rabisco</span></button><button class="ch ${S.view === 'regras' ? 'active' : ''}" data-regras>${ICON_REGRAS}<span class="grow">Regras</span></button><button class="ch ${S.view === 'vaq' ? 'active' : ''}" data-vaq>${ICON_VAQ}<span class="grow">Vaquinha</span>${vaqFalta() ? '<span class="vqponto" aria-label="vaquinha aberta"></span>' : ''}</button><button class="ch ${S.view === 'placar' ? 'active' : ''}" data-placar>${ICON_PLACAR}<span class="grow">Placar PvP</span></button>${CONFIG.whatsapp ? `<button class="ch chzap" data-zap>${ICON.zap}<span class="grow">WhatsApp</span></button>` : ''}${S.eu?.cargo === 'admin' ? `<button class="ch ${S.view === 'rec' ? 'active' : ''}" data-rec>${ICON_REC}<span class="grow">Recrutamento</span>${REC.lista.length ? `<span class="rcbolha" aria-label="${REC.lista.length} aguardando">${REC.lista.length}</span>` : ''}</button>` : ''}</div>`;
   $('#railHome').classList.toggle('on', S.view === 'home'); $('#railMapa').classList.toggle('on', S.view === 'map'); $('#railRegras')?.classList.toggle('on', S.view === 'regras'); $('#railRegras')?.classList.toggle('falta', S.assinou === false); $('#railVaq')?.classList.toggle('on', S.view === 'vaq'); $('#railPlacar')?.classList.toggle('on', S.view === 'placar'); { const d = $('#railVaq .vqponto'); if (d) d.hidden = !vaqFalta(); }
   h += `<div class="cat">Canais de texto${adm ? '<button class="addch" data-add="texto" title="Criar canal de texto">+</button>' : ''}</div>`;
   const itemTxt = (c, ico, extra = '') => {
@@ -3916,6 +4086,7 @@ function renderTop() {
   else if (S.view === 'home') $('#topTitle').innerHTML = `<span>Início</span>`;
   else if (S.view === 'regras') $('#topTitle').innerHTML = `${ICON_REGRAS}<span>Regras do clã</span>`;
   else if (S.view === 'vaq') $('#topTitle').innerHTML = `${ICON_VAQ}<span>Vaquinha do clã</span>`;
+  else if (S.view === 'rec') $('#topTitle').innerHTML = `${ICON_REC}<span>Recrutamento</span>`;
   else if (S.view === 'placar') $('#topTitle').innerHTML = `${ICON_PLACAR}<span>Placar PvP do clã</span>`;
   else if (TXT[S.ch]?.bot) $('#topTitle').innerHTML = `<span class="botmini"><img src="${LOGO}" alt=""></span><span>Bot U.C.B.R · mensagem privada</span>`;
   else if (TXT[S.ch]?.dm) $('#topTitle').innerHTML = `${avatar(TXT[S.ch].nome, 'mini', '', TXT[S.ch].dm)}<span>${esc(TXT[S.ch].nome)} · mensagem privada</span>`;
@@ -4086,7 +4257,7 @@ function moverPara(pid, para) {
 /* ---------------------------- música da sala (player oficial do YouTube, sincronizado) ----------------------------
    Cada pessoa toca o vídeo no próprio navegador (nada passa pela voz nem pela ponte TURN).
    O estado (fila, música atual, pausa) é combinado entre todos da sala: vence a versão mais nova. */
-const MU = { v: 0, autor: '', fila: [], atual: null };
+const MU = { v: 0, autor: '', fila: [], atual: null, solo: false };
 let ytPlayer = null, ytPronto = null, muAberto = false, muNitido = false, semCards = false;
 const RE_YT = /^[A-Za-z0-9_-]{11}$/;
 function idYoutube(txt) {
@@ -4115,14 +4286,14 @@ function carregarYT() {
 }
 const posAtual = () => !MU.atual ? 0 : MU.atual.pausadoEm != null ? MU.atual.pausadoEm : Math.max(0, (Date.now() - MU.atual.inicio) / 1000);
 function enviarMusica(pid) {
-  const v = S.v; if (!v?.mus) return;
+  const v = S.v; if (!v?.mus || MU.solo) return; // 'só para mim' não vai para ninguém
   const d = { v: MU.v, autor: MU.autor, fila: MU.fila, atual: MU.atual, agora: Date.now() };
   try { pid ? v.mus.send(d, { target: pid }) : v.mus.send(d); } catch {}
   // também pelo servidor, para quem está na sala sem conexão direta (ponte)
   if (!pid) musicaPeloServidor(d);
 }
 function musicaPeloServidor(d, para = null) {
-  if (!S.v || !S.rtCh) return;
+  if (!S.v || !S.rtCh || (MU.solo && !d?.pedir)) return;
   try { S.rtCh.send({ type: 'broadcast', event: 'musica', payload: { de: S.uid, voz: S.v.id, para, ...(d || { v: MU.v, autor: MU.autor, fila: MU.fila, atual: MU.atual, agora: Date.now() }) } }); } catch {}
 }
 function receberMusicaServidor(d) {
@@ -4134,7 +4305,7 @@ function mudarMusica(fn) {
   fn(); MU.v++; MU.autor = S.uid || ''; enviarMusica(); aplicarMusica(); renderMusica();
 }
 function receberMusica(d, pid) {
-  if (!d || !Number.isInteger(d.v) || !Array.isArray(d.fila)) return;
+  if (!d || !Number.isInteger(d.v) || !Array.isArray(d.fila) || MU.solo) return; // ouvindo só a sua: ignora a da sala
   const autor = String(d.autor || '');
   if (d.v < MU.v || (d.v === MU.v && autor >= MU.autor)) return;
   const dif = Date.now() - (+d.agora || Date.now()); // diferença de relógio entre os dois computadores
@@ -4157,8 +4328,8 @@ async function aplicarMusica() {
         width: '100%', height: '100%', videoId: a.id,
         playerVars: { autoplay: 1, start: Math.floor(pos), playsinline: 1, rel: 0, modestbranding: 1 },
         events: {
-          onReady: () => { ytPlayer.setVolume(LS.get('muVol', 40)); if (S.deaf) ytPlayer.mute(); res(); },
-          onStateChange: e => { if (e.data === YT.PlayerState.ENDED) fimMusica(ytPlayer?.getVideoData?.()?.video_id); else if (e.data === YT.PlayerState.PLAYING) atualizarTitulo(); },
+          onReady: () => { ytPlayer.setVolume(LS.get('muVol', 40)); if (S.deaf || LS.get('muMudo', false)) ytPlayer.mute(); res(); },
+          onStateChange: e => { if (e.data === YT.PlayerState.ENDED) fimMusica(ytPlayer?.getVideoData?.()?.video_id); else if (e.data === YT.PlayerState.PLAYING) { atualizarTitulo(); if (aoVivo() && MU.atual && !MU.atual.vivo) { MU.atual.vivo = true; renderMusica(); } } },
           onError: () => { const id = MU.atual?.id; toast('Esse vídeo não deixa tocar fora do YouTube. Pulando.', 'warn'); setTimeout(() => fimMusica(id), 800); },
         },
       });
@@ -4167,15 +4338,16 @@ async function aplicarMusica() {
   if (!S.v || MU.atual !== a) return;
   const atualId = ytPlayer.getVideoData?.()?.video_id;
   if (atualId !== a.id) ytPlayer.loadVideoById({ videoId: a.id, startSeconds: pos });
-  else if (Math.abs((ytPlayer.getCurrentTime?.() || 0) - pos) > 2.5) ytPlayer.seekTo(pos, true);
+  else if (!aoVivo() && Math.abs((ytPlayer.getCurrentTime?.() || 0) - pos) > 2.5) ytPlayer.seekTo(pos, true);
   if (a.pausadoEm != null) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
 }
+function aoVivo() { try { return !!(MU.atual?.vivo || ytPlayer?.getVideoData?.()?.isLive); } catch { return false; } }
 function fimMusica(id) { if (MU.atual?.id === id) mudarMusica(proxima); }
 function atualizarTitulo() {
   const t = ytPlayer?.getVideoData?.()?.title; if (!t || !MU.atual || MU.atual.t === t) return;
   MU.atual.t = t.slice(0, 120); renderMusica();
 }
-function pararMusicaLocal() { try { ytPlayer?.destroy(); } catch {} ytPlayer = null; MU.v = 0; MU.autor = ''; MU.fila = []; MU.atual = null; const box = $('#muPlayerBox'); if (box && !$('#muPlayer')) box.insertAdjacentHTML('afterbegin', '<div id="muPlayer"></div>'); renderMusica(); }
+function pararMusicaLocal() { try { ytPlayer?.destroy(); } catch {} ytPlayer = null; MU.v = 0; MU.autor = ''; MU.fila = []; MU.atual = null; MU.solo = false; const box = $('#muPlayerBox'); if (box && !$('#muPlayer')) box.insertAdjacentHTML('afterbegin', '<div id="muPlayer"></div>'); renderMusica(); }
 function renderMusica() {
   const box = $('#vmusica'); if (!box) return;
   const temAlgo = !!(MU.atual || MU.fila.length);
@@ -4190,9 +4362,13 @@ function renderMusica() {
   $('#voiceView').classList.toggle('semcards', mv && semCards);
   $('#muCards').hidden = !mv; $('#muCards').textContent = semCards ? '👥 Mostrar jogadores' : '🙈 Esconder jogadores';
   posPainel(); cinemaMusica();
-  $('#muTit').innerHTML = MU.atual ? `${esc(MU.atual.t || 'Carregando título…')}<small>pedida por ${esc(MU.atual.por || '?')}${MU.atual.pausadoEm != null ? ' · pausada' : ''} · o vídeo toca no fundo da sala</small>` : '<small>Nada tocando. Cole um link do YouTube abaixo.</small>';
+  $('#muTit').innerHTML = MU.atual ? `${MU.atual.vivo ? '<span class="muvivo">AO VIVO</span>' : ''}${esc(MU.atual.t || 'Carregando título…')}<small>${MU.solo ? 'só você está ouvindo' : 'pedida por ' + esc(MU.atual.por || '?')}${MU.atual.pausadoEm != null ? ' · pausada' : ''} · o vídeo toca no fundo da sala</small>` : '<small>Nada tocando. Cole um link do YouTube abaixo.</small>';
   $('#muFila').innerHTML = MU.fila.map(m => `<li>${esc(m.t || 'Vídeo ' + m.id)} <small>· ${esc(m.por)}</small></li>`).join('');
   ['#muPausa', '#muPular', '#muParar'].forEach(k => ($(k).disabled = !temAlgo));
+  document.querySelectorAll('[data-mumodo]').forEach(b => { const on = (b.dataset.mumodo === 'eu') === MU.solo; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  $('#muCard .muhead b').textContent = MU.solo ? '🎧 Música só sua' : '🎵 Música da sala';
+  $('#muPausa').title = MU.solo ? 'Pausar / continuar' : 'Pausar / continuar para todos';
+  muVolUI();
 }
 async function tituloDe(id) {
   try { const r = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent('https://www.youtube.com/watch?v=' + id)); if (r.ok) return String((await r.json()).title || '').slice(0, 120); } catch {}
@@ -4228,16 +4404,35 @@ function posPainel() {
   window.addEventListener('resize', () => posPainel());
 })();
 $('#muVol').value = LS.get('muVol', 40);
-$('#muVol').oninput = e => { const n = +e.target.value; LS.set('muVol', n); try { ytPlayer?.setVolume(n); } catch {} };
+function muVolUI() { const n = LS.get('muVol', 40), mudo = !!LS.get('muMudo', false); $('#muVolN').textContent = mudo ? 'mudo' : n + '%'; $('#muMudo').textContent = mudo || !n ? '🔇' : n < 40 ? '🔉' : '🔊'; $('#muMudo').setAttribute('aria-pressed', mudo); }
+function muVolAplicar() { const n = LS.get('muVol', 40), mudo = !!LS.get('muMudo', false); try { ytPlayer?.setVolume(n); if (mudo || S.deaf) ytPlayer?.mute(); else ytPlayer?.unMute(); } catch {} muVolUI(); }
+$('#muVol').oninput = e => { const n = +e.target.value; LS.set('muVol', n); if (n > 0) LS.set('muMudo', false); muVolAplicar(); };
+$('#muMudo').onclick = () => { LS.set('muMudo', !LS.get('muMudo', false)); muVolAplicar(); };
+// 1.63: 'só para mim' toca a sua música sem mandar para a sala; voltar para 'a sala' pega de novo o que a sala está ouvindo
+document.querySelectorAll('[data-mumodo]').forEach(b => b.onclick = () => {
+  const solo = b.dataset.mumodo === 'eu'; if (solo === MU.solo || !S.v) return;
+  try { ytPlayer?.stopVideo(); } catch {}
+  MU.solo = solo; MU.v = 0; MU.autor = ''; MU.fila = []; MU.atual = null; aplicarMusica(); renderMusica();
+  if (!solo) { try { S.rtCh?.send({ type: 'broadcast', event: 'musica', payload: { de: S.uid, voz: S.v.id, pedir: 1 } }); } catch {} toast('Voltou para a música da sala.'); }
+  else toast('Agora só você ouve o que colocar aqui. A sala não muda.');
+});
+// link de live de canal (youtube.com/@canal/live): o YouTube devolve o vídeo da live pelo oEmbed
+async function idDaLive(txt) {
+  try {
+    const u = new URL(String(txt || '').trim()); if (!/(^|\.)youtube\.com$/.test(u.hostname) || !/\/live\b|\/@/.test(u.pathname)) return null;
+    const r = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(u.href)); if (!r.ok) return null;
+    const m = /embed\/([A-Za-z0-9_-]{11})/.exec((await r.json()).html || ''); return m ? m[1] : null;
+  } catch { return null; }
+}
 $('#muForm').addEventListener('submit', async e => {
   e.preventDefault(); if (!S.v) return;
-  const id = idYoutube($('#muLink').value);
-  if (!id) return toast('Cole um link do YouTube (youtube.com ou youtu.be).', 'warn');
+  const id = idYoutube($('#muLink').value) || await idDaLive($('#muLink').value);
+  if (!id) return toast('Cole o link de um vídeo ou live do YouTube (youtube.com ou youtu.be).', 'warn');
   if (MU.fila.length >= 50) return toast('A fila já tem 50 músicas.', 'warn');
   $('#muLink').value = '';
   const t = await tituloDe(id), item = { id, t, por: S.name };
   mudarMusica(() => { if (!MU.atual) MU.atual = { ...item, inicio: Date.now(), pausadoEm: null }; else MU.fila.push(item); });
-  toast(MU.atual?.id === id && MU.fila.length === 0 ? 'Tocando agora para a sala.' : 'Adicionada na fila.');
+  toast(MU.atual?.id === id && MU.fila.length === 0 ? (MU.solo ? 'Tocando agora só para você.' : 'Tocando agora para a sala.') : 'Adicionada na fila.');
 });
 $('#muPausa').onclick = () => mudarMusica(() => { const a = MU.atual; if (!a) return; if (a.pausadoEm != null) { a.inicio = Date.now() - a.pausadoEm * 1000; a.pausadoEm = null; } else a.pausadoEm = posAtual(); });
 $('#muPular').onclick = () => mudarMusica(proxima);
@@ -4259,6 +4454,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-regras]')) return showRegras();
   if (e.target.closest('[data-vaq]')) return showVaq();
   if (e.target.closest('[data-placar]')) return showPlacar();
+  if (e.target.closest('[data-rec]')) return showRec();
   if (e.target.closest('[data-rabisco]')) return alternarRabisco();
   const dm = e.target.closest('[data-dm]'); if (dm) return abrirDM(dm.dataset.dm);
   const q = e.target.closest('.quem[data-uid], .mem[data-uid]') || (!e.target.closest('button,input,a') && e.target.closest('.pcard.pc2[data-uid]')); if (q && q.dataset.uid && !q.closest('.cdprev')) return abrirPop(q.dataset.uid, q);
@@ -4315,12 +4511,13 @@ function screenVideo(pid) {
   return el;
 }
 function renderStage() {
+  if (CARTA.ativo || ORD.el) { CARTA.sujo = true; return; }
   const stage = $('#stage');
   // Em tela cheia, o vídeo está no #fsLayer (fixo). Não mexe no palco até sair, para o navegador não derrubar a tela cheia.
   if (window.FS?.ativo) { FS.sujo = true; FS.atualizar(); return; }
   if (!S.v) { stage.innerHTML = ''; return; }
   const v = S.v;
-  const people = everyone().filter(p => p.voice === v.id);
+  const people = everyone().filter(p => p.voice === v.id).sort(cartaOrdem);
   const screens = Object.keys(v.screens);
   // remove vídeos do DOM antes de reescrever (mantém os elementos vivos)
   Object.values(v.screenEls).forEach(el => el.remove());
@@ -4328,7 +4525,7 @@ function renderStage() {
   const PV = pvpMapa();
   const pcard = p => { const pt = !p.me && PONTE[p.uid]?.ok && (String(p.id).startsWith('rt:') || !v.audios[p.id]), aid = pt ? 'rt:' + p.uid : p.id;
     const extra = `${p.me && v.semMic ? '<div class="semcon">só ouvindo · sem microfone</div>' : ''}${!p.me && !pt && v.falha?.[p.id] ? '<div class="semcon">sem conexão</div>' : ''}${p.longe ? '<div class="semcon">conectando…</div>' : ''}${pt ? '<div class="semcon ok" title="A conexão direta não abriu; a voz está passando pelo servidor">voz pela ponte</div>' : ''}${p.me && v.screen ? `<div class="semcon ok">transmitindo · ${v.assistindo.size} assistindo</div>` : ''}${!p.me && p.sharing && v.quero.has(p.id) && !v.screens[p.id] ? `<div class="semcon">abrindo a tela… (tentando de novo sozinho)</div><button class="btn ghost sm" data-parar="${esc(p.id)}">Cancelar</button>` : ''}`;
-    const fim = `${!p.me && p.sharing && !v.quero.has(p.id) ? `<button class="btn acc sm assistir" data-assistir="${esc(p.id)}">${ICON.screen}Assistir tela</button>` : ''}${p.me || p.longe ? '' : `<button type="button" class="vol volbtn" data-volmenu="${esc(aid)}" title="Volume de ${esc(p.name)} (ou clique com o botão direito no cartão)">${ICON.vol}<span>${Math.round(volFor(aid) * 100)}%</span></button>`}`;
+    const fim = `${people.length > 1 && p.uid ? '<button type="button" class="pgrip" title="Arraste para mudar a carta de lugar" aria-label="Mudar a carta de lugar (setas)">⠿</button>' : ''}${!p.me && p.sharing && !v.quero.has(p.id) ? `<button class="btn acc sm assistir" data-assistir="${esc(p.id)}">${ICON.screen}Assistir tela</button>` : ''}${p.me || p.longe ? '' : `<button type="button" class="vol volbtn" data-volmenu="${esc(aid)}" title="Volume de ${esc(p.name)} (ou clique com o botão direito no cartão)">${ICON.vol}<span>${Math.round(volFor(aid) * 100)}%</span></button>`}`;
     const icones = `${p.deaf ? ICON.headOff : p.muted ? ICON.micOff : ''}${!p.me && S.mutados.has(p.name) ? '<span class="mutlocal" title="Você silenciou esta pessoa">🔇</span>' : ''}`;
     return cartaHtml({ nome: p.name, uid: p.uid, cd: p.cd, pvp: PV.mapa.get(p.uid), lider: p.uid && PV.lider === p.uid, icones, extra, fim,
       cls: S.speaking[aid] ? ' speaking' : '', attrs: ` data-speak="${esc(aid)}" data-uid="${esc(p.uid || '')}"${p.me ? '' : ` data-volpid="${esc(aid)}" data-voluid="${esc(p.uid || '')}"`}` }); };
@@ -4498,13 +4695,13 @@ async function carregarAssinaturas() {
 function showRegras() {
   S.view = 'regras';
   renderRegras();
-  $('#regrasView').hidden = false; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
+  $('#regrasView').hidden = false; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
   $('#app').classList.remove('menu');
   $('#regrasView').scrollTop = 0;
   renderAll();
 }
 
-const ICON_VAQ = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 9.5c.9.3 2 1 2 2.5"/><path d="M5 11c0-3.3 3.1-6 7-6 1.3 0 2.5.3 3.6.8L18 4.5v3.4c.6.8 1 1.6 1.2 2.6H21v3h-1.8c-.4 1-1 1.8-1.8 2.5V19h-2.6l-.5-1.4c-.7.2-1.5.3-2.3.3s-1.6-.1-2.3-.3L9.2 19H6.6v-3.1C5.6 14.8 5 13 5 11z"/><circle cx="15" cy="10" r=".9" fill="currentColor"/><path d="M10 7.5h3"/></svg>';
+const ICON_VAQ = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.6 6.2C6.3 5.6 5.4 4.3 5.5 2.8"/><path d="M16.4 6.2c1.3-.6 2.2-1.9 2.1-3.4"/><path d="M7 9.2 3 8c.2 1.8 1.6 3 3.6 3"/><path d="M17 9.2 21 8c-.2 1.8-1.6 3-3.6 3"/><path d="M7 12.6V9.4C7 7 9.2 5.4 12 5.4s5 1.6 5 4v3.2"/><rect x="6.3" y="12" width="11.4" height="8.4" rx="4.2"/><circle cx="9.7" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="14.3" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="10" cy="16.2" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="16.2" r=".9" fill="currentColor" stroke="none"/></svg>';
 /* ---------------------------- 1.52: vaquinha do clã ---------------------------- */
 // Admin cria a vaquinha. Cada membro avisa quanto colocou (fica aguardando) e um admin confirma.
 // O site não cobra nada: só mostra a chave Pix (ou para quem entregar no jogo).
@@ -4546,7 +4743,7 @@ function vqAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'vaquinha
 function showVaq() {
   S.view = 'vaq'; VQ.anima = true;
   renderVaq();
-  $('#vaqView').hidden = false; $('#placarView').hidden = true; $('#regrasView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
+  $('#vaqView').hidden = false; $('#placarView').hidden = true; $('#recView').hidden = true; $('#regrasView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
   $('#app').classList.remove('menu');
   $('#vaqView').scrollTop = 0;
   renderAll();
@@ -4617,6 +4814,7 @@ function vqCardHTML(v) {
       </div>
     </div></article>`;
 }
+(() => { $('#vaqView')?.addEventListener('click', e => { const b = e.target.closest('[data-vqaba]'); if (!b) return; VQ.sel = b.dataset.vqaba; VQ.anima = true; renderVaq(); }); })();
 function renderVaq() {
   const box = $('#vaqView'); if (!box) return;
   const adm = vqAdm(), ab = VQ.lista.filter(v => v.aberta), fe = VQ.lista.filter(v => !v.aberta);
@@ -4627,7 +4825,11 @@ function renderVaq() {
   if (!VQ.ok && VQ.erro) h += `<div class="vqnada"><b>A vaquinha ainda não foi ativada</b>${adm ? 'Rode o SQL v1.52 (fim do supabase-setup.sql) no Supabase.' : 'O admin precisa ativar essa parte.'}</div>`;
   else if (!VQ.ok) h += `<div class="vqnada">Carregando…</div>`;
   else if (!ab.length) h += `<div class="vqnada"><span class="vqnadaico">${ICON_VAQ}</span><b>Nenhuma vaquinha aberta</b>${adm ? 'Quando o clã quiser juntar para alguma coisa, clique em "Nova vaquinha".' : 'Quando um admin abrir uma, ela aparece aqui.'}</div>`;
-  h += ab.map(vqCardHTML).join('');
+  if (ab.length > 1) {
+    if (!ab.some(v => v.id === VQ.sel)) VQ.sel = ab[0].id;
+    h += `<nav class="vqabas" aria-label="Vaquinhas abertas">${ab.map(v => { const s = vqSoma(v.id), pc = Math.min(100, Math.floor(s.c * 100 / v.meta)); return `<button type="button" class="vqaba ${v.id === VQ.sel ? 'on' : ''}" data-vqaba="${v.id}" aria-pressed="${v.id === VQ.sel}"><b>${esc(v.titulo)}</b><small><span>${vqFmt(s.c, v.unidade)}</span><span>${pc}%</span></small><span class="vqlin"><i style="width:${pc}%"></i></span></button>`; }).join('')}</nav>`;
+    h += vqCardHTML(ab.find(v => v.id === VQ.sel));
+  } else h += ab.map(vqCardHTML).join('');
   if (fe.length) h += `<h4 class="vqrot vqsec">Encerradas · ${fe.length}</h4><div class="vqtiles">${fe.map(vqCardHTML).join('')}</div>`;
   const abertos = [...box.querySelectorAll('details[open]')].map(d => d.querySelector('summary h4')?.textContent || d.className);
   box.innerHTML = h + '</div>';
@@ -4768,13 +4970,103 @@ function plAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'placar',
 function showPlacar() {
   S.view = 'placar';
   renderPlacar();
-  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView']) $(v).hidden = true;
+  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#recView']) $(v).hidden = true;
   $('#placarView').hidden = false;
   $('#app').classList.remove('menu');
   $('#placarView').scrollTop = 0;
   renderAll();
   carregarPlacar(); carregarKF();
 }
+/* ---------------------------- 1.63: Recrutamento (tribunal dos admins) ---------------------------- */
+// Os admins veem a ficha de quem está esperando, votam (entra / não entra) e depois alguém dá o veredito.
+const ICON_REC = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5"/><path d="M12 7l5 5"/><path d="M13.2 5.8l-4.4 4.4 5 5 4.4-4.4"/><path d="M10.5 12.5 4 19"/><path d="M3 21h9"/></svg>';
+const REC = { ok: true, carregado: false, lista: [], fichas: new Map(), votos: [] };
+async function carregarRec() {
+  if (!sb || S.eu?.cargo !== 'admin') return;
+  const { data: pend, error } = await sb.from('membros').select(COLS_MEMBRO).eq('status', 'pendente').order('criado_em');
+  if (error) { REC.carregado = true; if (S.view === 'rec') renderRec(); return; }
+  REC.lista = pend || [];
+  const ids = REC.lista.map(m => m.id);
+  const [fi, vo] = ids.length ? await Promise.all([sb.from('fichas').select('*').in('membro', ids), sb.from('recrut_votos').select('*').in('membro', ids)]) : [{ data: [] }, { data: [] }];
+  REC.ok = !(vo.error && /recrut_votos|schema cache|does not exist/i.test(vo.error.message || ''));
+  REC.fichas = new Map((fi.data || []).map(f => [f.membro, f]));
+  REC.votos = vo.data || [];
+  REC.carregado = true;
+  if (S.view === 'rec') renderRec();
+  renderChannels();
+}
+function recAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'recrut', payload: { uid: S.uid } }); } catch {} }
+function showRec() {
+  if (S.eu?.cargo !== 'admin') return;
+  S.view = 'rec';
+  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#placarView']) $(v).hidden = true;
+  $('#recView').hidden = false; $('#app').classList.remove('menu'); $('#recView').scrollTop = 0;
+  renderRec(); renderAll(); carregarRec();
+}
+const recDias = d => { const n = Math.floor((Date.now() - new Date(d)) / 864e5); return n <= 0 ? 'hoje' : n === 1 ? 'há 1 dia' : `há ${n} dias`; };
+function recCard(m) {
+  const f = REC.fichas.get(m.id), votos = REC.votos.filter(v => v.membro === m.id), sim = votos.filter(v => v.voto === 'sim'), nao = votos.filter(v => v.voto === 'nao');
+  const admins = Object.values(S.cla || {}).filter(x => x.cargo === 'admin').length || 1, meu = votos.find(v => v.votante === S.uid);
+  const tot = sim.length + nao.length, metade = Math.floor(admins / 2) + 1;
+  const ver = sim.length >= metade ? ['sim', 'Maioria quer que entre'] : nao.length >= metade ? ['nao', 'Maioria não quer'] : tot ? ['', 'Votação aberta'] : ['', 'Ninguém votou ainda'];
+  const sn = v => v ? 'Sim' : 'Não';
+  const ficha = f ? `<div class="rcficha">
+      <div class="fcheat ${f.usa_cheat ? 'sim' : ''}">${f.usa_cheat ? '⚠️ Disse que <b>USA CHEAT</b>' : '✓ Disse que não usa cheat'}</div>
+      <dl class="rcfatos"><div><dt>Idade</dt><dd>${esc(f.idade)} anos</dd></div><div><dt>Joga DayZ há</dt><dd>${esc(f.tempo_dayz)}</dd></div><div><dt>Outro clã</dt><dd>${f.outro_cla ? 'Sim' + (f.outro_cla_qual ? ' · ' + esc(f.outro_cla_qual) : '') : 'Não'}</dd></div>
+        <div><dt>É justo</dt><dd>${sn(f.justo)}</dd></div><div><dt>Divide loot</dt><dd>${sn(f.divide_loot)}</dd></div><div><dt>Divide despesas</dt><dd>${sn(f.divide_despesas)}</dd></div></dl>
+      <p class="rcporque">${esc(f.porque)}</p>
+      <details class="rcmais"><summary>Ver ficha completa</summary><dl><div><dt>Nome real</dt><dd>${esc(m.nome_real || '—')}</dd></div><div><dt>WhatsApp</dt><dd>${esc(f.whatsapp)}</dd></div><div><dt>Contato de emergência</dt><dd>${esc(f.emergencia)}</dd></div><div><dt>Ficha enviada</dt><dd>${esc(new Date(f.criado_em).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }))}</dd></div></dl></details>
+    </div>` : `<div class="rcficha rcsemficha">${esc(m.nick)} ainda não preencheu a ficha. Ela aparece aqui assim que for enviada.</div>`;
+  const juiz = v => { const n = S.cla?.[v.votante]?.nick || 'admin'; return `<span class="rcjuiz ${v.voto}" title="${esc(v.comentario || '')}">${avatar(n, '', '', v.votante)}${esc(n)}${v.comentario ? ` <em>“${esc(v.comentario.slice(0, 40))}${v.comentario.length > 40 ? '…' : ''}”</em>` : ''}</span>`; };
+  return `<article class="rccard ${ver[0] === 'sim' ? 'maioria' : ver[0] === 'nao' ? 'contra' : ''}" data-rcid="${esc(m.id)}">
+    <header class="rccab">${avatar(m.nick, '', '', m.id, m.avatar || null)}<div><h3>${esc(m.nick || '(sem nick)')}</h3><small>Pediu para entrar ${recDias(m.criado_em)}${m.nome_real ? ' · ' + esc(m.nome_real) : ''}</small></div><span class="rcveredito ${ver[0]}">${ver[1]}</span></header>
+    <div class="rcgrid">${ficha}
+      <div class="rcvoto">
+        <div class="rcplacar"><b class="s">${sim.length}</b><div class="rcbarra" role="img" aria-label="${sim.length} a favor, ${nao.length} contra"><i class="s" style="width:${tot ? sim.length * 100 / tot : 0}%"></i><i class="n" style="width:${tot ? nao.length * 100 / tot : 0}%"></i></div><b class="n">${nao.length}</b></div>
+        <span class="rcquem">${tot} de ${admins} admin${admins > 1 ? 's' : ''} votaram · precisa de ${metade} para ter maioria</span>
+        ${votos.length ? `<div class="rcjuizes">${votos.map(juiz).join('')}</div>` : ''}
+        ${REC.ok ? `<div class="rcbts"><button type="button" class="rcbt sim ${meu?.voto === 'sim' ? 'on' : ''}" data-rcvoto="sim" aria-pressed="${meu?.voto === 'sim'}">👍 Entra</button><button type="button" class="rcbt nao ${meu?.voto === 'nao' ? 'on' : ''}" data-rcvoto="nao" aria-pressed="${meu?.voto === 'nao'}">👎 Não entra</button></div>
+        <input class="inp rccom" data-rccom maxlength="300" placeholder="Comentário do seu voto (opcional)" value="${esc(meu?.comentario || '')}" aria-label="Comentário do seu voto">` : '<div class="rcsemficha">A votação ainda não foi ativada (falta rodar o SQL v1.63).</div>'}
+        <div class="rcfinal"><span>Veredito final: vale para todos.</span><button type="button" class="btn ok sm" data-rcfim="aprovado">Aprovar entrada</button><button type="button" class="btn warn sm" data-rcfim="bloqueado">Recusar</button></div>
+      </div></div></article>`;
+}
+function renderRec() {
+  const box = $('#recView'); if (!box) return;
+  if (box.contains(document.activeElement) && document.activeElement.matches('[data-rccom]')) { REC.depois = true; return; } // não apaga o que está sendo digitado
+  let h = `<div class="rcwrap"><header class="vqtopo"><div><span class="vqrot vqkick">Só dono e admins veem</span><h2>Recrutamento</h2><p>O tribunal do clã. Leia a ficha de quem quer entrar, vote e, quando estiverem de acordo, dê o veredito.</p></div></header>`;
+  if (!REC.carregado) h += '<div class="vqnada"><b>Carregando…</b></div>';
+  else if (!REC.lista.length) h += `<div class="vqnada"><span class="vqnadaico">${ICON_REC}</span><b>Ninguém esperando</b>Quando alguém se cadastrar com um convite, a ficha aparece aqui para votação. Os convites são gerados no Painel Admin.</div>`;
+  else h += `<div class="rclista">${REC.lista.map(recCard).join('')}</div>`;
+  box.innerHTML = h + '</div>';
+}
+async function recVotar(id, voto, comentario) {
+  const { error } = await sb.from('recrut_votos').upsert({ membro: id, votante: S.uid, voto, comentario: String(comentario || '').slice(0, 300) }, { onConflict: 'membro,votante' });
+  if (error) return toast(/recrut_votos|schema cache/.test(error.message || '') ? 'A votação ainda não foi ativada (falta rodar o SQL v1.63).' : traduz(error), 'err');
+  recAvisar(); await carregarRec();
+}
+(() => {
+  const box = $('#recView'); if (!box) return;
+  box.addEventListener('click', async e => {
+    const card = e.target.closest('[data-rcid]'); if (!card) return; const id = card.dataset.rcid, m = REC.lista.find(x => x.id === id); if (!m) return;
+    const v = e.target.closest('[data-rcvoto]');
+    if (v) { const meu = REC.votos.find(x => x.membro === id && x.votante === S.uid); if (meu?.voto === v.dataset.rcvoto) return; return recVotar(id, v.dataset.rcvoto, card.querySelector('[data-rccom]')?.value); }
+    const f = e.target.closest('[data-rcfim]'); if (!f) return;
+    const st = f.dataset.rcfim;
+    if (!f.dataset.conf) { f.dataset.conf = '1'; const t = f.textContent; f.textContent = st === 'aprovado' ? `Confirmar: ${m.nick} entra` : `Confirmar: recusar ${m.nick}`; setTimeout(() => { if (f.isConnected) { delete f.dataset.conf; f.textContent = t; } }, 5000); return; }
+    f.disabled = true;
+    const { error } = await sb.from('membros').update({ status: st }).eq('id', id);
+    if (error) { f.disabled = false; return toast(traduz(error), 'err'); }
+    toast(st === 'aprovado' ? `${m.nick} agora é do clã!` : `${m.nick} foi recusado.`);
+    recAvisar(); carregarCla.busy = false; carregarCla(true); avisarCla(); carregarRec();
+  });
+  // comentário: salva junto com o voto quando sai do campo
+  box.addEventListener('change', e => {
+    const c = e.target.closest('[data-rccom]'); if (!c) return; const id = c.closest('[data-rcid]').dataset.rcid;
+    const meu = REC.votos.find(x => x.membro === id && x.votante === S.uid);
+    if (meu && meu.comentario !== c.value) recVotar(id, meu.voto, c.value); // sem voto ainda: o texto vai junto quando votar
+  });
+  box.addEventListener('focusout', () => setTimeout(() => { if (REC.depois && !box.contains(document.activeElement)) { REC.depois = false; renderRec(); } }, 0));
+})();
 function plResumo() {
   const s = plAtual(), cla = plClaLista(s ? plComDelta(s) : []);
   if (!s && !cla.length) return 'Ainda sem placar';
@@ -4912,7 +5204,7 @@ $('#fPlMeu').addEventListener('submit', salvarPlMeu); $('#pmApagar').onclick = a
 
 function showHome() {
   S.view = 'home';
-  $('#homeView').hidden = false; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true;
+  $('#homeView').hidden = false; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
   $('#app').classList.remove('menu');
   renderAll();
 }
@@ -4920,7 +5212,7 @@ function showText(ch) {
   if (!TXT[ch]) return;
   S.view = 'text'; S.ch = ch; delete S.unread[ch]; delete S.mencao[ch];
   if (ch === BOAS_VINDAS.id) LS.set('bvVisto', Date.now());
-  $('#textView').hidden = false; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true;
+  $('#textView').hidden = false; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
   $('#app').classList.remove('menu');
   $('#composer').hidden = !!TXT[ch].fixo;
   renderMessages(); renderAll();
@@ -4929,14 +5221,14 @@ function showText(ch) {
 function showVoice() {
   if (!S.v) return;
   S.view = 'voice';
-  $('#textView').hidden = true; $('#voiceView').hidden = false; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true;
+  $('#textView').hidden = true; $('#voiceView').hidden = false; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
   $('#app').classList.remove('menu'); renderMusica();
   renderAll(); carregarArea();
 }
 function showMap() {
   S.view = 'map';
   abrirMapa3d();
-  $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = false; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true;
+  $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = false; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
   $('#app').classList.remove('menu');
   renderAll();
 }
@@ -5473,7 +5765,8 @@ async function entrarComSessao(user) {
   iniciarOnline();
   vigiarVersao();
   pedirNotificacoes();
-  setInterval(() => { carregarCla(); carregarCanais(); conferirMinhaConta(); }, 60000);
+  setInterval(() => { carregarCla(); carregarCanais(); conferirMinhaConta(); if (S.eu?.cargo === 'admin') carregarRec(); }, 60000);
+  if (S.eu?.cargo === 'admin') setTimeout(carregarRec, 2500);
 }
 
 async function boot() {
