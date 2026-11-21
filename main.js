@@ -35,6 +35,7 @@ const PADRAO = {
   pttSoltar: 200,            // ms depois de soltar a tecla (não corta o fim da palavra)
   muteTecla: null,           // liga/desliga microfone
   deafTecla: null,           // liga/desliga fone
+  limpaTecla: null,          // Limpa a call: para de ouvir, microfone continua ligado (1.65)
   avisoMsg: true,            // aviso do Windows para mensagem nova
   avisoSala: true,           // aviso quando alguém entra numa sala de voz
   fecharBandeja: true,       // X esconde perto do relógio
@@ -252,6 +253,7 @@ function iniciarHook() {
       if (CFG.ptt && igual(CFG.pttTecla, tipo, code)) enviar('ptt', desceu);
       if (desceu && igual(CFG.muteTecla, tipo, code)) enviar('atalho', 'mute');
       if (desceu && igual(CFG.deafTecla, tipo, code)) enviar('atalho', 'deaf');
+      if (desceu && igual(CFG.limpaTecla, tipo, code)) enviar('atalho', 'limpa');
     };
     uIOhook.on('keydown', e => evento('tecla', e.keycode, true));
     uIOhook.on('keyup', e => evento('tecla', e.keycode, false));
@@ -290,6 +292,8 @@ ipcMain.on('desk:badge', (_e, n) => {
   try { tray?.setToolTip(naoLidas ? `U.C.B.R • ${naoLidas} nova(s)` : 'U.C.B.R'); } catch {}
   if (naoLidas && !win.isFocused()) win.flashFrame(true);
 });
+// Alguém chamou a atenção (1.65): pisca o ícone na barra de tarefas sem roubar o foco do jogo
+ipcMain.on('desk:chamar', () => { try { if (win && !win.isFocused()) win.flashFrame(true); } catch {} });
 // Aviso do Windows feito aqui (clicar abre a janela mesmo escondida na bandeja)
 ipcMain.on('desk:aviso', (_e, a) => {
   if (!Notification.isSupported() || !a?.titulo) return;

@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld('ucbrDesktop', {
   badge: n => ipcRenderer.send('desk:badge', n),
   aviso: a => ipcRenderer.send('desk:aviso', a),
   barra: b => ipcRenderer.send('desk:barra', b),
+  chamar: () => ipcRenderer.send('desk:chamar'),
   kfStatus: () => ipcRenderer.invoke('desk:kfStatus'),
   onKillfeed: cb => ouvir('killfeed', cb),
   onKfStatus: cb => ouvir('kfStatus', cb),

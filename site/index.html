@@ -1980,6 +1980,135 @@ h2,h3{text-wrap:balance}
 body.temacarta #voiceView>#temaCarta{opacity:1}
 body.temacarta #voiceView{background:#050506}
 @media (prefers-reduced-motion:reduce){.fx *,.fx::before,.fx::after{animation:none!important}.pcard.pc2{transform:none!important}}
+
+/* ===== 1.65: Central do Admin ===== */
+#app{overflow:clip} /* o fundo animado (inset:-20%) deixava o app rolar sozinho ao focar um campo */
+.sideadm{position:relative;width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;color:var(--accent);background:rgba(var(--a),.1);box-shadow:inset 0 0 0 1px rgba(var(--a),.35);transition-property:background,box-shadow,transform;transition-duration:.15s}
+.sideadm:hover{background:rgba(var(--a),.2);box-shadow:inset 0 0 0 1px rgba(var(--a),.6),0 0 16px rgba(var(--a),.35)}
+.sideadm:active{transform:scale(.94)}
+.sideadm.on{background:var(--accent);color:var(--onaccent,#111)}
+.sideadm[hidden]{display:none}
+.sabolha{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#ef4b45;color:#fff;font:800 10px/17px Inter,system-ui,sans-serif;text-align:center;box-shadow:0 0 0 2px var(--bg1,#111)}
+.sabolha[hidden]{display:none}
+@media (min-width:761px){#app.mini #side:not(.aberto) .sideadm{visibility:hidden}}
+#admView{flex:1;overflow:auto;padding:26px clamp(16px,4vw,44px) 64px;background:radial-gradient(1100px 460px at 88% -16%,rgba(var(--a),.13),transparent 60%),radial-gradient(800px 340px at -10% 110%,rgba(var(--a),.06),transparent 60%)}
+.admwrap{max-width:1120px;margin:0 auto}
+.admhero{display:flex;justify-content:space-between;align-items:flex-end;gap:18px 24px;flex-wrap:wrap;margin-bottom:18px}
+.admhtit{display:flex;gap:16px;align-items:center;min-width:0}
+.admselo{width:64px;height:64px;flex:none;border-radius:18px;display:grid;place-items:center;color:var(--accent);background:radial-gradient(circle at 30% 20%,rgba(var(--a),.35),rgba(var(--a),.06) 70%);box-shadow:inset 0 0 0 1px rgba(var(--a),.45),0 0 32px rgba(var(--a),.25);animation:admPulso 3.2s ease-in-out infinite}
+@keyframes admPulso{50%{box-shadow:inset 0 0 0 1px rgba(var(--a),.7),0 0 46px rgba(var(--a),.42)}}
+.admhero h2{font-family:var(--brand);font-weight:400;font-size:clamp(32px,4.6vw,48px);line-height:1;margin:6px 0 6px;text-shadow:0 0 28px rgba(var(--a),.25);text-wrap:balance}
+.admhero p{margin:0;color:var(--txt2);max-width:54ch;text-wrap:pretty;line-height:1.5}
+.admhstats{display:flex;gap:8px;flex-wrap:wrap}
+.admhstats .st{min-width:92px;padding:10px 14px;border-radius:14px;background:rgba(0,0,0,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.admhstats .st b{display:block;font:700 28px/1 "Barlow Condensed","Arial Narrow",sans-serif;font-variant-numeric:tabular-nums;color:var(--txt)}
+.admhstats .st small{font:600 10.5px Inter,system-ui,sans-serif;letter-spacing:.6px;text-transform:uppercase;color:var(--txt3)}
+.admhstats .st.ac b{color:var(--accent)}.admhstats .st.ok b{color:var(--ok,#3ddc84)}
+.admtabs{display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.32);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);margin-bottom:18px;overflow-x:auto;scrollbar-width:none;position:sticky;top:-26px;z-index:3;backdrop-filter:blur(8px)}
+.admtabs button{flex:none;display:flex;align-items:center;gap:6px;padding:9px 12px;min-height:40px;border-radius:10px;color:var(--txt2);font:600 13.5px Inter,system-ui,sans-serif;transition-property:background,color;transition-duration:.15s}
+.admtabs button:hover{color:var(--txt);background:rgba(255,255,255,.05)}
+.admtabs button.on{background:rgba(var(--a),.16);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(var(--a),.4)}
+.admtabs .qtd{font:700 11px Inter,sans-serif;color:var(--txt3);font-variant-numeric:tabular-nums}
+.admtabs .qtd.quente{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#ef4b45;color:#fff;line-height:18px;text-align:center}
+.admtabs .qtd[hidden]{display:none}
+#admView [data-pane]{animation:admEntra .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes admEntra{from{opacity:0;transform:translateY(6px)}}
+.admgrade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.admbox{border-radius:20px;padding:16px 18px;background:linear-gradient(165deg,rgba(255,255,255,.045),rgba(0,0,0,.28) 60%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),0 18px 40px rgba(0,0,0,.25);min-width:0}
+.admgrade.larga{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
+#admView .admfiltros{position:static;background:none;padding:0}
+.admbox.largo{grid-column:span 2}
+@media (max-width:900px){.admbox.largo{grid-column:auto}}
+.admbox h4{margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;font:700 12px Inter,system-ui,sans-serif;letter-spacing:.9px;text-transform:uppercase;color:var(--txt3)}
+.admver{font:600 12px Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--accent);padding:4px 8px;border-radius:8px}
+.admver:hover{background:rgba(var(--a),.12)}
+.admp{margin:0 0 12px;color:var(--txt2);font-size:13.5px;line-height:1.5;text-wrap:pretty}
+.admvazio{color:var(--txt3);font-size:13.5px;padding:8px 0}
+#admPend .mcard{margin:0 0 8px}
+.admbarra{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}.admbarra .admp{margin:0}
+#admView .seg{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:rgba(0,0,0,.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+#admView .seg button{padding:6px 12px;border-radius:8px;color:var(--txt2);font:600 12.5px Inter,sans-serif}
+#admView .seg button.on{background:rgba(var(--a),.18);color:var(--accent)}
+/* ranking de tempo online */
+.onlista{display:grid;gap:6px}
+.onrow{display:grid;grid-template-columns:28px 36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;background:rgba(255,255,255,.025);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.onrow .pos{font:700 16px "Barlow Condensed",sans-serif;color:var(--txt3);text-align:center;font-variant-numeric:tabular-nums}
+.onrow:nth-child(1) .pos{color:#ffd24a}.onrow:nth-child(2) .pos{color:#cfd6e0}.onrow:nth-child(3) .pos{color:#e09a5b}
+.onrow .av{width:36px;height:36px}
+.onrow .nm{min-width:0}
+.onrow .nm b{display:flex;align-items:center;gap:6px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.onrow .nm small{color:var(--txt3);font-size:12px}
+.onbar{height:6px;border-radius:3px;background:rgba(255,255,255,.06);margin-top:6px;overflow:hidden;position:relative}
+.onbar i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:linear-gradient(90deg,rgba(var(--a),.55),var(--accent));transform-origin:left;animation:onCresce .7s cubic-bezier(.2,.8,.2,1) both}
+.onbar u{position:absolute;inset:0 auto 0 0;border-radius:3px;background:rgba(61,220,132,.75);text-decoration:none}
+@keyframes onCresce{from{transform:scaleX(0)}}
+.onrow .tm{text-align:right;font:700 20px/1 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.onrow .tm small{display:block;font:600 11px Inter,sans-serif;color:var(--ok,#3ddc84);margin-top:3px}
+.onagora{width:8px;height:8px;border-radius:50%;background:var(--ok,#3ddc84);box-shadow:0 0 8px var(--ok,#3ddc84);flex:none}
+.onleg{display:flex;gap:14px;color:var(--txt3);font-size:12px;margin:10px 2px 0}.onleg i{display:inline-block;width:10px;height:6px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.ondias{display:flex;gap:2px;align-items:flex-end;height:22px;margin-left:8px}.ondias i{width:5px;border-radius:2px;background:rgba(var(--a),.5);min-height:2px}
+/* convites por pessoa */
+.cvrank{display:grid;gap:8px}
+.cvr{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center}
+.cvr .av{width:36px;height:36px}
+.cvr b{font-size:14px}.cvr small{display:block;color:var(--txt3);font-size:12px;margin-top:2px;text-wrap:pretty}
+.cvr .num{display:flex;gap:6px}
+.cvr .num span{min-width:44px;padding:4px 8px;border-radius:9px;text-align:center;background:rgba(0,0,0,.3);font:700 18px/1 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums}
+.cvr .num span small{display:block;font:600 9.5px Inter,sans-serif;text-transform:uppercase;letter-spacing:.5px;color:var(--txt3);margin:2px 0 0}
+.cvr .num .ok{color:var(--ok,#3ddc84)}
+/* cargos */
+.cgform{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px 12px;align-items:center}
+.cgform .f{margin:0;color:var(--txt3);font-size:12.5px}
+.cgemo{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#cgEmoji{width:64px;text-align:center;font-size:20px;padding:6px}
+.cgsug{display:flex;gap:2px;flex-wrap:wrap}
+.cgsug button{width:32px;height:32px;border-radius:8px;font-size:17px;transition-property:background,transform;transition-duration:.12s}
+.cgsug button:hover{background:rgba(255,255,255,.08)}.cgsug button:active{transform:scale(.9)}
+.cgani{flex-wrap:wrap}
+.cgprev{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(0,0,0,.3)}
+.cgprev b{margin-left:4px}
+.cgprev>span{font:600 11px Inter,sans-serif;letter-spacing:.6px;text-transform:uppercase;color:var(--txt3)}
+.cgbts{grid-column:1/-1;display:flex;gap:8px}
+#admCargos{display:flex;gap:8px;flex-wrap:wrap}
+#admCargos .tcargo{cursor:pointer}
+#admCargos .tcargo.editando{outline:2px solid var(--accent);outline-offset:2px}
+/* emoji animado do cargo */
+.cemo{display:inline-block;font-style:normal;margin-right:4px;line-height:1;transform-origin:50% 70%}
+.ca-pulsa{animation:caPulsa 1.6s ease-in-out infinite}
+.ca-pula{animation:caPula 1.4s cubic-bezier(.3,.7,.4,1) infinite}
+.ca-gira{animation:caGira 3s linear infinite;transform-origin:50% 50%}
+.ca-balanca{animation:caBalanca 1.8s ease-in-out infinite}
+.ca-brilha{animation:caBrilha 2s ease-in-out infinite}
+@keyframes caPulsa{50%{transform:scale(1.28)}}
+@keyframes caPula{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}45%{transform:translateY(0) scaleY(.85)}}
+@keyframes caGira{to{transform:rotate(360deg)}}
+@keyframes caBalanca{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+@keyframes caBrilha{0%,100%{filter:drop-shadow(0 0 0 transparent)}50%{filter:drop-shadow(0 0 5px var(--c,#ffd24a)) drop-shadow(0 0 10px var(--c,#ffd24a))}}
+.semanim .cemo{animation:none!important}
+@media (prefers-reduced-motion:reduce){.cemo,.admselo,#admView [data-pane]{animation:none!important}}
+#admRec .vqtopo{display:none}
+#admRec .rcwrap{max-width:none}
+
+/* ===== 1.65: chamar atenção, tirar da sala, Limpa a call, tema parado ===== */
+@keyframes treme{0%,100%{transform:translate(0)}10%{transform:translate(-9px,3px)}20%{transform:translate(8px,-4px)}30%{transform:translate(-7px,-2px)}40%{transform:translate(9px,4px)}50%{transform:translate(-6px,2px)}60%{transform:translate(6px,-3px)}70%{transform:translate(-4px,3px)}80%{transform:translate(4px,-1px)}90%{transform:translate(-2px,1px)}}
+body.tremendo #app{animation:treme .7s cubic-bezier(.36,.07,.19,.97) 2}
+#chamarFlash{position:fixed;inset:0;z-index:95;pointer-events:none;box-shadow:inset 0 0 0 4px var(--accent),inset 0 0 120px rgba(var(--a),.55);opacity:0}
+#chamarFlash.on{animation:chFlash 1.6s ease-out}
+@keyframes chFlash{0%,30%,60%{opacity:1}15%,45%{opacity:.25}100%{opacity:0}}
+.popacoes{display:flex;gap:6px;flex-wrap:wrap}
+.popacoes .btn{flex:1}
+.cbtn.limpa{width:auto;min-width:52px;padding:0 14px;border-radius:26px;display:flex;gap:6px;align-items:center;justify-content:center}
+.cbtn.limpa span{font:800 11px Inter,system-ui,sans-serif;letter-spacing:.8px}
+.cbtn.limpa.on{background:#f5c84b;color:#1a1408;border-color:#f5c84b;box-shadow:0 0 20px rgba(245,200,75,.45)}
+.lpcall{display:inline-grid;place-items:center;font-size:13px;margin-left:2px}
+#app>#temaAfk{position:absolute!important;inset:0;z-index:0!important;pointer-events:none;opacity:0;transition:opacity .9s ease;border-radius:0}
+body.afktema #app>#temaAfk{opacity:1}
+body.afktema #rail{background:rgba(0,0,0,.3)!important}
+body.afktema #side,body.afktema #members{background:rgba(6,6,9,.24)!important}
+body.afktema #app::before{opacity:0}
+body.afktema #top{background:transparent!important}
+body.afktema #voiceView{background:transparent!important}
+body.afktema #voiceView>#temaCarta{opacity:0!important}
 </style>
 </head>
 <body>
@@ -2082,10 +2211,11 @@ body.temacarta #voiceView{background:#050506}
 
 <!-- ============ APP ============ -->
 <div id="app" hidden>
+  <div id="temaAfk" class="fx" aria-hidden="true"></div>
   <nav id="rail"><button class="srv" id="srvIcon" type="button" title="Início" aria-label="Voltar ao início"></button><div class="rail-sep"></div><button class="rbtn" id="railHome" type="button" data-home title="Início" aria-label="Início"></button><button class="rbtn" id="railMapa" type="button" data-map title="Mapa" aria-label="Mapa"></button><button class="rbtn gartic" id="railGartic" type="button" data-rabisco title="Rabisco: jogo de desenhar e adivinhar" aria-label="Rabisco"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1-.1-2.2 1.1-2.2H17a4 4 0 0 0 4-4c0-5-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button><button class="rbtn" id="railRegras" type="button" data-regras title="Regras do clã" aria-label="Regras do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></button><button class="rbtn" id="railVaq" type="button" data-vaq title="Vaquinha do clã" aria-label="Vaquinha do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.6 6.2C6.3 5.6 5.4 4.3 5.5 2.8"/><path d="M16.4 6.2c1.3-.6 2.2-1.9 2.1-3.4"/><path d="M7 9.2 3 8c.2 1.8 1.6 3 3.6 3"/><path d="M17 9.2 21 8c-.2 1.8-1.6 3-3.6 3"/><path d="M7 12.6V9.4C7 7 9.2 5.4 12 5.4s5 1.6 5 4v3.2"/><rect x="6.3" y="12" width="11.4" height="8.4" rx="4.2"/><circle cx="9.7" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="14.3" cy="9.7" r=".95" fill="currentColor" stroke="none"/><circle cx="10" cy="16.2" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="16.2" r=".9" fill="currentColor" stroke="none"/></svg><span class="vqponto" hidden></span></button><button class="rbtn" id="railPlacar" type="button" data-placar title="Placar PvP do clã" aria-label="Placar PvP do clã"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></button><button class="rbtn zap" id="railZap" type="button" data-zap title="Grupo do WhatsApp" aria-label="Grupo do WhatsApp"></button></nav>
 
   <aside id="side">
-    <header><button type="button" id="sideLogo" class="sidelogo" aria-label="Início"></button><span class="sidetit"><b id="srvName"></b><span class="online" id="onlineCount"></span></span><button type="button" class="sidemini" id="menuMini" title="Recolher menu" aria-label="Recolher menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg></button></header>
+    <header><button type="button" id="sideLogo" class="sidelogo" aria-label="Início"></button><span class="sidetit"><b id="srvName"></b><span class="online" id="onlineCount"></span></span><button type="button" id="admCentralBtn" class="sideadm" hidden title="Central do Admin" aria-label="Central do Admin"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg><span class="sabolha" hidden></span></button><button type="button" class="sidemini" id="menuMini" title="Recolher menu" aria-label="Recolher menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg></button></header>
     <div id="chans"></div>
     <div id="voicebar" hidden>
       <div class="row">
@@ -2125,6 +2255,62 @@ body.temacarta #voiceView{background:#050506}
     <section id="vaqView" hidden></section>
     <section id="placarView" hidden></section>
     <section id="recView" hidden></section>
+    <section id="admView" hidden>
+      <div class="admwrap">
+        <header class="admhero">
+          <div class="admhtit"><span class="admselo"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg></span><div><span class="vqrot vqkick">Só dono e admins veem</span><h2>Central do Admin</h2><p>Membros, tempo online, convites, cargos e o tribunal do recrutamento, tudo num lugar só.</p></div></div>
+          <div class="admhstats" id="admStats"></div>
+        </header>
+        <nav class="admtabs" role="tablist" aria-label="Seções da Central do Admin">
+          <button type="button" role="tab" class="on" data-admtab="geral">Visão geral</button>
+          <button type="button" role="tab" data-admtab="membros">Membros <span class="qtd" id="admQtd"></span></button>
+          <button type="button" role="tab" data-admtab="online">Tempo online</button>
+          <button type="button" role="tab" data-admtab="convites">Convites</button>
+          <button type="button" role="tab" data-admtab="cargos">Cargos</button>
+          <button type="button" role="tab" data-admtab="rec">Recrutamento <span class="qtd quente" id="admRecQtd" hidden></span></button>
+        </nav>
+        <div data-pane="geral" id="admGeral">
+          <div class="admgrade">
+            <article class="admbox largo"><h4>Mais tempo online · 7 dias <button type="button" class="admver" data-admtab="online">ver tudo</button></h4><div id="admTopOn"></div></article>
+            <article class="admbox"><h4>Quem mais convidou <button type="button" class="admver" data-admtab="convites">ver tudo</button></h4><div id="admTopCv"></div></article>
+            <article class="admbox largo"><h4>Aguardando aprovação</h4><div id="admPend"></div></article>
+            <article class="admbox"><h4>Segurança da voz</h4><p class="admp">Depois de bloquear alguém, troque a chave da voz. Assim quem foi bloqueado não entra mais nos canais. Todos precisam recarregar depois.</p><button class="btn warn sm" id="admChave">Trocar chave da voz</button></article>
+          </div>
+        </div>
+        <div data-pane="membros" id="admMembros" hidden>
+          <div class="admfiltros"><input class="inp" id="admBusca" placeholder="Pesquisar por nick, nome ou e-mail" autocomplete="off">
+            <div class="chips" id="admChips"></div></div>
+          <div class="mlista" id="admList"></div>
+        </div>
+        <div data-pane="online" hidden>
+          <div class="admbarra"><p class="admp">Conta o tempo com o app aberto e o tempo dentro das salas de voz. Começou a contar na versão 1.65.</p>
+            <div class="seg" id="onPer"><button type="button" data-per="1">Hoje</button><button type="button" data-per="7" class="on">7 dias</button><button type="button" data-per="30">30 dias</button></div></div>
+          <div id="admOnline" class="onlista"></div>
+        </div>
+        <div data-pane="convites" hidden>
+          <div class="admgrade larga">
+            <article class="admbox"><h4>Gerar convite</h4><p class="admp">Mande o link para quem quer entrar. A pessoa cria a conta, preenche a ficha e cai no Recrutamento. Cada link vale <b>7 dias</b> e serve para <b>uma pessoa</b>.</p>
+              <button class="btn acc sm" type="button" id="cvGerar">Gerar link de convite</button><div class="cvlista" id="cvLista"></div></article>
+            <article class="admbox"><h4>Convites por pessoa</h4><div id="admCvRank"></div></article>
+          </div>
+        </div>
+        <div data-pane="cargos" hidden>
+          <div class="admgrade larga">
+            <article class="admbox"><h4 id="cgTit">Novo cargo</h4>
+              <div class="cgform">
+                <label class="f" for="cgNome">Nome</label><input class="inp" id="cgNome" maxlength="30" placeholder="Ex.: Sniper, Médico, Dono" autocomplete="off">
+                <label class="f">Emoji</label><div class="cgemo"><input class="inp" id="cgEmoji" maxlength="8" placeholder="🎯" autocomplete="off" aria-label="Emoji do cargo"><div class="cgsug" id="cgSug"></div></div>
+                <label class="f">Animação</label><div class="seg cgani" id="cgAnim"></div>
+                <label class="f" for="cgCor">Cor</label><input type="color" id="cgCor" value="#ff8a24" title="Cor do cargo">
+                <div class="cgprev"><span>Prévia</span><div id="cgPrev"></div></div>
+                <div class="cgbts"><button class="btn acc sm" id="cgAdd">Adicionar cargo</button><button class="btn ghost sm" id="cgCancelar" hidden>Cancelar</button></div>
+              </div></article>
+            <article class="admbox"><h4>Cargos do clã</h4><p class="admp">Clique num cargo para editar. Para dar o cargo, abra <b>Membros &gt; Editar nome e cargo</b> ou clique no nome da pessoa. O dono também pode se dar cargo.</p><div class="cargos" id="admCargos"></div></article>
+          </div>
+        </div>
+        <div data-pane="rec" id="admRec" hidden></div>
+      </div>
+    </section>
     <section id="textView">
       <div id="msgs"></div>
       <div id="typing"></div>
@@ -2197,6 +2383,7 @@ body.temacarta #voiceView{background:#050506}
         <span id="pttTag" title="Apertar para falar ligado (app do PC)">PTT</span>
         <button class="cbtn" id="cMute" title="Microfone"></button>
         <button class="cbtn" id="cDeaf" title="Áudio"></button>
+        <button class="cbtn limpa" id="cLimpa" title="Limpa a call: você para de ouvir, mas continua falando" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15h2.5v5H5a1 1 0 0 1-1-1zM20 15h-2.5v5H19a1 1 0 0 0 1-1z"/><path d="M3 3l18 18"/></svg><span>LIMPA</span></button>
         <button class="cbtn share" id="cShare" title="Compartilhar tela"></button>
         <button class="cbtn" id="cSom" title="Efeitos sonoros" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/></svg></button>
         <button class="cbtn leave" id="cLeave" title="Sair da voz"></button>
@@ -2358,33 +2545,6 @@ body.temacarta #voiceView{background:#050506}
   <div class="drow"><button class="btn ghost" type="button" id="exCancel">Cancelar</button><button class="btn warn" type="button" id="exOk">Excluir</button></div>
 </dialog>
 
-<dialog id="admin" class="big">
-  <div class="dhead"><h3>Painel Admin</h3><button class="btn ghost sm" id="admClose">Fechar</button></div>
-  <div class="admtabs" role="tablist"><button type="button" role="tab" class="on" data-admtab="geral">Visão geral</button><button type="button" role="tab" data-admtab="membros">MEMBROS <span class="qtd" id="admQtd"></span></button></div>
-  <div id="admGeral">
-  <div class="stats" id="admStats"></div>
-  <div class="secao">Convidar novos membros</div>
-  <div class="caixa">Gere um link e mande para quem quer entrar. A pessoa cria a conta, preenche a ficha e espera a aprovação. Cada link vale <b>7 dias</b> e serve para <b>uma pessoa</b>.
-    <div style="margin-top:10px"><button class="btn acc sm" type="button" id="cvGerar">Gerar link de convite</button></div>
-    <div class="cvlista" id="cvLista"></div></div>
-  <div id="admPend"></div>
-  <div class="secao">Segurança da voz</div>
-  <div class="caixa">Depois de bloquear alguém, troque a chave da voz. Assim quem foi bloqueado não consegue mais entrar nos canais. Todos os membros precisam recarregar a página depois.
-    <div style="margin-top:10px"><button class="btn warn sm" id="admChave">Trocar chave da voz</button></div></div>
-  <div class="secao">Cargos do clã</div>
-  <div class="caixa">Crie cargos como Sniper, Médico ou Líder de esquadrão. Depois, em <b>MEMBROS &gt; Editar nome e cargo</b>, escolha o cargo de cada um. O cargo aparece com a cor ao lado do nome.
-    <div class="cargos" id="admCargos"></div>
-    <div class="novocargo"><input class="inp" id="cgNome" maxlength="30" placeholder="Nome do cargo" autocomplete="off"><input type="color" id="cgCor" value="#ff8a24" title="Cor do cargo"><button class="btn acc sm" id="cgAdd">Adicionar</button></div></div>
-  <div class="secao">Informações do clã</div>
-  <div class="caixa">Espaço reservado para as informações que você vai definir.</div>
-  </div>
-  <div id="admMembros" hidden>
-    <div class="admfiltros"><input class="inp" id="admBusca" placeholder="Pesquisar por nick, nome ou e-mail" autocomplete="off">
-      <div class="chips" id="admChips"></div></div>
-    <div class="mlista" id="admList"></div>
-  </div>
-</dialog>
-
 <dialog id="dlgTela">
   <h3>Compartilhar tela</h3>
   <p style="color:var(--txt2);margin:0 0 10px;font-size:14px;line-height:1.5">Escolha a qualidade. Como a transmissão vai direto do seu PC para cada pessoa, quanto mais gente assistindo, mais internet de envio você precisa.</p>
@@ -2407,6 +2567,7 @@ body.temacarta #voiceView{background:#050506}
     <div class="vlin"><label for="cdFrase">Frase</label><input class="inp" id="cdFrase" maxlength="40" placeholder="Ex.: sniper de Chernarus"></div>
     <label class="chk"><input type="checkbox" id="cdBrilho"> Borda brilhando</label>
     <label class="chk"><input type="checkbox" id="cdKd" checked> Mostrar minhas kills e mortes do Placar PvP</label>
+    <label class="chk"><input type="checkbox" id="cdAfk" checked> Parado na sala: o tema da minha carta vira o tema do app inteiro</label>
     <label class="chk"><input type="checkbox" id="cdAnim" checked> Animações nas cartas <small style="color:var(--txt3)">(só neste PC; desligue se travar)</small></label>
     <div class="cdprev" id="cdPrev"></div>
   </div>
@@ -2432,6 +2593,7 @@ body.temacarta #voiceView{background:#050506}
     <label class="chk"><input type="checkbox" id="dkPttSom"> Bipe ao apertar e soltar</label>
     <div class="dkrow"><span>Ligar/desligar microfone</span><button type="button" class="dktecla" data-k="muteTecla">Definir</button></div>
     <div class="dkrow"><span>Ligar/desligar fone</span><button type="button" class="dktecla" data-k="deafTecla">Definir</button></div>
+    <div class="dkrow"><span>Limpa a call (para de ouvir, mic ligado)</span><button type="button" class="dktecla" data-k="limpaTecla">Definir</button></div>
     <p class="dica">Funciona com o DayZ na frente. Vale tecla do teclado ou botão lateral do mouse. Esc apaga o atalho.</p>
     <label class="chk"><input type="checkbox" id="dkKf"> Ler o killfeed do DayZ e registrar as kills do clã</label>
     <p class="dica" id="dkKfSt">Olha só o canto de cima à direita da janela do DayZ, como o OBS. Não mexe no jogo. Jogue em janela sem borda (tela cheia exclusiva fica preta para o app).</p>
@@ -2468,9 +2630,9 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.64',
+  versao: '1.65',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
-  dataVersao: '20/11/2026',
+  dataVersao: '21/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
   idUnico: 'cla-dayz-comms-v1-9q4x',
   // Grupo do WhatsApp (botão na barra da esquerda, no Início e em #boas-vindas). Troque a imagem whatsapp-qr.png se quiser.
@@ -2648,7 +2810,7 @@ setInterval(() => {
   const now = performance.now();
   for (const [id, m] of Object.entries(S.meters)) {
     let lv = level(m);
-    if (id === selfId && (S.muted || S.deaf)) lv = 0;
+    if (id === selfId && !micLiberado()) lv = 0;
     if (id !== selfId && (S.peers[id]?.muted || S.peers[id]?.deaf)) lv = 0;
     if (lv > 0.035) m.last = now;
     setSpeaking(id, now - m.last < 280);
@@ -2770,13 +2932,14 @@ function abrirSalaPrincipal() {
     const prev = S.peers[peerId];
     const uid = typeof d.uid === 'string' ? d.uid.slice(0, 40) : null;
     if (uid && !S.cla[uid]) carregarCla(true);
-    const p = { uid, name: (S.cla[uid]?.nick || d.name).slice(0, 32), voice: VOZ[d.voice] ? d.voice : null, muted: !!d.muted, deaf: !!d.deaf, sharing: !!d.sharing };
+    const p = { uid, name: (S.cla[uid]?.nick || d.name).slice(0, 32), voice: VOZ[d.voice] ? d.voice : null, muted: !!d.muted, deaf: !!d.deaf, lp: !!d.lp, sharing: !!d.sharing };
     p.vozDesde = vozDesde(prev, p.voice, d.vh);
     p.cd = cartaoValido(d.cd); p.st = statusValido(d.st); p.rb = !!d.rb; p.rj = !!d.rj;
     S.peers[peerId] = p;
     if (!prev || prev.viaVoz || prev.uid !== p.uid) { try { hist.send(recentHistory(p.uid), { target: peerId }); } catch {} }
     if (!prev && Date.now() - S.startedAt > 6000) toast(`${p.name} ficou online`);
     if (S.v && prev?.voice !== p.voice) { if (p.voice === S.v.id) sfx('join'); else if (prev?.voice === S.v.id) sfx('leave'); }
+    if (S.v && prev && p.voice === S.v.id && p.lp && !prev.lp) toast(`🤫 ${p.name} pediu LIMPA A CALL e parou de ouvir. Fala só o necessário!`);
     if (DESK && prev && p.voice && prev.voice !== p.voice && p.uid !== S.uid && DESK_CFG.avisoSala !== false && foraDeVista() && Date.now() - S.startedAt > 8000)
       avisoPC('sala:' + p.uid, `${p.name} entrou na sala de voz`, VOZ[p.voice]?.nome ? `🔊 ${VOZ[p.voice].nome}` : '', { voz: p.voice }, 60000);
     if (prev?.sharing && !p.sharing) { removeScreen(peerId); S.v?.quero.delete(peerId); }
@@ -2809,6 +2972,8 @@ function abrirSalaPrincipal() {
     toast(`${quem.name} moveu você para ${VOZ[d.para].nome}.`);
     joinVoice(d.para);
   };
+  S.act.ctrl = S.main.makeAction('ctrl');
+  S.act.ctrl.onMessage = (d, { peerId }) => receberCtrl(d, S.peers[peerId]?.uid);
   S.act.pontos = S.main.makeAction('pontos');
   S.act.pontos.onMessage = () => { if (MAPA.w || MAPA3D.pronto) carregarPontos(); };
   if (velha) setTimeout(broadcast, 1500);
@@ -2995,7 +3160,7 @@ function vigiarPontes() {
   for (const u of Object.keys(v.semDireta)) if (!aqui.has(u)) delete v.semDireta[u];
 }
 // Em canal de voz privado, quem não foi convidado não fica sabendo em qual sala estou.
-const myPresence = uid => { const v = S.v && podeVer(VOZ[S.v.id], uid) ? S.v.id : null; return { uid: S.uid, name: S.name, voice: v, vh: v ? Date.now() - (S.vozDesde || Date.now()) : 0, muted: S.muted, deaf: S.deaf, sharing: !!(v && S.v?.screen), cd: meuCartao(), st: meuStatus(), rb: noRabisco() ? 1 : 0, rj: R.g && R.g.fase !== 'fim' ? 1 : 0 }; };
+const myPresence = uid => { const v = S.v && podeVer(VOZ[S.v.id], uid) ? S.v.id : null; return { uid: S.uid, name: S.name, voice: v, vh: v ? Date.now() - (S.vozDesde || Date.now()) : 0, muted: S.muted, deaf: S.deaf && !S.limpa, lp: S.limpa ? 1 : 0, sharing: !!(v && S.v?.screen), cd: meuCartao(), st: meuStatus(), rb: noRabisco() ? 1 : 0, rj: R.g && R.g.fase !== 'fim' ? 1 : 0 }; };
 // Há quanto tempo a sala está ocupada: desde quem está nela há mais tempo.
 function tempoUso(pessoas, prefixo = '') {
   const t = pessoas.map(p => p.vozDesde).filter(Boolean);
@@ -3386,6 +3551,7 @@ async function iniciarOnline() {
     ch.on('broadcast', { event: 'pontos' }, () => { if (MAPA3D.pronto) carregarPontos(); });
     ch.on('broadcast', { event: 'vaquinha' }, () => carregarVaquinhas());
     ch.on('broadcast', { event: 'placar' }, () => carregarPlacar());
+    ch.on('broadcast', { event: 'ctrl' }, m => receberCtrl(m?.payload, null));
     ch.on('broadcast', { event: 'recrut' }, () => { if (S.eu?.cargo === 'admin') carregarRec(); });
     ch.on('broadcast', { event: 'killfeed' }, () => carregarKF());
     ch.on('broadcast', { event: 'assinou' }, () => { if (S.view === 'regras' && S.eu?.cargo === 'admin') carregarAssinaturas(); });
@@ -3563,9 +3729,11 @@ async function joinVoice(id) {
     if (S.v !== v || !d || typeof d.name !== 'string') return;
     const uid = typeof d.uid === 'string' ? d.uid.slice(0, 40) : null;
     const antes = S.peers[peerId] || {};
-    S.peers[peerId] = { ...antes, uid, name: (S.cla[uid]?.nick || d.name).slice(0, 32), voice: v.id, vozDesde: vozDesde(antes, v.id, d.vh), cd: cartaoValido(d.cd), muted: !!d.muted, deaf: !!d.deaf, sharing: !!d.sharing, viaVoz: !antes.uid || antes.viaVoz };
+    S.peers[peerId] = { ...antes, uid, name: (S.cla[uid]?.nick || d.name).slice(0, 32), voice: v.id, vozDesde: vozDesde(antes, v.id, d.vh), cd: cartaoValido(d.cd), muted: !!d.muted, deaf: !!d.deaf, lp: !!d.lp, sharing: !!d.sharing, viaVoz: !antes.uid || antes.viaVoz };
     renderAll();
   };
+  v.ctrl = room.makeAction('ctrl');
+  v.ctrl.onMessage = (d, { peerId }) => receberCtrl(d, S.peers[peerId]?.uid);
   v.som = room.makeAction('som');
   v.som.onMessage = (d, { peerId }) => { if (S.v === v) receberSom(d, peerId); };
   v.mus = room.makeAction('musica');
@@ -3822,7 +3990,7 @@ function stopScreen() {
 const DESK = window.ucbrDesktop || null;
 const PTT = { on: false, down: false, som: true, soltar: 200, t: 0 };
 const DESK_CFG = {};
-const micLiberado = () => !S.muted && !S.deaf && (!PTT.on || PTT.down);
+const micLiberado = () => !S.muted && (!S.deaf || S.limpa) && (!PTT.on || PTT.down);
 function pttAplicar() {
   S.v?.mic.getAudioTracks().forEach(t => t.enabled = micLiberado());
   document.body.classList.toggle('ptt', PTT.on);
@@ -3941,7 +4109,7 @@ if (DESK) {
   DESK.onKillfeed(kfNovo);
   DESK.onKfStatus(kfStatusUI);
   DESK.kfStatus().then(kfStatusUI).catch(() => {});
-  DESK.onAtalho(k => { if (!S.uid) return; if (k === 'mute') toggleMute(); else if (k === 'deaf') toggleDeaf(); });
+  DESK.onAtalho(k => { if (!S.uid) return; if (k === 'mute') toggleMute(); else if (k === 'deaf') toggleDeaf(); else if (k === 'limpa' && S.v) toggleLimpa(); });
   DESK.onAbrirConfig(() => { if (S.uid) openSettings(); });
   DESK.onAbrirAviso(a => { if (!S.uid || !a) return; if (a.ch && TXT[a.ch]) showText(a.ch); else if (a.voz && VOZ[a.voz]) joinVoice(a.voz); });
   addEventListener('focus', () => { if (S.unreadCount) { S.unreadCount = 0; updateTitle(); } if (S.view === 'text' && S.unread[S.ch]) { delete S.unread[S.ch]; renderChannels(); } });
@@ -3977,7 +4145,7 @@ function applyMute() {
   // fone desligado: a música da sala e os efeitos também ficam mudos para você
   try { if (ytPlayer) { if (S.deaf) ytPlayer.mute(); else ytPlayer.unMute(); } } catch {}
   if (S.deaf) SOM.tocando.forEach(a => { try { a.pause(); } catch {} });
-  LS.set('muted', S.muted); LS.set('deaf', S.deaf);
+  LS.set('muted', S.muted); LS.set('deaf', S.deaf && !S.limpa);
 }
 function motivoMic(e) {
   const n = e?.name || '';
@@ -4001,8 +4169,9 @@ async function tentarMicDeNovo() {
     toast('Microfone ligado.');
   } catch (e) { toast(motivoMic(e), 'err'); }
 }
-function toggleMute() { if (S.v?.semMic) return tentarMicDeNovo(); if (S.deaf) { S.deaf = false; S.muted = false; } else S.muted = !S.muted; applyMute(); sfx(S.muted ? 'mute' : 'unmute'); broadcast(); renderAll(); }
+function toggleMute() { if (S.v?.semMic) return tentarMicDeNovo(); if (S.limpa) { S.muted = !S.muted; applyMute(); sfx(S.muted ? 'mute' : 'unmute'); broadcast(); renderAll(); return; } if (S.deaf) { S.deaf = false; S.muted = false; } else S.muted = !S.muted; applyMute(); sfx(S.muted ? 'mute' : 'unmute'); broadcast(); renderAll(); }
 function toggleDeaf() {
+  if (S.limpa) return toggleLimpa();
   if (!S.deaf) { S.preMute = S.muted; S.deaf = true; S.muted = true; }
   else { S.deaf = false; S.muted = !!S.preMute; }
   applyMute(); sfx(S.deaf ? 'surdo' : 'ouvir'); broadcast(); renderAll();
@@ -4015,7 +4184,7 @@ function renderStatic() {
   const n = CONFIG.nomeServidor;
   document.documentElement.style.setProperty('--logo', `url(${LOGO})`);
   $('#srvIcon').innerHTML = `<img src="${LOGO}" alt="${esc(n)}">`; $('#srvIcon').title = n; $('#srvName').textContent = n; $('#sideLogo').innerHTML = `<img src="${LOGO}" alt="">`;
-  $('#meName').textContent = S.name; $('#meAv').outerHTML = avatar(S.name, '', selfId, S.uid).replace('class="av ', 'id="meAv" title="Meu perfil" class="av '); $('#meAv').onclick = abrirPerfil; $('#adminBtn').hidden = S.eu?.cargo !== 'admin';
+  $('#meName').textContent = S.name; $('#meAv').outerHTML = avatar(S.name, '', selfId, S.uid).replace('class="av ', 'id="meAv" title="Meu perfil" class="av '); $('#meAv').onclick = abrirPerfil; $('#adminBtn').hidden = true; $('#admCentralBtn').hidden = S.eu?.cargo !== 'admin';
   $('#setBtn').innerHTML = ICON.gear; $('#vbLeave').innerHTML = ICON.hang; $('#menuBtn').innerHTML = ICON.menu;
   $('#railHome').innerHTML = ICON.home; $('#railMapa').innerHTML = ICON.map; $('#railZap').innerHTML = ICON.zap; $('#railZap').hidden = !CONFIG.whatsapp; $('#pollBtn').innerHTML = ICON.poll;
   $('#membersBtn').innerHTML = ICON.users; $('#sendBtn').innerHTML = ICON.send; $('#attachBtn').innerHTML = ICON.clip; $('#cLeave').innerHTML = ICON.hang; $('#cShare').innerHTML = ICON.screen;
@@ -4025,7 +4194,7 @@ function renderStatic() {
 function renderAll() { if (typeof R !== 'undefined') { marcarRail(); if (R.aberto && !R.g) renderLobbyRabisco(); } renderMesa(); renderEnquetesVoz(); renderChannels(); renderMe(); renderMembers(); renderVoicebar(); renderStage(); renderTop(); renderTyping(); if (S.view === 'home') renderHome(); }
 
 function everyone() {
-  const list = [{ id: selfId, uid: S.uid, name: S.name, voice: S.v?.id || null, vozDesde: S.vozDesde, cd: meuCartao(), st: meuStatus(), rb: noRabisco(), rj: !!(R.g && R.g.fase !== 'fim'), muted: S.muted, deaf: S.deaf, sharing: !!S.v?.screen, me: true }];
+  const list = [{ id: selfId, uid: S.uid, name: S.name, voice: S.v?.id || null, vozDesde: S.vozDesde, cd: meuCartao(), st: meuStatus(), rb: noRabisco(), rj: !!(R.g && R.g.fase !== 'fim'), muted: S.muted, deaf: S.deaf && !S.limpa, lp: !!S.limpa, sharing: !!S.v?.screen, me: true }];
   for (const [id, p] of Object.entries(S.peers)) list.push({ id, ...p });
   // Quem está online (segundo o servidor) mas ainda não se ligou direto a você: aparece como "conectando".
   const ligados = new Set(list.map(p => p.uid));
@@ -4040,8 +4209,8 @@ function renderChannels() {
   const all = everyone();
   const adm = S.eu?.cargo === 'admin';
   const del = c => adm ? `<span class="edch" data-edch="${esc(c.id)}" title="Editar nome e ícone">✎</span><span class="delch" data-del="${esc(c.id)}" title="Excluir canal">×</span>` : '';
-  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button><button class="ch ${S.view === 'map' ? 'active' : ''}" data-map>${ICON.map}<span class="grow">Mapa</span></button><button class="ch" data-rabisco>${ICON_RABISCO}<span class="grow">Rabisco</span></button><button class="ch ${S.view === 'regras' ? 'active' : ''}" data-regras>${ICON_REGRAS}<span class="grow">Regras</span></button><button class="ch ${S.view === 'vaq' ? 'active' : ''}" data-vaq>${ICON_VAQ}<span class="grow">Vaquinha</span>${vaqFalta() ? '<span class="vqponto" aria-label="vaquinha aberta"></span>' : ''}</button><button class="ch ${S.view === 'placar' ? 'active' : ''}" data-placar>${ICON_PLACAR}<span class="grow">Placar PvP</span></button>${CONFIG.whatsapp ? `<button class="ch chzap" data-zap>${ICON.zap}<span class="grow">WhatsApp</span></button>` : ''}${S.eu?.cargo === 'admin' ? `<button class="ch ${S.view === 'rec' ? 'active' : ''}" data-rec>${ICON_REC}<span class="grow">Recrutamento</span>${REC.lista.length ? `<span class="rcbolha" aria-label="${REC.lista.length} aguardando">${REC.lista.length}</span>` : ''}</button>` : ''}</div>`;
-  $('#railHome').classList.toggle('on', S.view === 'home'); $('#railMapa').classList.toggle('on', S.view === 'map'); $('#railRegras')?.classList.toggle('on', S.view === 'regras'); $('#railRegras')?.classList.toggle('falta', S.assinou === false); $('#railVaq')?.classList.toggle('on', S.view === 'vaq'); $('#railPlacar')?.classList.toggle('on', S.view === 'placar'); { const d = $('#railVaq .vqponto'); if (d) d.hidden = !vaqFalta(); }
+  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button><button class="ch ${S.view === 'map' ? 'active' : ''}" data-map>${ICON.map}<span class="grow">Mapa</span></button><button class="ch" data-rabisco>${ICON_RABISCO}<span class="grow">Rabisco</span></button><button class="ch ${S.view === 'regras' ? 'active' : ''}" data-regras>${ICON_REGRAS}<span class="grow">Regras</span></button><button class="ch ${S.view === 'vaq' ? 'active' : ''}" data-vaq>${ICON_VAQ}<span class="grow">Vaquinha</span>${vaqFalta() ? '<span class="vqponto" aria-label="vaquinha aberta"></span>' : ''}</button><button class="ch ${S.view === 'placar' ? 'active' : ''}" data-placar>${ICON_PLACAR}<span class="grow">Placar PvP</span></button>${CONFIG.whatsapp ? `<button class="ch chzap" data-zap>${ICON.zap}<span class="grow">WhatsApp</span></button>` : ''}</div>`;
+  $('#railHome').classList.toggle('on', S.view === 'home'); $('#railMapa').classList.toggle('on', S.view === 'map'); $('#railRegras')?.classList.toggle('on', S.view === 'regras'); $('#railRegras')?.classList.toggle('falta', S.assinou === false); $('#railVaq')?.classList.toggle('on', S.view === 'vaq'); $('#railPlacar')?.classList.toggle('on', S.view === 'placar'); { const d = $('#railVaq .vqponto'); if (d) d.hidden = !vaqFalta(); } admBolhas();
   h += `<div class="cat">Canais de texto${adm ? '<button class="addch" data-add="texto" title="Criar canal de texto">+</button>' : ''}</div>`;
   const itemTxt = (c, ico, extra = '') => {
     const active = S.view === 'text' && S.ch === c.id;
@@ -4066,7 +4235,7 @@ function renderChannels() {
       for (const p of inside) {
         const arrasta = !p.longe && (adm || p.me);
         h += `<div class="vm${arrasta ? ' arrastavel' : ''}${p.longe ? ' longe' : ''}"${arrasta ? ` draggable="true" data-arrastar="${esc(p.id)}" title="Arraste para outro canal de voz"` : ''}>${avatar(p.name, S.speaking[p.id] ? 'speaking' : '', p.id, p.uid)}<span class="grow" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.name)}</span>
-          <span class="icons">${p.longe ? '<span class="conect" title="Online, mas a conexão direta com você ainda não abriu">conectando</span>' : ''}${p.sharing ? '<span class="live">AO VIVO</span>' : ''}${p.deaf ? ICON.headOff : p.muted ? ICON.micOff : ''}</span></div>`;
+          <span class="icons">${p.longe ? '<span class="conect" title="Online, mas a conexão direta com você ainda não abriu">conectando</span>' : ''}${p.sharing ? '<span class="live">AO VIVO</span>' : ''}${p.lp ? '<span class="lpcall" title="Limpa a call: não está ouvindo, só falando">🤫</span>' : ''}${p.lp ? '' : p.deaf ? ICON.headOff : p.muted ? ICON.micOff : ''}</span></div>`;
       }
       h += `</div>`;
     }
@@ -4081,7 +4250,8 @@ function renderMe() {
   const st = meuStatus();
   $('#meStatus').innerHTML = `<i class="sdot ${st}"></i>${S.v ? '🔊 ' + esc(VOZ[S.v.id].nome) : STATUS[st]}`;
   $('#cMute').innerHTML = S.muted ? ICON.micOff : ICON.mic; $('#cMute').classList.toggle('on', S.muted);
-  $('#cDeaf').innerHTML = S.deaf ? ICON.headOff : ICON.head; $('#cDeaf').classList.toggle('on', S.deaf);
+  $('#cDeaf').innerHTML = S.deaf ? ICON.headOff : ICON.head; $('#cDeaf').classList.toggle('on', S.deaf && !S.limpa);
+  $('#cLimpa').classList.toggle('on', !!S.limpa); $('#cLimpa').setAttribute('aria-pressed', !!S.limpa);
   $('#cShare').classList.toggle('on', !!S.v?.screen);
 }
 function renderVoicebar() {
@@ -4114,6 +4284,7 @@ function renderTop() {
   else if (S.view === 'regras') $('#topTitle').innerHTML = `${ICON_REGRAS}<span>Regras do clã</span>`;
   else if (S.view === 'vaq') $('#topTitle').innerHTML = `${ICON_VAQ}<span>Vaquinha do clã</span>`;
   else if (S.view === 'rec') $('#topTitle').innerHTML = `${ICON_REC}<span>Recrutamento</span>`;
+  else if (S.view === 'adm') $('#topTitle').innerHTML = `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg><span>Central do Admin</span>`;
   else if (S.view === 'placar') $('#topTitle').innerHTML = `${ICON_PLACAR}<span>Placar PvP do clã</span>`;
   else if (TXT[S.ch]?.bot) $('#topTitle').innerHTML = `<span class="botmini"><img src="${LOGO}" alt=""></span><span>Bot U.C.B.R · mensagem privada</span>`;
   else if (TXT[S.ch]?.dm) $('#topTitle').innerHTML = `${avatar(TXT[S.ch].nome, 'mini', '', TXT[S.ch].dm)}<span>${esc(TXT[S.ch].nome)} · mensagem privada</span>`;
@@ -4492,7 +4663,7 @@ document.addEventListener('click', e => {
 function abrirPop(uid, alvo) {
   const m = S.cla[uid]; if (!m) return;
   const adm = S.eu?.cargo === 'admin', souDono = S.dono ? S.dono === S.uid : adm;
-  const podeCargo = adm && uid !== S.dono && (m.cargo !== 'admin' || souDono || uid === S.uid);
+  const podeCargo = adm && (uid !== S.dono || uid === S.uid) && (m.cargo !== 'admin' || souDono || uid === S.uid);
   const pop = $('#popMem');
   const quem = everyone().find(x => x.uid === uid), cd = quem ? quem.cd : uid === S.uid ? meuCartao() : null, PV = pvpMapa(), pv = PV.mapa.get(uid);
   const e = cd?.e && CARTOES.some(x => x.id === cd.e) ? cd.e : '', fxh = e ? `<div class="popfx fx fx-${e}" style="--cf:${CARTOES.find(x => x.id === e).f}">${fxDe(uid, e, 1)}</div>` : '';
@@ -4500,6 +4671,7 @@ function abrirPop(uid, alvo) {
   const pvh = pv ? `<div class="pvph">PvP no servidor${PV.lider === uid ? '<span>👑 1º do clã</span>' : pv.inf ? '<span style="color:var(--gold)">informado</span>' : pv.p ? `<span style="color:var(--txt2)">${pv.p}º lugar</span>` : ''}</div><dl class="pvp"><div><dt>Kills</dt><dd style="color:var(--ok)">${pv.k}</dd></div><div><dt>Mortes</dt><dd style="color:#ff6b62">${pv.m}</dd></div><div><dt>K/D</dt><dd>${fmtKD(pv.k, pv.m)}</dd></div><div><dt>Tiro mais longo</dt><dd>${pv.t || 0}<small style="font:600 12px Inter,sans-serif;color:var(--txt3)"> m</small></dd></div></dl>` : '';
   pop.innerHTML = fxh + `<div class="ptop">${avatar(m.nick, '', '', uid)}<div><b style="color:${corCargo(uid) || 'var(--txt)'}">${esc(m.nick)}</b>${tagCargo(uid)}<small>${m.cargo === 'admin' ? (uid === S.dono ? 'Dono do clã' : 'Admin') : 'Membro'}${m.aprovado_em ? ' · desde ' + new Date(m.aprovado_em).toLocaleDateString('pt-BR') : ''}</small></div></div>${pvh}
     ${uid !== S.uid ? `<button class="btn acc sm" data-dm="${esc(uid)}">💬 Mensagem privada</button>` : ''}
+    ${uid !== S.uid && quem && !quem.me ? `<div class="popacoes"><button class="btn ghost sm" type="button" data-chamar="${esc(uid)}" title="Faz barulho e treme a tela dela, mesmo com o fone desligado">🔔 Chamar atenção</button>${quem.voice && podeTirar(uid) ? `<button class="btn warn sm" type="button" data-tirar="${esc(uid)}" title="Tira da sala de voz (ela pode voltar depois)">🚪 Tirar da sala</button>` : ''}</div>` : ''}
     ${podeCargo ? `<label class="f">Cargo no clã</label><select class="inp" id="popCargo"><option value="">Sem cargo</option>${[...new Set([...S.cargos.map(c => c.nome), ...(m.titulo ? [m.titulo] : [])])].map(n => `<option ${n === m.titulo ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>${S.cargos.length ? '' : '<small class="dica">Crie os cargos em Painel Admin &gt; Visão geral &gt; Cargos do clã.</small>'}` : ''}`;
   pop.hidden = false;
   const r = alvo.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
@@ -4553,7 +4725,7 @@ function renderStage() {
   const pcard = p => { const pt = !p.me && PONTE[p.uid]?.ok && (String(p.id).startsWith('rt:') || !v.audios[p.id]), aid = pt ? 'rt:' + p.uid : p.id;
     const extra = `${p.me && v.semMic ? '<div class="semcon">só ouvindo · sem microfone</div>' : ''}${!p.me && !pt && v.falha?.[p.id] ? '<div class="semcon">sem conexão</div>' : ''}${p.longe ? '<div class="semcon">conectando…</div>' : ''}${pt ? '<div class="semcon ok" title="A conexão direta não abriu; a voz está passando pelo servidor">voz pela ponte</div>' : ''}${p.me && v.screen ? `<div class="semcon ok">transmitindo · ${v.assistindo.size} assistindo</div>` : ''}${!p.me && p.sharing && v.quero.has(p.id) && !v.screens[p.id] ? `<div class="semcon">abrindo a tela… (tentando de novo sozinho)</div><button class="btn ghost sm" data-parar="${esc(p.id)}">Cancelar</button>` : ''}`;
     const fim = `${people.length > 1 && p.uid ? '<button type="button" class="pgrip" title="Arraste para mudar a carta de lugar" aria-label="Mudar a carta de lugar (setas)">⠿</button>' : ''}${!p.me && p.sharing && !v.quero.has(p.id) ? `<button class="btn acc sm assistir" data-assistir="${esc(p.id)}">${ICON.screen}Assistir tela</button>` : ''}${p.me || p.longe ? '' : `<button type="button" class="vol volbtn" data-volmenu="${esc(aid)}" title="Volume de ${esc(p.name)} (ou clique com o botão direito no cartão)">${ICON.vol}<span>${Math.round(volFor(aid) * 100)}%</span></button>`}`;
-    const icones = `${p.deaf ? ICON.headOff : p.muted ? ICON.micOff : ''}${!p.me && S.mutados.has(p.name) ? '<span class="mutlocal" title="Você silenciou esta pessoa">🔇</span>' : ''}`;
+    const icones = `${p.lp ? '<span class="lpcall" title="Limpa a call: não está ouvindo, só falando">🤫</span>' : ''}${p.lp ? (p.muted ? ICON.micOff : '') : p.deaf ? ICON.headOff : p.muted ? ICON.micOff : ''}${!p.me && S.mutados.has(p.name) ? '<span class="mutlocal" title="Você silenciou esta pessoa">🔇</span>' : ''}`;
     return cartaHtml({ nome: p.name, uid: p.uid, cd: p.cd, pvp: PV.mapa.get(p.uid), lider: p.uid && PV.lider === p.uid, icones, extra, fim,
       cls: S.speaking[aid] ? ' speaking' : '', attrs: ` data-speak="${esc(aid)}" data-uid="${esc(p.uid || '')}"${p.me ? '' : ` data-volpid="${esc(aid)}" data-voluid="${esc(p.uid || '')}"`}` }); };
 
@@ -4722,7 +4894,7 @@ async function carregarAssinaturas() {
 function showRegras() {
   S.view = 'regras';
   renderRegras();
-  $('#regrasView').hidden = false; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
+  $('#regrasView').hidden = false; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
   $('#app').classList.remove('menu');
   $('#regrasView').scrollTop = 0;
   renderAll();
@@ -4770,7 +4942,7 @@ function vqAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'vaquinha
 function showVaq() {
   S.view = 'vaq'; VQ.anima = true;
   renderVaq();
-  $('#vaqView').hidden = false; $('#placarView').hidden = true; $('#recView').hidden = true; $('#regrasView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
+  $('#vaqView').hidden = false; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true; $('#regrasView').hidden = true; $('#homeView').hidden = true; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true;
   $('#app').classList.remove('menu');
   $('#vaqView').scrollTop = 0;
   renderAll();
@@ -4997,7 +5169,7 @@ function plAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'placar',
 function showPlacar() {
   S.view = 'placar';
   renderPlacar();
-  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#recView']) $(v).hidden = true;
+  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#recView', '#admView']) $(v).hidden = true;
   $('#placarView').hidden = false;
   $('#app').classList.remove('menu');
   $('#placarView').scrollTop = 0;
@@ -5011,7 +5183,7 @@ const REC = { ok: true, carregado: false, lista: [], fichas: new Map(), votos: [
 async function carregarRec() {
   if (!sb || S.eu?.cargo !== 'admin') return;
   const { data: pend, error } = await sb.from('membros').select(COLS_MEMBRO).eq('status', 'pendente').order('criado_em');
-  if (error) { REC.carregado = true; if (S.view === 'rec') renderRec(); return; }
+  if (error) { REC.carregado = true; if (S.view === 'adm') renderRec(); return; }
   REC.lista = pend || [];
   const ids = REC.lista.map(m => m.id);
   const [fi, vo] = ids.length ? await Promise.all([sb.from('fichas').select('*').in('membro', ids), sb.from('recrut_votos').select('*').in('membro', ids)]) : [{ data: [] }, { data: [] }];
@@ -5019,17 +5191,11 @@ async function carregarRec() {
   REC.fichas = new Map((fi.data || []).map(f => [f.membro, f]));
   REC.votos = vo.data || [];
   REC.carregado = true;
-  if (S.view === 'rec') renderRec();
+  if (S.view === 'adm') renderRec();
   renderChannels();
 }
 function recAvisar() { try { S.rtCh?.send?.({ type: 'broadcast', event: 'recrut', payload: { uid: S.uid } }); } catch {} }
-function showRec() {
-  if (S.eu?.cargo !== 'admin') return;
-  S.view = 'rec';
-  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#placarView']) $(v).hidden = true;
-  $('#recView').hidden = false; $('#app').classList.remove('menu'); $('#recView').scrollTop = 0;
-  renderRec(); renderAll(); carregarRec();
-}
+function showRec() { return abrirAdmin('rec'); }
 const recDias = d => { const n = Math.floor((Date.now() - new Date(d)) / 864e5); return n <= 0 ? 'hoje' : n === 1 ? 'há 1 dia' : `há ${n} dias`; };
 function recCard(m) {
   const f = REC.fichas.get(m.id), votos = REC.votos.filter(v => v.membro === m.id), sim = votos.filter(v => v.voto === 'sim'), nao = votos.filter(v => v.voto === 'nao');
@@ -5058,7 +5224,7 @@ function recCard(m) {
       </div></div></article>`;
 }
 function renderRec() {
-  const box = $('#recView'); if (!box) return;
+  const box = $('#admRec'); if (!box) return;
   if (box.contains(document.activeElement) && document.activeElement.matches('[data-rccom]')) { REC.depois = true; return; } // não apaga o que está sendo digitado
   let h = `<div class="rcwrap"><header class="vqtopo"><div><span class="vqrot vqkick">Só dono e admins veem</span><h2>Recrutamento</h2><p>O tribunal do clã. Leia a ficha de quem quer entrar, vote e, quando estiverem de acordo, dê o veredito.</p></div></header>`;
   if (!REC.carregado) h += '<div class="vqnada"><b>Carregando…</b></div>';
@@ -5072,7 +5238,7 @@ async function recVotar(id, voto, comentario) {
   recAvisar(); await carregarRec();
 }
 (() => {
-  const box = $('#recView'); if (!box) return;
+  const box = $('#admRec'); if (!box) return;
   box.addEventListener('click', async e => {
     const card = e.target.closest('[data-rcid]'); if (!card) return; const id = card.dataset.rcid, m = REC.lista.find(x => x.id === id); if (!m) return;
     const v = e.target.closest('[data-rcvoto]');
@@ -5231,7 +5397,7 @@ $('#fPlMeu').addEventListener('submit', salvarPlMeu); $('#pmApagar').onclick = a
 
 function showHome() {
   S.view = 'home';
-  $('#homeView').hidden = false; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
+  $('#homeView').hidden = false; $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true;
   $('#app').classList.remove('menu');
   renderAll();
 }
@@ -5239,7 +5405,7 @@ function showText(ch) {
   if (!TXT[ch]) return;
   S.view = 'text'; S.ch = ch; delete S.unread[ch]; delete S.mencao[ch];
   if (ch === BOAS_VINDAS.id) LS.set('bvVisto', Date.now());
-  $('#textView').hidden = false; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
+  $('#textView').hidden = false; $('#voiceView').hidden = true; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true;
   $('#app').classList.remove('menu');
   $('#composer').hidden = !!TXT[ch].fixo;
   renderMessages(); renderAll();
@@ -5248,14 +5414,14 @@ function showText(ch) {
 function showVoice() {
   if (!S.v) return;
   S.view = 'voice';
-  $('#textView').hidden = true; $('#voiceView').hidden = false; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
+  $('#textView').hidden = true; $('#voiceView').hidden = false; $('#mapView').hidden = true; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true;
   $('#app').classList.remove('menu'); renderMusica();
   renderAll(); carregarArea();
 }
 function showMap() {
   S.view = 'map';
   abrirMapa3d();
-  $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = false; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true;
+  $('#textView').hidden = true; $('#voiceView').hidden = true; $('#mapView').hidden = false; $('#homeView').hidden = true; $('#regrasView').hidden = true; $('#vaqView').hidden = true; $('#placarView').hidden = true; $('#recView').hidden = true; $('#admView').hidden = true;
   $('#app').classList.remove('menu');
   renderAll();
 }
@@ -5851,7 +6017,11 @@ const COLS_MEMBRO = 'id,nome_real,nick,avatar,cargo,status,observacoes,criado_em
 // Cargo do clã (ex.: Sniper, Médico): cor vem da lista que o admin define.
 const corValida = c => /^#[0-9a-fA-F]{6}$/.test(c || '') ? c : null;
 function corCargo(uid) { const t = S.cla?.[uid]?.titulo; return t ? corValida(S.cargos.find(c => c.nome === t)?.cor) : null; }
-function tagCargo(uid) { const t = S.cla?.[uid]?.titulo; return t ? `<span class="tcargo" style="--c:${corCargo(uid) || '#9299a5'}">${esc(t)}</span>` : ''; }
+const CG_ANIMS = [['pulsa', 'Pulsar'], ['pula', 'Pular'], ['balanca', 'Balançar'], ['gira', 'Girar'], ['brilha', 'Brilhar'], ['nada', 'Parado']];
+const CG_EMOJIS = ['👑', '🎯', '🩺', '🛡️', '⚔️', '🔥', '💀', '🧟', '📡', '🚗', '🔧', '💣', '🏹', '🎖️', '⭐', '🐺', '🦅', '🍖'];
+function emojiCargo(c) { if (!c?.emoji) return ''; const a = CG_ANIMS.some(x => x[0] === c.anim) ? c.anim : 'pulsa'; return `<i class="cemo ca-${a}" aria-hidden="true">${esc(String(c.emoji).slice(0, 8))}</i>`; }
+function tagCargoNome(t, extra = '') { if (!t) return ''; const c = S.cargos.find(x => x.nome === t); return `<span class="tcargo${extra}" style="--c:${corValida(c?.cor) || '#9299a5'}">${emojiCargo(c)}${esc(t)}</span>`; }
+function tagCargo(uid) { return tagCargoNome(S.cla?.[uid]?.titulo); }
 // Aceita e-mail ou nick. Pelo nick, o banco só devolve o e-mail se a senha estiver certa.
 async function emailDe(texto, senha) {
   texto = texto.trim();
@@ -5989,7 +6159,7 @@ async function gerarConvite() {
   const { error } = await sb.from('convites').insert({ codigo, criado_por: S.uid });
   bt.disabled = false;
   if (error) return toast(/convites|schema cache/.test(error.message) ? 'Os convites ainda não foram ativados (falta rodar o SQL v1.49).' : traduz(error), 'err');
-  await carregarConvites(codigo);
+  await carregarConvites(codigo); carregarCvRank();
 }
 async function carregarConvites(novo) {
   const box = $('#cvLista'); if (!box) return;
@@ -6112,7 +6282,7 @@ $('#exOk').onclick = async () => {
 };
 async function carregarCargos() {
   const { data } = await sb.from('cla_config').select('cargos').maybeSingle();
-  if (Array.isArray(data?.cargos)) { S.cargos = data.cargos; renderAll(); if (S.view === 'text') renderMessages(); if ($('#admin').open) { renderCargos(); renderAdmin(); } }
+  if (Array.isArray(data?.cargos)) { S.cargos = data.cargos; renderAll(); if (S.view === 'text') renderMessages(); if (S.view === 'adm') { renderCargos(); renderAdmin(); } }
 }
 function avisarCla() { try { S.act.canais?.send({ t: Date.now(), cla: true }); } catch {} }
 // Avisa os outros membros online para recarregarem a lista de canais na hora.
@@ -6303,13 +6473,42 @@ let admMembros = [];
 let admAba = 'geral', admFiltro = 'todos';
 function abaAdmin(aba) {
   admAba = aba;
-  document.querySelectorAll('[data-admtab]').forEach(b => { b.classList.toggle('on', b.dataset.admtab === aba); b.setAttribute('aria-selected', b.dataset.admtab === aba); });
-  $('#admGeral').hidden = aba !== 'geral'; $('#admMembros').hidden = aba !== 'membros';
-  if (aba === 'membros') setTimeout(() => $('#admBusca').focus(), 50);
+  document.querySelectorAll('.admtabs [data-admtab]').forEach(b => { b.classList.toggle('on', b.dataset.admtab === aba); b.setAttribute('aria-selected', b.dataset.admtab === aba); });
+  document.querySelectorAll('#admView [data-pane]').forEach(p => p.hidden = p.dataset.pane !== aba);
+  if (aba === 'membros') setTimeout(() => $('#admBusca').focus({ preventScroll: true }), 50);
+  if (aba === 'rec') renderRec();
+  if (aba === 'online') renderOnline();
+  if (aba === 'convites') renderCvRank();
+  if (aba === 'cargos') cgForm();
 }
+function admBolhas() {
+  const n = S.eu?.cargo === 'admin' ? REC.lista.length : 0, b = $('#admCentralBtn .sabolha'), q = $('#admRecQtd');
+  if (b) { b.hidden = !n; b.textContent = n; }
+  if (q) { q.hidden = !n; q.textContent = n; }
+  $('#admCentralBtn')?.classList.toggle('on', S.view === 'adm');
+}
+const CG = { edit: null, anim: 'pulsa' };
 function renderCargos() {
-  $('#admCargos').innerHTML = S.cargos.length ? S.cargos.map((c, k) => `<span class="tcargo grande" style="--c:${corValida(c.cor) || '#9299a5'}">${esc(c.nome)}<button type="button" data-tirarcargo="${k}" title="Apagar cargo">×</button></span>`).join('') : '<small style="color:var(--txt3)">Nenhum cargo ainda.</small>';
+  const conta = n => Object.values(S.cla || {}).filter(m => m.titulo === n).length;
+  $('#admCargos').innerHTML = S.cargos.length ? S.cargos.map((c, k) => `<span class="tcargo grande${CG.edit === k ? ' editando' : ''}" data-editcargo="${k}" title="Clique para editar · ${conta(c.nome)} com este cargo" style="--c:${corValida(c.cor) || '#9299a5'}">${emojiCargo(c)}${esc(c.nome)}<button type="button" data-tirarcargo="${k}" title="Apagar cargo" aria-label="Apagar cargo ${esc(c.nome)}">×</button></span>`).join('') : '<small style="color:var(--txt3)">Nenhum cargo ainda.</small>';
 }
+function cgForm() {
+  const c = CG.edit != null ? S.cargos[CG.edit] : null;
+  $('#cgTit').textContent = c ? `Editar cargo ${c.nome}` : 'Novo cargo';
+  $('#cgAdd').textContent = c ? 'Salvar cargo' : 'Adicionar cargo'; $('#cgCancelar').hidden = !c;
+  $('#cgSug').innerHTML = CG_EMOJIS.map(e => `<button type="button" data-cgemo="${e}" aria-label="Usar ${e}">${e}</button>`).join('');
+  $('#cgAnim').innerHTML = CG_ANIMS.map(([k, n]) => `<button type="button" data-cganim="${k}" class="${CG.anim === k ? 'on' : ''}">${n}</button>`).join('');
+  cgPrev();
+}
+function cgPrev() {
+  const c = { nome: $('#cgNome').value.trim() || 'Seu cargo', cor: $('#cgCor').value, emoji: $('#cgEmoji').value.trim(), anim: CG.anim };
+  $('#cgPrev').innerHTML = `<span class="tcargo grande" style="--c:${corValida(c.cor) || '#9299a5'}">${emojiCargo(c)}${esc(c.nome)}</span><b style="color:${corValida(c.cor) || 'var(--txt)'}">${esc(S.name || 'Nick')}</b>`;
+}
+function cgLimpar() { CG.edit = null; CG.anim = 'pulsa'; $('#cgNome').value = ''; $('#cgEmoji').value = ''; $('#cgCor').value = '#ff8a24'; renderCargos(); cgForm(); }
+['cgNome', 'cgEmoji', 'cgCor'].forEach(id => $('#' + id).addEventListener('input', cgPrev));
+$('#cgSug').addEventListener('click', e => { const b = e.target.closest('[data-cgemo]'); if (b) { $('#cgEmoji').value = b.dataset.cgemo; cgPrev(); } });
+$('#cgAnim').addEventListener('click', e => { const b = e.target.closest('[data-cganim]'); if (b) { CG.anim = b.dataset.cganim; cgForm(); } });
+$('#cgCancelar').onclick = cgLimpar;
 async function salvarCargos(lista) {
   const { error } = await sb.rpc('admin_definir_cargos', { lista });
   if (error) return toast(traduz(error), 'err'), false;
@@ -6317,17 +6516,103 @@ async function salvarCargos(lista) {
 }
 $('#cgAdd').onclick = async () => {
   const nome = $('#cgNome').value.trim(); if (!nome) return $('#cgNome').focus();
-  if (S.cargos.some(c => c.nome.toLowerCase() === nome.toLowerCase())) return toast('Esse cargo já existe.', 'warn');
-  if (await salvarCargos([...S.cargos, { nome, cor: $('#cgCor').value }])) { $('#cgNome').value = ''; toast(`Cargo ${nome} criado.`); }
+  const novo = { nome, cor: $('#cgCor').value, emoji: $('#cgEmoji').value.trim().slice(0, 8), anim: CG.anim };
+  if (!novo.emoji) delete novo.emoji;
+  const ed = CG.edit, antigo = ed != null ? S.cargos[ed] : null;
+  if (S.cargos.some((c, k) => k !== ed && c.nome.toLowerCase() === nome.toLowerCase())) return toast('Esse cargo já existe.', 'warn');
+  const lista = ed != null ? S.cargos.map((c, k) => k === ed ? novo : c) : [...S.cargos, novo];
+  if (!(await salvarCargos(lista))) return;
+  // trocou o nome: quem tinha o cargo antigo passa para o novo nome
+  if (antigo && antigo.nome !== nome) {
+    const quem = Object.entries(S.cla || {}).filter(([, m]) => m.titulo === antigo.nome).map(([u]) => u);
+    for (const u of quem) await sb.from('membros').update({ titulo: nome }).eq('id', u);
+    if (quem.length) { carregarCla.busy = false; carregarCla(true); avisarCla(); }
+  }
+  toast(antigo ? `Cargo ${nome} salvo.` : `Cargo ${nome} criado.`); cgLimpar();
 };
 $('#admCargos').addEventListener('click', async e => {
+  const ed = e.target.closest('[data-editcargo]');
+  if (ed && !e.target.closest('[data-tirarcargo]')) { const c = S.cargos[+ed.dataset.editcargo]; if (!c) return; CG.edit = +ed.dataset.editcargo; CG.anim = c.anim || 'pulsa'; $('#cgNome').value = c.nome; $('#cgEmoji').value = c.emoji || ''; $('#cgCor').value = corValida(c.cor) || '#ff8a24'; renderCargos(); cgForm(); $('#cgNome').focus({ preventScroll: true }); return; }
   const b = e.target.closest('[data-tirarcargo]'); if (!b) return;
   const c = S.cargos[+b.dataset.tirarcargo]; if (!c) return;
   if (await salvarCargos(S.cargos.filter((_, k) => k !== +b.dataset.tirarcargo))) toast(`Cargo ${c.nome} apagado. Quem tinha esse cargo continua com o nome, sem cor.`);
 });
-async function abrirAdmin(aba) { abaAdmin(typeof aba === 'string' ? aba : 'geral'); renderCargos(); $('#admin').showModal(); carregarConvites(); await carregarAdmin(); }
+async function abrirAdmin(aba) {
+  if (S.eu?.cargo !== 'admin') return;
+  fecharPop(); S.view = 'adm';
+  for (const v of ['#vaqView', '#regrasView', '#homeView', '#textView', '#voiceView', '#mapView', '#placarView', '#recView']) $(v).hidden = true;
+  $('#admView').hidden = false; $('#app').classList.remove('menu'); $('#admView').scrollTop = 0;
+  abaAdmin(typeof aba === 'string' ? aba : 'geral'); renderCargos(); renderAll();
+  carregarConvites(); carregarCvRank(); carregarOnline(); carregarRec(); await carregarAdmin();
+}
 $('#cvGerar').onclick = () => gerarConvite();
 function abrirMembros() { return abrirAdmin('membros'); }
+/* ---------- tempo online (1.65) ---------- */
+const ONL = { linhas: [], per: 7, carregado: false, semTabela: false };
+const diaBR = (d = new Date()) => new Date(d.getTime() - 3 * 3600e3).toISOString().slice(0, 10);
+function fmtHoras(seg, curto) { const m = Math.round(seg / 60), h = Math.floor(m / 60); return h ? `${h} h${curto ? '' : ' ' + String(m % 60).padStart(2, '0') + ' min'}` : `${m} min`; }
+async function marcarOnline() {
+  if (!S.uid || S.eu?.status !== 'aprovado' || ONL.semTabela) return;
+  try { const { error } = await sb.rpc('marcar_online', { em_voz: !!S.v }); if (error && /marcar_online|schema cache|function/i.test(error.message || '')) ONL.semTabela = true; } catch {}
+}
+setTimeout(marcarOnline, 25000); setInterval(marcarOnline, 300000);
+async function carregarOnline() {
+  const de = diaBR(new Date(Date.now() - 30 * 864e5));
+  const { data, error } = await sb.from('tempo_online').select('membro,dia,segundos,voz,ultimo').gte('dia', de).limit(5000);
+  ONL.semTabela = !!(error && /tempo_online|schema cache|does not exist/i.test(error.message || ''));
+  ONL.linhas = data || []; ONL.carregado = true;
+  if (S.view === 'adm') { renderTopOn(); if (admAba === 'online') renderOnline(); if (admAba === 'geral') renderAdmin(); }
+}
+function onlSoma(per) {
+  const de = diaBR(new Date(Date.now() - (per - 1) * 864e5)), m = new Map();
+  for (const l of ONL.linhas) {
+    if (l.dia < de) continue;
+    const r = m.get(l.membro) || { uid: l.membro, seg: 0, voz: 0, ult: null, dias: {} };
+    r.seg += l.segundos | 0; r.voz += l.voz | 0; r.dias[l.dia] = (l.segundos | 0); if (!r.ult || l.ultimo > r.ult) r.ult = l.ultimo; m.set(l.membro, r);
+  }
+  return [...m.values()].filter(r => S.cla?.[r.uid] || admMembros.some(x => x.id === r.uid)).sort((a, b) => b.seg - a.seg);
+}
+const nickAdm = u => S.cla?.[u]?.nick || admMembros.find(m => m.id === u)?.nick || '?';
+function onRow(r, i, max, per) {
+  const agora = everyone().some(p => p.uid === r.uid), dias = [];
+  for (let k = 6; k >= 0; k--) dias.push(r.dias[diaBR(new Date(Date.now() - k * 864e5))] || 0);
+  const md = Math.max(1, ...dias);
+  const visto = agora ? 'online agora' : r.ult ? 'visto ' + quandoTxt(r.ult) : '';
+  return `<div class="onrow"><span class="pos">${i + 1}</span>${avatar(nickAdm(r.uid), '', '', r.uid)}<div class="nm"><b>${agora ? '<i class="onagora" aria-label="online agora"></i>' : ''}${esc(nickAdm(r.uid))}${tagCargo(r.uid)}</b><small>${visto}</small>
+    <div class="onbar"><i style="width:${(r.seg / max * 100).toFixed(1)}%"></i><u style="width:${(r.voz / max * 100).toFixed(1)}%"></u></div></div>
+    <div style="display:flex;align-items:center"><div class="tm">${fmtHoras(r.seg)}<small>${r.voz ? '🔊 ' + fmtHoras(r.voz) + ' na voz' : 'sem voz'}</small></div>${per > 1 ? `<div class="ondias" title="Últimos 7 dias">${dias.map(d => `<i style="height:${Math.max(2, d / md * 22)}px"></i>`).join('')}</div>` : ''}</div></div>`;
+}
+function renderOnline() {
+  const box = $('#admOnline'); if (!box) return;
+  document.querySelectorAll('#onPer [data-per]').forEach(b => b.classList.toggle('on', +b.dataset.per === ONL.per));
+  if (ONL.semTabela) { box.innerHTML = '<div class="vqnada"><b>Falta ativar</b>O tempo online começa a contar depois de rodar o SQL da versão 1.65 no Supabase.</div>'; return; }
+  if (!ONL.carregado) { box.innerHTML = '<div class="admvazio">Carregando…</div>'; return; }
+  const l = onlSoma(ONL.per), max = Math.max(1, ...l.map(r => r.seg));
+  box.innerHTML = l.length ? l.map((r, i) => onRow(r, i, max, ONL.per)).join('') + '<div class="onleg"><span><i style="background:var(--accent)"></i>app aberto</span><span><i style="background:#3ddc84"></i>dentro da sala de voz</span></div>'
+    : '<div class="vqnada"><b>Ainda sem dados</b>Assim que o pessoal abrir o app na versão 1.65, o tempo começa a aparecer aqui.</div>';
+}
+function renderTopOn() {
+  const box = $('#admTopOn'); if (!box) return;
+  if (ONL.semTabela) { box.innerHTML = '<div class="admvazio">Falta rodar o SQL da versão 1.65 para contar o tempo online.</div>'; return; }
+  const l = onlSoma(7).slice(0, 5), max = Math.max(1, ...l.map(r => r.seg));
+  box.innerHTML = l.length ? `<div class="onlista">${l.map((r, i) => onRow(r, i, max, 1)).join('')}</div>` : `<div class="admvazio">${ONL.carregado ? 'Ainda sem dados de tempo online.' : 'Carregando…'}</div>`;
+}
+$('#onPer').addEventListener('click', e => { const b = e.target.closest('[data-per]'); if (b) { ONL.per = +b.dataset.per; renderOnline(); } });
+// convites por pessoa
+const CVR = { lista: [], ok: false };
+async function carregarCvRank() {
+  const { data, error } = await sb.from('convites').select('criado_por,usado_por,expira_em,criado_em').order('criado_em', { ascending: false }).limit(1000);
+  CVR.lista = error ? [] : data || []; CVR.ok = !error; renderCvRank();
+}
+function renderCvRank(soTopo) {
+  const m = new Map(), agora = Date.now();
+  for (const v of CVR.lista) { const r = m.get(v.criado_por) || { uid: v.criado_por, ger: 0, usados: [], ativos: 0 }; r.ger++; if (v.usado_por) r.usados.push(v.usado_por); else if (new Date(v.expira_em) > agora) r.ativos++; m.set(v.criado_por, r); }
+  const l = [...m.values()].sort((a, b) => b.usados.length - a.usados.length || b.ger - a.ger);
+  const linha = r => `<div class="cvr">${avatar(nickAdm(r.uid), '', '', r.uid)}<div><b>${esc(nickAdm(r.uid))}</b><small>${r.usados.length ? 'Trouxe: ' + r.usados.map(u => esc(nickAdm(u))).join(', ') : 'Ninguém entrou ainda'}${r.ativos ? ` · ${r.ativos} aguardando` : ''}</small></div><div class="num"><span>${r.ger}<small>gerados</small></span><span class="ok">${r.usados.length}<small>entraram</small></span></div></div>`;
+  const vazio = `<div class="admvazio">${CVR.ok ? 'Nenhum convite gerado ainda.' : 'Carregando…'}</div>`;
+  if ($('#admTopCv')) $('#admTopCv').innerHTML = l.length ? `<div class="cvrank">${l.slice(0, 4).map(linha).join('')}</div>` : vazio;
+  if (!soTopo && $('#admCvRank')) $('#admCvRank').innerHTML = l.length ? `<div class="cvrank">${l.map(linha).join('')}</div>` : vazio;
+}
 async function carregarAdmin() {
   $('#admList').innerHTML = '<div class="caixa">Carregando…</div>';
   const { data, error } = await sb.from('membros').select(COLS_MEMBRO).order('criado_em');
@@ -6355,7 +6640,7 @@ function cardAdmin(m) {
   return `<div class="mcard ${m.status === 'pendente' ? 'pend' : ''}" data-id="${esc(m.id)}">
     <div class="top">${avatar(m.nick, '', '', '', m.avatar || null)}
       <div class="who"><b>${esc(m.nick || '(sem nick)')}${eu ? ' <small>(você)</small>' : ''}</b><small>${esc(m.nome_real)}${m.email ? ' · ' + esc(m.email) : ''} · desde ${dt}</small></div>
-      ${m.titulo ? `<span class="tcargo" style="--c:${corValida(S.cargos.find(c => c.nome === m.titulo)?.cor) || '#9299a5'}">${esc(m.titulo)}</span>` : ''}<span class="pill ${m.status}">${m.status}</span>${ehDono ? '<span class="pill dono">dono</span>' : m.cargo === 'admin' ? '<span class="pill admin">admin</span>' : ''}
+      ${tagCargoNome(m.titulo)}<span class="pill ${m.status}">${m.status}</span>${ehDono ? '<span class="pill dono">dono</span>' : m.cargo === 'admin' ? '<span class="pill admin">admin</span>' : ''}
       <div class="acts">${acts.join('')}</div></div>
     <div class="fichabox" hidden></div>
     <div class="edit" hidden>
@@ -6371,8 +6656,10 @@ function renderAdmin() {
   const q = $('#admBusca').value.trim().toLowerCase();
   const pend = admMembros.filter(m => m.status === 'pendente');
   const n = st => admMembros.filter(m => m.status === st).length;
-  $('#admStats').innerHTML = `<div class="stat"><b>${n('aprovado')}</b><small>membros ativos</small></div><div class="stat"><b>${pend.length}</b><small>aguardando aprovação</small></div><div class="stat"><b>${n('bloqueado')}</b><small>bloqueados</small></div><div class="stat"><b>${Object.keys(S.peers).length + 1}</b><small>online agora</small></div>`;
-  $('#admPend').innerHTML = pend.length ? `<div class="secao">Aguardando aprovação</div>${pend.map(cardAdmin).join('')}` : '<div class="caixa">Ninguém aguardando aprovação.</div>';
+  const onl = new Set(everyone().map(p => p.uid).filter(Boolean)), hoje = onlSoma(1).reduce((t, r) => t + r.seg, 0);
+  $('#admStats').innerHTML = `<div class="st ok"><b>${onl.size}</b><small>online agora</small></div><div class="st"><b>${n('aprovado')}</b><small>membros</small></div><div class="st ac"><b>${pend.length}</b><small>pendentes</small></div><div class="st"><b>${ONL.carregado ? fmtHoras(hoje, true) : '–'}</b><small>online hoje</small></div>`;
+  $('#admPend').innerHTML = pend.length ? pend.map(cardAdmin).join('') : '<div class="admvazio">Ninguém aguardando aprovação. Quem se cadastrar com convite aparece aqui e no Recrutamento.</div>';
+  renderTopOn(); renderCvRank(true);
   $('#admQtd').textContent = admMembros.length;
   const FILTROS = { todos: ['Todos', () => true], aprovado: ['Ativos', m => m.status === 'aprovado'], pendente: ['Pendentes', m => m.status === 'pendente'], bloqueado: ['Bloqueados', m => m.status === 'bloqueado'], admin: ['Admins', m => m.cargo === 'admin'] };
   $('#admChips').innerHTML = Object.entries(FILTROS).map(([k, [nome, f]]) => `<button type="button" data-filtro="${k}" class="${k === admFiltro ? 'on' : ''}">${nome} · ${admMembros.filter(f).length}</button>`).join('');
@@ -6442,13 +6729,107 @@ async function acaoAdmin(card, a) {
   }
 }
 $('#adminBtn').onclick = abrirAdmin;
-$('#admClose').onclick = () => $('#admin').close();
+$('#admCentralBtn').onclick = e => { e.stopPropagation(); abrirAdmin(S.view === 'adm' ? admAba : 'geral'); };
 $('#admBusca').oninput = renderAdmin;
-$('#admin').addEventListener('click', e => {
+$('#admView').addEventListener('click', e => {
   const tb = e.target.closest('[data-admtab]'); if (tb) return abaAdmin(tb.dataset.admtab);
   const f = e.target.closest('[data-filtro]'); if (f) { admFiltro = f.dataset.filtro; renderAdmin(); }
 });
-$('#admin').addEventListener('click', e => { const b = e.target.closest('[data-a]'); if (b) acaoAdmin(b.closest('.mcard'), b.dataset.a); });
+$('#admView').addEventListener('click', e => { const b = e.target.closest('[data-a]'); if (b) acaoAdmin(b.closest('.mcard'), b.dataset.a); });
+
+/* ---------- 1.65: chamar atenção (estilo MSN) e tirar da sala ---------- */
+// dono tira qualquer um; admin tira quem não é admin
+function podeTirar(uid) { if (S.eu?.cargo !== 'admin' || uid === S.uid || uid === S.dono) return false; return S.dono === S.uid || S.cla?.[uid]?.cargo !== 'admin'; }
+const CTRL = { vistos: new Set(), ult: {}, porPessoa: {} };
+function ctrlEnviar(k, uid) {
+  const m = { k, de: S.uid, para: uid, voz: S.peers && Object.values(S.peers).find(p => p.uid === uid)?.voice || null, n: Date.now().toString(36) + Math.random().toString(36).slice(2, 7) };
+  for (const [pid, p] of Object.entries(S.peers)) if (p.uid === uid) { try { (p.viaVoz ? S.v?.ctrl : S.act.ctrl)?.send(m, { target: pid }); } catch {} }
+  try { S.rtCh?.send({ type: 'broadcast', event: 'ctrl', payload: m }); } catch {}
+}
+function chamarAtencao(uid) {
+  const nome = S.cla?.[uid]?.nick || 'a pessoa';
+  if (Date.now() - (CTRL.ult[uid] || 0) < 15000) return toast(`Espere um pouco para chamar ${nome} de novo.`, 'warn');
+  CTRL.ult[uid] = Date.now(); ctrlEnviar('chamar', uid); fecharPop(); toast(`🔔 Você chamou a atenção de ${nome}.`);
+}
+function tirarDaSala(uid, b) {
+  const nome = S.cla?.[uid]?.nick || 'a pessoa';
+  if (!podeTirar(uid)) return toast('Você não pode tirar essa pessoa da sala.', 'warn');
+  if (b && !b.dataset.conf) { b.dataset.conf = '1'; b.textContent = `Confirmar: tirar ${nome}`; setTimeout(() => { if (b.isConnected) { delete b.dataset.conf; b.textContent = '🚪 Tirar da sala'; } }, 5000); return; }
+  ctrlEnviar('tirar', uid); fecharPop(); toast(`🚪 ${nome} foi tirado da sala de voz.`);
+}
+function somChamar() {
+  // "trrrim" de campainha: dois toques com tremolo rápido. Toca mesmo com o fone desligado no app.
+  try {
+    const c = ac(), t0 = c.currentTime + .02, out = c.createGain(); out.gain.value = .55; out.connect(c.destination);
+    [0, .42].forEach(d => {
+      const t = t0 + d, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), lfo = c.createOscillator(), lg = c.createGain();
+      o.type = 'square'; o.frequency.setValueAtTime(1180, t); o2.type = 'triangle'; o2.frequency.setValueAtTime(1770, t);
+      lfo.frequency.value = 28; lg.gain.value = .5; lfo.connect(lg).connect(g.gain);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.5, t + .01); g.gain.setValueAtTime(.5, t + .26); g.gain.exponentialRampToValueAtTime(.0001, t + .36);
+      const f = c.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1500; f.Q.value = .8;
+      o.connect(f); o2.connect(f); f.connect(g).connect(out);
+      [o, o2, lfo].forEach(x => { x.start(t); x.stop(t + .38); });
+    });
+  } catch {}
+}
+function levarChamada(nome) {
+  somChamar();
+  document.body.classList.remove('tremendo'); void document.body.offsetWidth; document.body.classList.add('tremendo');
+  setTimeout(() => document.body.classList.remove('tremendo'), 1500);
+  let fl = $('#chamarFlash'); if (!fl) { fl = document.createElement('div'); fl.id = 'chamarFlash'; document.body.appendChild(fl); }
+  fl.classList.remove('on'); void fl.offsetWidth; fl.classList.add('on');
+  toast(`🔔 ${nome} está chamando sua atenção!`, 'warn');
+  if (DESK) { try { DESK.chamar?.(); DESK.aviso({ titulo: `🔔 ${nome} chamou sua atenção!`, corpo: 'Volte para a call do clã.' }); } catch {} }
+}
+function receberCtrl(m, uidPeer) {
+  if (!m || typeof m.n !== 'string' || m.n.length > 20 || m.para !== S.uid || typeof m.de !== 'string') return;
+  if (uidPeer && uidPeer !== m.de) return;
+  if (CTRL.vistos.has(m.n)) return; CTRL.vistos.add(m.n); if (CTRL.vistos.size > 200) CTRL.vistos = new Set([...CTRL.vistos].slice(-100));
+  const quem = S.cla?.[m.de]; if (!quem) return;
+  if (m.k === 'chamar') {
+    const lst = (CTRL.porPessoa[m.de] || []).filter(t => Date.now() - t < 20000); if (lst.length >= 2) return; lst.push(Date.now()); CTRL.porPessoa[m.de] = lst;
+    if (S.mutados?.has(quem.nick)) return; // quem você silenciou não chama
+    return levarChamada(quem.nick);
+  }
+  if (m.k === 'tirar') {
+    // só vale de admin; admin só tira quem não é admin; ninguém tira o dono
+    if (quem.cargo !== 'admin' || S.uid === S.dono || (S.eu?.cargo === 'admin' && m.de !== S.dono) || !S.v) return;
+    leaveVoice(true); sfx('leave');
+    toast(`🚪 ${quem.nick} tirou você da sala de voz.`, 'warn');
+    if (DESK) avisoPC('tirado', `🚪 ${quem.nick} tirou você da sala de voz`, 'Você pode voltar quando quiser.', null, 5000);
+  }
+}
+$('#popMem').addEventListener('click', e => {
+  const c = e.target.closest('[data-chamar]'); if (c) { e.stopPropagation(); return chamarAtencao(c.dataset.chamar); }
+  const t = e.target.closest('[data-tirar]'); if (t) { e.stopPropagation(); return tirarDaSala(t.dataset.tirar, t); }
+});
+
+/* ---------- 1.65: Limpa a call (fone desligado, microfone ligado) ---------- */
+function toggleLimpa() {
+  if (!S.limpa) { S.preLimpa = { deaf: S.deaf, muted: S.muted }; S.limpa = true; S.deaf = true; S.muted = false; }
+  else { S.limpa = false; S.deaf = !!S.preLimpa?.deaf; S.muted = !!S.preLimpa?.muted; }
+  applyMute(); sfx(S.limpa ? 'surdo' : 'ouvir'); broadcast(); renderAll();
+  toast(S.limpa ? '🤫 LIMPA A CALL: você não ouve ninguém, mas o pessoal ainda te escuta.' : 'Voltou a ouvir a call.');
+}
+$('#cLimpa').onclick = toggleLimpa;
+
+/* ---------- 1.65: parado na sala, o tema da sua carta vira o tema do app ---------- */
+const AFK = { t: Date.now(), on: false, espera: 30000 };
+function afkEntrar() {
+  const cd = meuCartao(), e = cd?.e && CARTOES.some(x => x.id === cd.e) ? cd.e : 'padrao', f = CARTOES.find(x => x.id === e).f, el = $('#temaAfk');
+  el.className = 'fx fx-' + e; el.style.setProperty('--cf', f); el.style.background = f; el.innerHTML = fxDe('afk|' + S.uid, e, 3);
+  aplicarTema(RE_COR.test(cd?.c || '') ? cd.c : undefined);
+  AFK.on = true; document.body.classList.add('afktema');
+}
+function afkSair() { if (!AFK.on) return; AFK.on = false; document.body.classList.remove('afktema'); if (!CARTA.ativo) aplicarTema(); }
+['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, () => { AFK.t = Date.now(); afkSair(); }, { passive: true, capture: true }));
+setInterval(() => {
+  const pode = S.v && S.view === 'voice' && !CINE.on && !CARTA.ativo && LS.get('afkTema', true) !== false;
+  if (!pode) return afkSair();
+  if (!AFK.on && Date.now() - AFK.t > AFK.espera) afkEntrar();
+}, 2000);
+$('#cdAfk').checked = LS.get('afkTema', true) !== false;
+$('#cdAfk').onchange = e => { LS.set('afkTema', e.target.checked); if (!e.target.checked) afkSair(); };
 $('#admChave').onclick = async () => {
   const { error } = await sb.rpc('admin_trocar_chave_voz');
   if (error) return toast(traduz(error), 'err');
