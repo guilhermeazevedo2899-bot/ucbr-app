@@ -8,7 +8,7 @@ if dst.exists(): shutil.rmtree(dst)
 dst.mkdir()
 for n in ['index.html', 'versao.json', 'manifest.webmanifest', 'mapa-chernarus.jpg', 'regras-ucbr.pdf', 'whatsapp-qr.png']:
     shutil.copy2(src / n, dst / n)
-for d in ['icones', 'mapa3d', 'ruido']:
+for d in ['icones', 'mapa3d', 'ruido', 'voz']:
     shutil.copytree(src / d, dst / d)
 lib = dst / 'lib'; (lib / 'fontes').mkdir(parents=True)
 sb = libs / 'supabase-supabase-js-2.45.4/package/dist/umd'

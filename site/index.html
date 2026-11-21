@@ -2107,8 +2107,8 @@ body.afktema #rail{background:rgba(0,0,0,.3)!important}
 body.afktema #side,body.afktema #members{background:rgba(6,6,9,.24)!important}
 body.afktema #app::before{opacity:0}
 body.afktema #top{background:transparent!important}
-body.afktema #voiceView{background:transparent!important}
-body.afktema #voiceView>#temaCarta{opacity:0!important}
+body.afktema #voiceView>#temaCarta{opacity:1}
+body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px 50px rgba(0,0,0,.55)}
 </style>
 </head>
 <body>
@@ -2383,7 +2383,7 @@ body.afktema #voiceView>#temaCarta{opacity:0!important}
         <span id="pttTag" title="Apertar para falar ligado (app do PC)">PTT</span>
         <button class="cbtn" id="cMute" title="Microfone"></button>
         <button class="cbtn" id="cDeaf" title="Áudio"></button>
-        <button class="cbtn limpa" id="cLimpa" title="Limpa a call: você para de ouvir, mas continua falando" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15h2.5v5H5a1 1 0 0 1-1-1zM20 15h-2.5v5H19a1 1 0 0 0 1-1z"/><path d="M3 3l18 18"/></svg><span>LIMPA</span></button>
+        <button class="cbtn limpa" id="cLimpa" title="Limpa a call: você para de ouvir, mas continua falando. Também funciona falando &quot;limpa a call&quot; (e &quot;libera&quot; para voltar)" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><path d="M4 15h2.5v5H5a1 1 0 0 1-1-1zM20 15h-2.5v5H19a1 1 0 0 0 1-1z"/><path d="M3 3l18 18"/></svg><span>LIMPA</span></button>
         <button class="cbtn share" id="cShare" title="Compartilhar tela"></button>
         <button class="cbtn" id="cSom" title="Efeitos sonoros" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/></svg></button>
         <button class="cbtn leave" id="cLeave" title="Sair da voz"></button>
@@ -2586,6 +2586,7 @@ body.afktema #voiceView>#temaCarta{opacity:0!important}
   <select class="inp" id="nsModo"><option value="ia">Forte, com IA (ventilador, ar-condicionado, teclado)</option><option value="navegador">Leve, só do navegador</option><option value="off">Desligado (microfone de estúdio)</option></select>
   <p class="dica" style="color:var(--txt3);font-size:12px;margin:6px 0 0">Eco e ganho automático ficam sempre ligados. O que você escolher aqui é o que os outros escutam.</p>
   <label class="chk"><input type="checkbox" id="sndChk"> Sons de entrada/saída na voz</label>
+  <label class="chk"><input type="checkbox" id="limpaVozChk"> Limpa a call por voz: falar <b>"limpa a call"</b> desliga o seu fone (o microfone continua) e <b>"libera"</b> volta a ouvir</label>
   <section id="deskSec" hidden>
     <h4>App do <b>PC</b></h4>
     <label class="chk"><input type="checkbox" id="dkPtt"> Apertar para falar (push-to-talk)</label>
@@ -2630,7 +2631,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.65',
+  versao: '1.66',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '21/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -6809,19 +6810,55 @@ function toggleLimpa() {
   if (!S.limpa) { S.preLimpa = { deaf: S.deaf, muted: S.muted }; S.limpa = true; S.deaf = true; S.muted = false; }
   else { S.limpa = false; S.deaf = !!S.preLimpa?.deaf; S.muted = !!S.preLimpa?.muted; }
   applyMute(); sfx(S.limpa ? 'surdo' : 'ouvir'); broadcast(); renderAll();
-  toast(S.limpa ? '🤫 LIMPA A CALL: você não ouve ninguém, mas o pessoal ainda te escuta.' : 'Voltou a ouvir a call.');
+  toast(S.limpa ? '🤫 LIMPA A CALL: você não ouve ninguém, mas o pessoal ainda te escuta. Fale "libera" para voltar.' : 'Voltou a ouvir a call.');
 }
 $('#cLimpa').onclick = toggleLimpa;
+/* ---------- 1.66: Limpa a call por voz ----------
+   Reconhecedor de voz que roda aqui no PC (Vosk, modelo pequeno em português). Escuta só o SEU microfone,
+   só dentro da sala de voz e só procura duas coisas: "limpa a call" e "libera". Nada sai do PC. */
+const VOZCMD = { model: null, rec: null, ctx: null, node: null, src: null, trilha: null, carregando: false, falhou: false, ult: 0 };
+const vozCmdLigado = () => LS.get('limpaVoz', true) !== false && !!S.v && !VOZCMD.falhou;
+function carregarScript(src) { return new Promise((ok, erro) => { const el = document.createElement('script'); el.src = src; el.onload = ok; el.onerror = erro; document.head.appendChild(el); }); }
+async function vozCmdIniciar() {
+  const v = S.v, trilha = v?.mic?.getAudioTracks?.()[0];
+  if (!vozCmdLigado() || VOZCMD.carregando || !trilha || trilha.readyState !== 'live') return;
+  if (VOZCMD.rec && VOZCMD.trilha === trilha) return;
+  vozCmdParar(); VOZCMD.carregando = true;
+  try {
+    if (!window.Vosk) await carregarScript('voz/vosk.js');
+    VOZCMD.model ||= await Vosk.createModel(location.origin + '/voz/modelo-pt.tar.gz');
+    if (S.v !== v || !vozCmdLigado()) return;
+    const ctx = new AudioContext({ sampleRate: 16000 }); // o modelo é de 16 kHz: o navegador já converte
+    const rec = new VOZCMD.model.KaldiRecognizer(16000, JSON.stringify(['limpa a cal', 'limpa a col', 'limpa', 'libera', '[unk]']));
+    rec.on('result', m => vozCmdOuviu(String(m?.result?.text || '')));
+    const src = ctx.createMediaStreamSource(new MediaStream([trilha])), node = ctx.createScriptProcessor(4096, 1, 1);
+    node.onaudioprocess = e => { if (!micLiberado() || !VOZCMD.rec) return; try { rec.acceptWaveform(e.inputBuffer); } catch {} };
+    src.connect(node); node.connect(ctx.destination);
+    Object.assign(VOZCMD, { ctx, rec, src, node, trilha });
+  } catch (e) { VOZCMD.falhou = true; console.warn('limpa por voz', e); }
+  finally { VOZCMD.carregando = false; }
+}
+function vozCmdParar() { const V = VOZCMD; try { V.node?.disconnect(); V.src?.disconnect(); V.rec?.remove(); V.ctx?.close(); } catch {} V.node = V.src = V.rec = V.ctx = V.trilha = null; }
+function vozCmdOuviu(t) {
+  const w = t.toLowerCase().split(/\s+/);
+  if (!S.v || !w[0] || Date.now() - VOZCMD.ult < 2500) return;
+  if (!S.limpa && (w.includes('limpa') || w.includes('cal') || w.includes('col'))) { VOZCMD.ult = Date.now(); toggleLimpa(); }
+  else if (S.limpa && w.includes('libera')) { VOZCMD.ult = Date.now(); toggleLimpa(); }
+}
+setInterval(() => { if (vozCmdLigado()) vozCmdIniciar(); else if (VOZCMD.rec) vozCmdParar(); }, 3000);
+$('#limpaVozChk').checked = LS.get('limpaVoz', true) !== false;
+$('#limpaVozChk').onchange = e => { LS.set('limpaVoz', e.target.checked); VOZCMD.falhou = false; if (!e.target.checked) vozCmdParar(); };
+
 
 /* ---------- 1.65: parado na sala, o tema da sua carta vira o tema do app ---------- */
 const AFK = { t: Date.now(), on: false, espera: 30000 };
 function afkEntrar() {
   const cd = meuCartao(), e = cd?.e && CARTOES.some(x => x.id === cd.e) ? cd.e : 'padrao', f = CARTOES.find(x => x.id === e).f, el = $('#temaAfk');
   el.className = 'fx fx-' + e; el.style.setProperty('--cf', f); el.style.background = f; el.innerHTML = fxDe('afk|' + S.uid, e, 3);
-  aplicarTema(RE_COR.test(cd?.c || '') ? cd.c : undefined);
+  cartaTema(S.uid, true); // o meio da sala também
   AFK.on = true; document.body.classList.add('afktema');
 }
-function afkSair() { if (!AFK.on) return; AFK.on = false; document.body.classList.remove('afktema'); if (!CARTA.ativo) aplicarTema(); }
+function afkSair() { if (!AFK.on) return; AFK.on = false; document.body.classList.remove('afktema'); if (!CARTA.ativo) cartaTema(S.uid, false); }
 ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => addEventListener(ev, () => { AFK.t = Date.now(); afkSair(); }, { passive: true, capture: true }));
 setInterval(() => {
   const pode = S.v && S.view === 'voice' && !CINE.on && !CARTA.ativo && LS.get('afkTema', true) !== false;

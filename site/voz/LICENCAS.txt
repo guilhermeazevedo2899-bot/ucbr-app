@@ -1,0 +1,3 @@
+Reconhecimento de voz do "Limpa a call" (roda so no PC, nada sai dele).
+- vosk.js: vosk-browser 0.0.8 (npm), licenca Apache-2.0, https://github.com/ccoreilly/vosk-browser
+- modelo-pt.tar.gz: vosk-model-small-pt-0.3 (Alpha Cephei), licenca Apache-2.0, https://alphacephei.com/vosk/models
