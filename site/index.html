@@ -2587,6 +2587,7 @@ body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px
   <p class="dica" style="color:var(--txt3);font-size:12px;margin:6px 0 0">Eco e ganho automático ficam sempre ligados. O que você escolher aqui é o que os outros escutam.</p>
   <label class="chk"><input type="checkbox" id="sndChk"> Sons de entrada/saída na voz</label>
   <label class="chk"><input type="checkbox" id="limpaVozChk"> Limpa a call por voz: falar <b>"limpa a call"</b> desliga o seu fone (o microfone continua) e <b>"libera"</b> volta a ouvir</label>
+  <p class="dica" id="limpaVozOuvi" style="color:var(--txt3);font-size:12px;margin:2px 0 0 26px">Entre numa sala de voz e fale "limpa" para testar.</p>
   <section id="deskSec" hidden>
     <h4>App do <b>PC</b></h4>
     <label class="chk"><input type="checkbox" id="dkPtt"> Apertar para falar (push-to-talk)</label>
@@ -2631,7 +2632,7 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.66',
+  versao: '1.67',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
   dataVersao: '21/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
@@ -6816,6 +6817,8 @@ $('#cLimpa').onclick = toggleLimpa;
 /* ---------- 1.66: Limpa a call por voz ----------
    Reconhecedor de voz que roda aqui no PC (Vosk, modelo pequeno em português). Escuta só o SEU microfone,
    só dentro da sala de voz e só procura duas coisas: "limpa a call" e "libera". Nada sai do PC. */
+// frases que valem + palavras parecidas que só servem para "puxar" o que não é comando
+const VOZ_GRAM = ['limpa', 'limpa a cal', 'limpa a col', 'libera', 'bala', 'caiu', 'cala', 'calibre', 'calma', 'cara', 'carro', 'casa', 'cola', 'colete', 'colina', 'com', 'corre', 'cuidado', 'liberado', 'lima', 'limpar', 'limpeza', 'limpo', 'pessoal', 'que', 'ta', 'tem', 'um', '[unk]'];
 const VOZCMD = { model: null, rec: null, ctx: null, node: null, src: null, trilha: null, carregando: false, falhou: false, ult: 0 };
 const vozCmdLigado = () => LS.get('limpaVoz', true) !== false && !!S.v && !VOZCMD.falhou;
 function carregarScript(src) { return new Promise((ok, erro) => { const el = document.createElement('script'); el.src = src; el.onload = ok; el.onerror = erro; document.head.appendChild(el); }); }
@@ -6829,21 +6832,58 @@ async function vozCmdIniciar() {
     VOZCMD.model ||= await Vosk.createModel(location.origin + '/voz/modelo-pt.tar.gz');
     if (S.v !== v || !vozCmdLigado()) return;
     const ctx = new AudioContext({ sampleRate: 16000 }); // o modelo é de 16 kHz: o navegador já converte
-    const rec = new VOZCMD.model.KaldiRecognizer(16000, JSON.stringify(['limpa a cal', 'limpa a col', 'limpa', 'libera', '[unk]']));
-    rec.on('result', m => vozCmdOuviu(String(m?.result?.text || '')));
-    const src = ctx.createMediaStreamSource(new MediaStream([trilha])), node = ctx.createScriptProcessor(4096, 1, 1);
-    node.onaudioprocess = e => { if (!micLiberado() || !VOZCMD.rec) return; try { rec.acceptWaveform(e.inputBuffer); } catch {} };
+    const rec = new VOZCMD.model.KaldiRecognizer(16000, JSON.stringify(VOZ_GRAM));
+    rec.setWords(true); // traz a confiança de cada palavra no resultado final
+    rec.on('partialresult', m => vozCmdOuviu(String(m?.result?.partial || ''), false, 1)); // age enquanto ainda fala
+    rec.on('result', m => vozCmdOuviu(String(m?.result?.text || ''), true, Math.min(1, ...(m?.result?.result || [{ conf: 0 }]).map(w => +w.conf || 0))));
+    const src = ctx.createMediaStreamSource(new MediaStream([trilha])), node = ctx.createScriptProcessor(1024, 1, 1); // 64 ms por pedaço
+    node.onaudioprocess = e => { if (!micLiberado() || !VOZCMD.rec) return; vozEnergia(e.inputBuffer.getChannelData(0)); try { rec.acceptWaveform(e.inputBuffer); } catch {} };
     src.connect(node); node.connect(ctx.destination);
     Object.assign(VOZCMD, { ctx, rec, src, node, trilha });
   } catch (e) { VOZCMD.falhou = true; console.warn('limpa por voz', e); }
   finally { VOZCMD.carregando = false; }
 }
 function vozCmdParar() { const V = VOZCMD; try { V.node?.disconnect(); V.src?.disconnect(); V.rec?.remove(); V.ctx?.close(); } catch {} V.node = V.src = V.rec = V.ctx = V.trilha = null; }
-function vozCmdOuviu(t) {
-  const w = t.toLowerCase().split(/\s+/);
-  if (!S.v || !w[0] || Date.now() - VOZCMD.ult < 2500) return;
-  if (!S.limpa && (w.includes('limpa') || w.includes('cal') || w.includes('col'))) { VOZCMD.ult = Date.now(); toggleLimpa(); }
-  else if (S.limpa && w.includes('libera')) { VOZCMD.ult = Date.now(); toggleLimpa(); }
+// "limpa" sozinho age NA HORA (o fone desliga só aqui no PC) e se confirma quando a fala termina;
+// se era outra frase ("a casa tá limpa", "limpa a área"...), volta a ouvir em menos de 2 s sem avisar ninguém.
+function vozLimpaProvisorio() {
+  S.preLimpa = { deaf: S.deaf, muted: S.muted }; S.limpa = true; S.deaf = true; S.muted = false;
+  VOZCMD.prov = setTimeout(vozLimpaCancelar, 2000); applyMute(); renderAll();
+}
+function vozLimpaConfirmar() {
+  clearTimeout(VOZCMD.prov); VOZCMD.prov = 0; VOZCMD.ult = Date.now();
+  sfx('surdo'); broadcast(); renderAll(); toast('🤫 LIMPA A CALL: você não ouve ninguém, mas o pessoal ainda te escuta. Fale "libera" para voltar.');
+}
+function vozLimpaCancelar() {
+  if (!VOZCMD.prov) return; clearTimeout(VOZCMD.prov); VOZCMD.prov = 0;
+  S.limpa = false; S.deaf = !!S.preLimpa?.deaf; S.muted = !!S.preLimpa?.muted; applyMute(); renderAll();
+}
+// marca quando a pessoa começou a falar (volume acima do ruído) e quando parou
+function vozEnergia(d) {
+  let q = 0; for (let i = 0; i < d.length; i += 4) q += d[i] * d[i];
+  const agora = performance.now(), fala = Math.sqrt(q / (d.length / 4)) > .015;
+  if (fala) { if (!VOZCMD.falaDesde || agora - VOZCMD.falaUlt > 450) VOZCMD.falaDesde = agora; VOZCMD.falaUlt = agora; }
+}
+function vozOuviTexto(t, final) { if (!final || !t) return; const el = $('#limpaVozOuvi'); if (el) el.textContent = `Ouvi agora: "${t.replace(/ c[ao]l$/, ' call')}"`; }
+function vozCmdOuviu(t, final, conf) {
+  t = t.toLowerCase().trim().replace(/\s+/g, ' ');
+  if (!S.v) return;
+  const limpa = /^limpa( a c[ao]l)?$/.test(t), inteira = /^limpa a c[ao]l$/.test(t);
+  vozOuviTexto(t, final);
+  if (VOZCMD.prov) { // esperando confirmar o "limpa"
+    if (inteira || (final && limpa && conf >= .5)) vozLimpaConfirmar();
+    else if (final && !t) vozLimpaConfirmar(); // terminou de falar e não veio outra palavra
+    else if (final || (t && !/^limpa( a( c[ao]?)?)?$/.test(t))) vozLimpaCancelar();
+    return;
+  }
+  if (!t || Date.now() - VOZCMD.ult < 2500) return;
+  if (!S.limpa) {
+    if (!final && inteira) { VOZCMD.ult = Date.now(); toggleLimpa(); }
+    // "limpa" que aparece depois de mais de 1 s de fala é fim de frase ("a casa tá limpa"): não vale
+    else if (!final && limpa && performance.now() - (VOZCMD.falaDesde || 0) < 1100) vozLimpaProvisorio();
+    // no fim da fala: "limpa", "limpa a call" ou só "a call" (às vezes o "limpa" sai baixo), com boa certeza
+    else if (final && /^(limpa|limpa a c[ao]l|a c[ao]l)$/.test(t) && conf >= .8) { VOZCMD.ult = Date.now(); toggleLimpa(); }
+  } else if (/(^| )libera$/.test(t) && (!final || conf >= .6)) { VOZCMD.ult = Date.now(); toggleLimpa(); }
 }
 setInterval(() => { if (vozCmdLigado()) vozCmdIniciar(); else if (VOZCMD.rec) vozCmdParar(); }, 3000);
 $('#limpaVozChk').checked = LS.get('limpaVoz', true) !== false;
