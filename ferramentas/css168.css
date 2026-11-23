@@ -1,0 +1,161 @@
+/* ===================== 1.68: layout novo, página Visual, Jogos e desempenho ===================== */
+/* a barra de ícones da esquerda sai; o Clã na lateral fica só com o Início */
+#rail{display:none!important}
+.cla-mobile{display:block!important}
+.cla-mobile .ch{margin-top:6px}
+/* menu das páginas do clã, em cima */
+#menuTop{flex:none;display:flex;align-items:center;gap:4px;padding:8px 12px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg0) 88%,transparent);overflow-x:auto;scrollbar-width:none;position:relative;z-index:3}
+#menuTop::-webkit-scrollbar{display:none}
+#menuTop .mi{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:var(--txt2);font-weight:600;font-size:.875rem;white-space:nowrap;position:relative;flex:none;transition:background .15s,color .15s}
+#menuTop .mi svg{width:18px;height:18px;flex:none}
+#menuTop .mi:hover{color:var(--txt);background:var(--bg2)}
+#menuTop .mi.on{color:var(--txt);background:var(--bg3)}
+#menuTop .mi.on::after{content:"";position:absolute;inset-inline:12px;inset-block-end:-9px;height:2px;border-radius:2px;background:var(--accent)}
+#menuTop .mi .pt{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex:none}
+#menuTop .mi .pt.red{background:var(--red);box-shadow:0 0 6px var(--red)}
+#menuTop .sep{flex:1;min-width:8px}
+#menuTop .mib{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--txt2);flex:none}
+#menuTop .mib:hover{background:var(--bg2);color:var(--txt)}
+#menuTop .mib.on{background:var(--bg3);color:var(--accent)}
+#menuTop .mib svg{width:20px;height:20px}
+@media (max-width:760px){#menuTop .mi span:not(.pt){display:none}#menuTop .mi.on span{display:inline}#menuTop .mi{padding:8px 10px}}
+
+/* fundo do app parado (antes girava o tempo todo na tela inteira) */
+#app::before{animation:none!important}
+/* equalizador do modo cinema: só se mexe com o cinema ligado */
+.eqlado i{animation-play-state:paused!important}
+body.cinema:not(.pausado) .eqlado i{animation-play-state:running!important}
+
+/* desempenho: equilibrado = enfeites só animam com o mouse em cima, sem desfoque */
+body.anim-equi *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.anim-equi .vmold,body.anim-equi .vmold::before,body.anim-equi .vmold::after,body.anim-equi .vef,body.anim-equi [class*="vn-"],body.anim-equi .fx *,body.anim-equi .fx::before,body.anim-equi .fx::after,body.anim-equi #vfundo::before{animation-play-state:paused!important}
+body.anim-equi :hover>.vmold,body.anim-equi :hover>.vmold::after,body.anim-equi :hover>.vmold::before,body.anim-equi .pcard:hover *,body.anim-equi .vitem:hover .vvis *,body.anim-equi .vitem:hover .vvis *::before,body.anim-equi .vitem:hover .vvis *::after,body.anim-equi .vperfil:hover *{animation-play-state:running!important}
+/* leve = nada se mexe, sem desfoque */
+body.anim-leve *,body.anim-leve *::before,body.anim-leve *::after{animation:none!important;transition:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+/* app sem foco (o DayZ está na frente) ou minimizado: tudo parado */
+body.parado *,body.parado *::before,body.parado *::after{animation-play-state:paused!important}
+
+/* ---------- enfeites do perfil (todos veem) ---------- */
+.av.temmold{overflow:visible}
+.vmold{position:absolute;inset:-14%;border-radius:50%;pointer-events:none;z-index:1}
+.vm-brasa{background:conic-gradient(from 0deg,#ff3b0a,#ffb347,#ff6b00,#ff2a00,#ffb347,#ff3b0a);-webkit-mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);animation:vgira 4s linear infinite;filter:drop-shadow(0 0 5px #ff6b00)}
+.vm-toxico{background:conic-gradient(#9dff4a 0 12%,transparent 12% 25%,#9dff4a 25% 37%,transparent 37% 50%,#9dff4a 50% 62%,transparent 62% 75%,#9dff4a 75% 87%,transparent 87%);-webkit-mask:radial-gradient(circle,transparent 62%,#000 64%,#000 69%,transparent 71%);mask:radial-gradient(circle,transparent 62%,#000 64%,#000 69%,transparent 71%);animation:vgira 6s linear infinite reverse;filter:drop-shadow(0 0 5px #9dff4a)}
+.vm-radar{border:2px solid rgba(54,229,140,.55);inset:-10%}
+.vm-radar::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(rgba(54,229,140,.55),transparent 22%);animation:vgira 2.4s linear infinite;-webkit-mask:radial-gradient(circle,transparent 56%,#000 58%);mask:radial-gradient(circle,transparent 56%,#000 58%)}
+.vm-arame{inset:-16%;background:repeating-conic-gradient(#9aa3ae 0 4deg,transparent 4deg 15deg);-webkit-mask:radial-gradient(circle,transparent 60%,#000 61%,#000 66%,transparent 67%);mask:radial-gradient(circle,transparent 60%,#000 61%,#000 66%,transparent 67%);animation:vgira 30s linear infinite}
+.vm-gelo{background:conic-gradient(#e9fbff,#7fd8ff,#2f8fd6,#e9fbff,#7fd8ff,#e9fbff);-webkit-mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);filter:drop-shadow(0 0 6px #7fd8ff);animation:vpulsa 2.6s ease-in-out infinite}
+.vm-sangue{background:conic-gradient(#7a0a0a,#e0483e,#7a0a0a,#e0483e,#7a0a0a);-webkit-mask:radial-gradient(circle,transparent 62%,#000 64%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 62%,#000 64%,#000 70%,transparent 72%);animation:vgira 8s linear infinite;filter:drop-shadow(0 0 5px #e0483e)}
+.vm-coroa{inset:-12%;border:3px solid #ffb347;box-shadow:0 0 12px rgba(255,179,71,.6),inset 0 0 8px rgba(255,179,71,.35)}
+.vm-coroa::before{content:"";position:absolute;left:50%;top:-24%;width:46%;height:30%;translate:-50% 0;background:#ffb347;clip-path:polygon(0 100%,0 30%,22% 62%,50% 0,78% 62%,100% 30%,100% 100%);filter:drop-shadow(0 0 5px rgba(255,179,71,.8))}
+@keyframes vgira{to{rotate:1turn}}
+@keyframes vpulsa{50%{opacity:.55}}
+/* efeitos por cima da carta e do perfil */
+.vef{position:absolute;inset:0;pointer-events:none;z-index:4;border-radius:inherit}
+.ve-neve{background-image:radial-gradient(2px 2px at 20% 10%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 30%,#fff,transparent),radial-gradient(2.5px 2.5px at 40% 60%,#fff,transparent),radial-gradient(1.5px 1.5px at 85% 80%,#fff,transparent),radial-gradient(2px 2px at 10% 85%,#fff,transparent);background-size:140px 140px;animation:vcai 6s linear infinite;opacity:.85}
+@keyframes vcai{to{background-position:20px 140px,-14px 140px,10px 140px,-20px 140px,14px 140px}}
+.ve-brasas{background-image:radial-gradient(2px 2px at 20% 90%,#ffb347,transparent),radial-gradient(1.5px 1.5px at 60% 70%,#ff6b00,transparent),radial-gradient(2.5px 2.5px at 80% 95%,#ff8a24,transparent),radial-gradient(1.5px 1.5px at 35% 50%,#ffd59a,transparent),radial-gradient(2px 2px at 90% 40%,#ff3b0a,transparent);background-size:120px 160px;animation:vsobe 4s linear infinite}
+@keyframes vsobe{to{background-position:10px -160px,-12px -160px,6px -160px,-8px -160px,12px -160px}}
+.ve-gas{background:radial-gradient(ellipse at 20% 100%,rgba(157,255,74,.35),transparent 55%),radial-gradient(ellipse at 80% 110%,rgba(157,255,74,.28),transparent 50%);background-size:200% 100%;animation:vgas 7s ease-in-out infinite alternate}
+@keyframes vgas{to{background-position:100% 0;opacity:.6}}
+.ve-scan{background:linear-gradient(180deg,transparent 0,rgba(54,229,140,.2) 48%,rgba(54,229,140,.45) 50%,transparent 52%);background-size:100% 260%;animation:vscan 3.2s linear infinite}
+@keyframes vscan{from{background-position:0 100%}to{background-position:0 -160%}}
+/* cor do nick */
+.vn-fogo,.vn-gelo,.vn-ouro{-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;background-size:200% 100%!important;animation:vcorre 3s linear infinite}
+.vn-fogo{background-image:linear-gradient(90deg,#ff3b0a,#ffb347,#ff3b0a)!important}
+.vn-gelo{background-image:linear-gradient(90deg,#e9fbff,#7fd8ff,#e9fbff)!important}
+.vn-ouro{background-image:linear-gradient(90deg,#b8860b,#ffe08a,#b8860b)!important}
+.vn-toxico{color:#9dff4a!important;text-shadow:0 0 8px rgba(157,255,74,.6)}
+@keyframes vcorre{to{background-position:200% 0}}
+/* selo ao lado do nick */
+.vselo{display:inline-flex;align-items:center;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:5px;white-space:nowrap;margin-inline-start:6px;vertical-align:middle;line-height:1.5}
+.vs-vet{background:#2a1d0c;color:#ffb347;border:1px solid rgba(255,179,71,.45)}
+.vs-sniper{background:#13211a;color:#36e58c;border:1px solid rgba(54,229,140,.4)}
+.vs-medico{background:#2a1214;color:#ff6b6b;border:1px solid rgba(255,107,107,.4)}
+.vs-batedor{background:#121c2a;color:#7fd8ff;border:1px solid rgba(127,216,255,.4)}
+.vs-construtor{background:#1f1b12;color:#d9c08c;border:1px solid rgba(217,192,140,.4)}
+.vs-motorista{background:#1d1426;color:#c49bff;border:1px solid rgba(196,155,255,.4)}
+
+/* ---------- páginas Visual e Jogos ---------- */
+#visualView,#jogosView{overflow-y:auto;min-height:0;flex:1}
+.vwrap{padding:24px;display:flex;flex-direction:column;gap:20px;max-width:1180px}
+.vtit .vqrot{display:block}
+.vtit h2{margin:4px 0 0;font-family:var(--brand);font-weight:400;font-size:2rem;line-height:1.1}
+.vabas{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);padding-bottom:8px}
+.vabas::-webkit-scrollbar{display:none}
+.vaba{padding:8px 14px;border-radius:10px;color:var(--txt2);font-weight:600;font-size:.875rem;display:flex;align-items:center;gap:8px;white-space:nowrap;flex:none}
+.vaba svg{width:18px;height:18px}
+.vaba:hover{background:var(--bg3);color:var(--txt)}
+.vaba.on{background:rgba(var(--a),.14);color:var(--accent)}
+.vcorpo{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.vlista{display:flex;flex-direction:column;gap:16px;min-width:0}
+.vfiltro{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.vfiltro button{padding:6px 12px;border-radius:8px;color:var(--txt2);font-size:.875rem;font-weight:500;white-space:nowrap;flex:none}
+.vfiltro button:hover{color:var(--txt);background:var(--bg3)}
+.vfiltro button.on{color:var(--txt);background:var(--bg4)}
+.vgrade{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.vitem{position:relative;background:var(--bg1);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:start;transition:transform .2s cubic-bezier(.23,1,.32,1),border-color .2s,box-shadow .2s;cursor:pointer}
+.vitem:hover,.vitem:focus-within{transform:translateY(-3px);border-color:rgba(var(--a),.55);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.vitem.usando{border-color:rgba(54,229,140,.55)}
+.vvis{aspect-ratio:1/.8;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,var(--bg3),var(--bg1) 70%);position:relative;overflow:hidden}
+.vvis *,.vvis *::before,.vvis *::after{animation-play-state:paused}
+.vitem:hover .vvis *,.vitem:hover .vvis *::before,.vitem:hover .vvis *::after,.vitem:focus-within .vvis *,.vitem:focus-within .vvis *::before,.vitem:focus-within .vvis *::after{animation-play-state:running}
+@media (hover:none){.vvis *,.vvis *::before,.vvis *::after{animation-play-state:running}}
+.vvis>.av{width:64px;height:64px;font-size:22px;transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vitem:hover .vvis>*{transform:scale(1.08)}
+.vvis .vnome{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vvis .vfundo{position:absolute;inset:12%;border-radius:10px;background:var(--cf);box-shadow:0 8px 22px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vvis .vmini{position:relative;width:76%;aspect-ratio:1.3;border-radius:10px;background:var(--bg2);border:1px solid var(--line);overflow:hidden;display:flex;align-items:flex-end;padding:8px}
+.vvis .vmini .av{width:32px;height:32px;font-size:12px}
+.vtag{position:absolute;inset-block-start:8px;inset-inline-start:8px;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:2px 7px;z-index:5;white-space:nowrap}
+.vtag.an{color:var(--accent)}.vtag.novo{color:#36e58c}.vtag.lid{color:#ffb347}
+.vinfo{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px;min-height:70px}
+.vinfo b{font-weight:600;font-size:.9375rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vinfo small{font-size:.8125rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vinfo .vest{font-size:.8125rem;font-weight:600;color:var(--txt3);margin-top:auto}
+.vinfo .vest.on{color:#36e58c}
+.vver{position:absolute;inset-inline:12px;inset-block-end:12px;justify-content:center;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .18s cubic-bezier(.23,1,.32,1)}
+.vitem:hover .vver,.vitem:focus-within .vver{opacity:1;transform:none}
+@media (hover:none){.vver{display:none}}
+.vlado{position:sticky;top:0;display:flex;flex-direction:column;gap:10px}
+.vlado .vqrot em{font-style:normal;color:var(--accent)}
+.vperfil{position:relative;border-radius:16px;overflow:hidden;background:var(--bg1);border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.vlado.provando .vperfil{border-color:rgba(var(--a),.6)}
+.vperfil .vban{height:92px;background:var(--cf,linear-gradient(120deg,#3a2414,#1d130c))}
+.vperfil .vfoto{position:absolute;inset-block-start:50px;inset-inline-start:16px;padding:6px;border-radius:50%;background:var(--bg1)}
+.vperfil .vfoto .av{width:72px;height:72px;font-size:24px}
+.vperfil .vdados{padding:50px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.vperfil .vdados b{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;line-height:1.2}
+.vperfil .vdados small{color:var(--txt2);font-size:.8125rem}
+.vdica{font-size:.8125rem;color:var(--txt3);line-height:1.5;margin:0}
+.vsecpg{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:16px 20px;max-width:760px}
+.vsecpg>b:first-child{font-family:var(--cond,'Barlow Condensed',sans-serif);font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase}
+.niveis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 4px}
+.nivel{text-align:start;padding:14px;border-radius:12px;background:var(--bg2);border:2px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.nivel b{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.15rem;letter-spacing:.04em;text-transform:uppercase}
+.nivel small{color:var(--txt2);font-size:.8125rem;line-height:1.4}
+.nivel.on{border-color:var(--accent);background:rgba(var(--a),.08)}
+.vopc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.vopc b{font-weight:600}
+.vopc small{display:block;color:var(--txt3);font-size:.8125rem;line-height:1.4;margin-top:2px}
+.chave{width:44px;height:26px;border-radius:999px;background:var(--bg4);position:relative;transition:background .2s;flex:none}
+.chave::after{content:"";position:absolute;inset-block-start:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:translate .2s cubic-bezier(.23,1,.32,1)}
+.chave[aria-checked="true"]{background:var(--accent)}
+.chave[aria-checked="true"]::after{translate:18px 0}
+#visualView .vsec{border:0;padding:0;margin:0}
+.jogos{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.jogo{border-radius:16px;overflow:hidden;background:var(--bg1);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s cubic-bezier(.23,1,.32,1),border-color .2s,box-shadow .2s}
+.jogo:hover{transform:translateY(-3px);border-color:rgba(var(--a),.55);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.jogo .capa{aspect-ratio:16/8;display:grid;place-items:center;overflow:hidden;background:repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px),linear-gradient(135deg,#f4efe6,#e5dccb)}
+.jogo .capa svg{width:70%;height:70%}
+.jogo .capa path{stroke-dasharray:900;stroke-dashoffset:900;animation:vrisca 3s ease-in-out infinite}
+@keyframes vrisca{50%,100%{stroke-dashoffset:0}}
+.jogo .capa.breve{background:repeating-linear-gradient(135deg,#15171c 0 14px,#191c22 14px 28px);color:var(--txt3);font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.jogo .q{padding:16px;display:flex;flex-direction:column;gap:8px}
+.jogo h3{margin:0;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.jogo p{margin:0;color:var(--txt2);font-size:.875rem;line-height:1.5}
+.jogo .rod{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.jogo .rod small{color:var(--txt3);font-size:.8125rem}
+@media (max-width:1100px){.vcorpo{grid-template-columns:minmax(0,1fr)}.vlado{position:static;order:-1;max-width:320px}}
+@media (max-width:760px){.vwrap{padding:16px}.niveis{grid-template-columns:minmax(0,1fr)}.vgrade{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}}
+@media (prefers-reduced-motion:reduce){.vmold,.vmold::after,.vef,[class*="vn-"],.jogo .capa path{animation:none!important}}
+.who .vselo{align-self:flex-start;margin-inline-start:0;margin-block:2px}

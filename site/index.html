@@ -2109,6 +2109,168 @@ body.afktema #app::before{opacity:0}
 body.afktema #top{background:transparent!important}
 body.afktema #voiceView>#temaCarta{opacity:1}
 body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px 50px rgba(0,0,0,.55)}
+/* ===================== 1.68: layout novo, página Visual, Jogos e desempenho ===================== */
+/* a barra de ícones da esquerda sai; o Clã na lateral fica só com o Início */
+#rail{display:none!important}
+.cla-mobile{display:block!important}
+.cla-mobile .ch{margin-top:6px}
+/* menu das páginas do clã, em cima */
+#menuTop{flex:none;display:flex;align-items:center;gap:4px;padding:8px 12px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg0) 88%,transparent);overflow-x:auto;scrollbar-width:none;position:relative;z-index:3}
+#menuTop::-webkit-scrollbar{display:none}
+#menuTop .mi{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;color:var(--txt2);font-weight:600;font-size:.875rem;white-space:nowrap;position:relative;flex:none;transition:background .15s,color .15s}
+#menuTop .mi svg{width:18px;height:18px;flex:none}
+#menuTop .mi:hover{color:var(--txt);background:var(--bg2)}
+#menuTop .mi.on{color:var(--txt);background:var(--bg3)}
+#menuTop .mi.on::after{content:"";position:absolute;inset-inline:12px;inset-block-end:-9px;height:2px;border-radius:2px;background:var(--accent)}
+#menuTop .mi .pt{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);flex:none}
+#menuTop .mi .pt.red{background:var(--red);box-shadow:0 0 6px var(--red)}
+#menuTop .sep{flex:1;min-width:8px}
+#menuTop .mib{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--txt2);flex:none}
+#menuTop .mib:hover{background:var(--bg2);color:var(--txt)}
+#menuTop .mib.on{background:var(--bg3);color:var(--accent)}
+#menuTop .mib svg{width:20px;height:20px}
+@media (max-width:760px){#menuTop .mi span:not(.pt){display:none}#menuTop .mi.on span{display:inline}#menuTop .mi{padding:8px 10px}}
+
+/* fundo do app parado (antes girava o tempo todo na tela inteira) */
+#app::before{animation:none!important}
+/* equalizador do modo cinema: só se mexe com o cinema ligado */
+.eqlado i{animation-play-state:paused!important}
+body.cinema:not(.pausado) .eqlado i{animation-play-state:running!important}
+
+/* desempenho: equilibrado = enfeites só animam com o mouse em cima, sem desfoque */
+body.anim-equi *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.anim-equi .vmold,body.anim-equi .vmold::before,body.anim-equi .vmold::after,body.anim-equi .vef,body.anim-equi [class*="vn-"],body.anim-equi .fx *,body.anim-equi .fx::before,body.anim-equi .fx::after,body.anim-equi #vfundo::before{animation-play-state:paused!important}
+body.anim-equi :hover>.vmold,body.anim-equi :hover>.vmold::after,body.anim-equi :hover>.vmold::before,body.anim-equi .pcard:hover *,body.anim-equi .vitem:hover .vvis *,body.anim-equi .vitem:hover .vvis *::before,body.anim-equi .vitem:hover .vvis *::after,body.anim-equi .vperfil:hover *{animation-play-state:running!important}
+/* leve = nada se mexe, sem desfoque */
+body.anim-leve *,body.anim-leve *::before,body.anim-leve *::after{animation:none!important;transition:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+/* app sem foco (o DayZ está na frente) ou minimizado: tudo parado */
+body.parado *,body.parado *::before,body.parado *::after{animation-play-state:paused!important}
+
+/* ---------- enfeites do perfil (todos veem) ---------- */
+.av.temmold{overflow:visible}
+.vmold{position:absolute;inset:-14%;border-radius:50%;pointer-events:none;z-index:1}
+.vm-brasa{background:conic-gradient(from 0deg,#ff3b0a,#ffb347,#ff6b00,#ff2a00,#ffb347,#ff3b0a);-webkit-mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);animation:vgira 4s linear infinite;filter:drop-shadow(0 0 5px #ff6b00)}
+.vm-toxico{background:conic-gradient(#9dff4a 0 12%,transparent 12% 25%,#9dff4a 25% 37%,transparent 37% 50%,#9dff4a 50% 62%,transparent 62% 75%,#9dff4a 75% 87%,transparent 87%);-webkit-mask:radial-gradient(circle,transparent 62%,#000 64%,#000 69%,transparent 71%);mask:radial-gradient(circle,transparent 62%,#000 64%,#000 69%,transparent 71%);animation:vgira 6s linear infinite reverse;filter:drop-shadow(0 0 5px #9dff4a)}
+.vm-radar{border:2px solid rgba(54,229,140,.55);inset:-10%}
+.vm-radar::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(rgba(54,229,140,.55),transparent 22%);animation:vgira 2.4s linear infinite;-webkit-mask:radial-gradient(circle,transparent 56%,#000 58%);mask:radial-gradient(circle,transparent 56%,#000 58%)}
+.vm-arame{inset:-16%;background:repeating-conic-gradient(#9aa3ae 0 4deg,transparent 4deg 15deg);-webkit-mask:radial-gradient(circle,transparent 60%,#000 61%,#000 66%,transparent 67%);mask:radial-gradient(circle,transparent 60%,#000 61%,#000 66%,transparent 67%);animation:vgira 30s linear infinite}
+.vm-gelo{background:conic-gradient(#e9fbff,#7fd8ff,#2f8fd6,#e9fbff,#7fd8ff,#e9fbff);-webkit-mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 61%,#000 63%,#000 70%,transparent 72%);filter:drop-shadow(0 0 6px #7fd8ff);animation:vpulsa 2.6s ease-in-out infinite}
+.vm-sangue{background:conic-gradient(#7a0a0a,#e0483e,#7a0a0a,#e0483e,#7a0a0a);-webkit-mask:radial-gradient(circle,transparent 62%,#000 64%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 62%,#000 64%,#000 70%,transparent 72%);animation:vgira 8s linear infinite;filter:drop-shadow(0 0 5px #e0483e)}
+.vm-coroa{inset:-12%;border:3px solid #ffb347;box-shadow:0 0 12px rgba(255,179,71,.6),inset 0 0 8px rgba(255,179,71,.35)}
+.vm-coroa::before{content:"";position:absolute;left:50%;top:-24%;width:46%;height:30%;translate:-50% 0;background:#ffb347;clip-path:polygon(0 100%,0 30%,22% 62%,50% 0,78% 62%,100% 30%,100% 100%);filter:drop-shadow(0 0 5px rgba(255,179,71,.8))}
+@keyframes vgira{to{rotate:1turn}}
+@keyframes vpulsa{50%{opacity:.55}}
+/* efeitos por cima da carta e do perfil */
+.vef{position:absolute;inset:0;pointer-events:none;z-index:4;border-radius:inherit}
+.ve-neve{background-image:radial-gradient(2px 2px at 20% 10%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 30%,#fff,transparent),radial-gradient(2.5px 2.5px at 40% 60%,#fff,transparent),radial-gradient(1.5px 1.5px at 85% 80%,#fff,transparent),radial-gradient(2px 2px at 10% 85%,#fff,transparent);background-size:140px 140px;animation:vcai 6s linear infinite;opacity:.85}
+@keyframes vcai{to{background-position:20px 140px,-14px 140px,10px 140px,-20px 140px,14px 140px}}
+.ve-brasas{background-image:radial-gradient(2px 2px at 20% 90%,#ffb347,transparent),radial-gradient(1.5px 1.5px at 60% 70%,#ff6b00,transparent),radial-gradient(2.5px 2.5px at 80% 95%,#ff8a24,transparent),radial-gradient(1.5px 1.5px at 35% 50%,#ffd59a,transparent),radial-gradient(2px 2px at 90% 40%,#ff3b0a,transparent);background-size:120px 160px;animation:vsobe 4s linear infinite}
+@keyframes vsobe{to{background-position:10px -160px,-12px -160px,6px -160px,-8px -160px,12px -160px}}
+.ve-gas{background:radial-gradient(ellipse at 20% 100%,rgba(157,255,74,.35),transparent 55%),radial-gradient(ellipse at 80% 110%,rgba(157,255,74,.28),transparent 50%);background-size:200% 100%;animation:vgas 7s ease-in-out infinite alternate}
+@keyframes vgas{to{background-position:100% 0;opacity:.6}}
+.ve-scan{background:linear-gradient(180deg,transparent 0,rgba(54,229,140,.2) 48%,rgba(54,229,140,.45) 50%,transparent 52%);background-size:100% 260%;animation:vscan 3.2s linear infinite}
+@keyframes vscan{from{background-position:0 100%}to{background-position:0 -160%}}
+/* cor do nick */
+.vn-fogo,.vn-gelo,.vn-ouro{-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;background-size:200% 100%!important;animation:vcorre 3s linear infinite}
+.vn-fogo{background-image:linear-gradient(90deg,#ff3b0a,#ffb347,#ff3b0a)!important}
+.vn-gelo{background-image:linear-gradient(90deg,#e9fbff,#7fd8ff,#e9fbff)!important}
+.vn-ouro{background-image:linear-gradient(90deg,#b8860b,#ffe08a,#b8860b)!important}
+.vn-toxico{color:#9dff4a!important;text-shadow:0 0 8px rgba(157,255,74,.6)}
+@keyframes vcorre{to{background-position:200% 0}}
+/* selo ao lado do nick */
+.vselo{display:inline-flex;align-items:center;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:5px;white-space:nowrap;margin-inline-start:6px;vertical-align:middle;line-height:1.5}
+.vs-vet{background:#2a1d0c;color:#ffb347;border:1px solid rgba(255,179,71,.45)}
+.vs-sniper{background:#13211a;color:#36e58c;border:1px solid rgba(54,229,140,.4)}
+.vs-medico{background:#2a1214;color:#ff6b6b;border:1px solid rgba(255,107,107,.4)}
+.vs-batedor{background:#121c2a;color:#7fd8ff;border:1px solid rgba(127,216,255,.4)}
+.vs-construtor{background:#1f1b12;color:#d9c08c;border:1px solid rgba(217,192,140,.4)}
+.vs-motorista{background:#1d1426;color:#c49bff;border:1px solid rgba(196,155,255,.4)}
+
+/* ---------- páginas Visual e Jogos ---------- */
+#visualView,#jogosView{overflow-y:auto;min-height:0;flex:1}
+.vwrap{padding:24px;display:flex;flex-direction:column;gap:20px;max-width:1180px}
+.vtit .vqrot{display:block}
+.vtit h2{margin:4px 0 0;font-family:var(--brand);font-weight:400;font-size:2rem;line-height:1.1}
+.vabas{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);padding-bottom:8px}
+.vabas::-webkit-scrollbar{display:none}
+.vaba{padding:8px 14px;border-radius:10px;color:var(--txt2);font-weight:600;font-size:.875rem;display:flex;align-items:center;gap:8px;white-space:nowrap;flex:none}
+.vaba svg{width:18px;height:18px}
+.vaba:hover{background:var(--bg3);color:var(--txt)}
+.vaba.on{background:rgba(var(--a),.14);color:var(--accent)}
+.vcorpo{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+.vlista{display:flex;flex-direction:column;gap:16px;min-width:0}
+.vfiltro{display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.vfiltro button{padding:6px 12px;border-radius:8px;color:var(--txt2);font-size:.875rem;font-weight:500;white-space:nowrap;flex:none}
+.vfiltro button:hover{color:var(--txt);background:var(--bg3)}
+.vfiltro button.on{color:var(--txt);background:var(--bg4)}
+.vgrade{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.vitem{position:relative;background:var(--bg1);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:start;transition:transform .2s cubic-bezier(.23,1,.32,1),border-color .2s,box-shadow .2s;cursor:pointer}
+.vitem:hover,.vitem:focus-within{transform:translateY(-3px);border-color:rgba(var(--a),.55);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.vitem.usando{border-color:rgba(54,229,140,.55)}
+.vvis{aspect-ratio:1/.8;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,var(--bg3),var(--bg1) 70%);position:relative;overflow:hidden}
+.vvis *,.vvis *::before,.vvis *::after{animation-play-state:paused}
+.vitem:hover .vvis *,.vitem:hover .vvis *::before,.vitem:hover .vvis *::after,.vitem:focus-within .vvis *,.vitem:focus-within .vvis *::before,.vitem:focus-within .vvis *::after{animation-play-state:running}
+@media (hover:none){.vvis *,.vvis *::before,.vvis *::after{animation-play-state:running}}
+.vvis>.av{width:64px;height:64px;font-size:22px;transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vitem:hover .vvis>*{transform:scale(1.08)}
+.vvis .vnome{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vvis .vfundo{position:absolute;inset:12%;border-radius:10px;background:var(--cf);box-shadow:0 8px 22px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.vvis .vmini{position:relative;width:76%;aspect-ratio:1.3;border-radius:10px;background:var(--bg2);border:1px solid var(--line);overflow:hidden;display:flex;align-items:flex-end;padding:8px}
+.vvis .vmini .av{width:32px;height:32px;font-size:12px}
+.vtag{position:absolute;inset-block-start:8px;inset-inline-start:8px;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:2px 7px;z-index:5;white-space:nowrap}
+.vtag.an{color:var(--accent)}.vtag.novo{color:#36e58c}.vtag.lid{color:#ffb347}
+.vinfo{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px;min-height:70px}
+.vinfo b{font-weight:600;font-size:.9375rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vinfo small{font-size:.8125rem;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vinfo .vest{font-size:.8125rem;font-weight:600;color:var(--txt3);margin-top:auto}
+.vinfo .vest.on{color:#36e58c}
+.vver{position:absolute;inset-inline:12px;inset-block-end:12px;justify-content:center;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .18s cubic-bezier(.23,1,.32,1)}
+.vitem:hover .vver,.vitem:focus-within .vver{opacity:1;transform:none}
+@media (hover:none){.vver{display:none}}
+.vlado{position:sticky;top:0;display:flex;flex-direction:column;gap:10px}
+.vlado .vqrot em{font-style:normal;color:var(--accent)}
+.vperfil{position:relative;border-radius:16px;overflow:hidden;background:var(--bg1);border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.vlado.provando .vperfil{border-color:rgba(var(--a),.6)}
+.vperfil .vban{height:92px;background:var(--cf,linear-gradient(120deg,#3a2414,#1d130c))}
+.vperfil .vfoto{position:absolute;inset-block-start:50px;inset-inline-start:16px;padding:6px;border-radius:50%;background:var(--bg1)}
+.vperfil .vfoto .av{width:72px;height:72px;font-size:24px}
+.vperfil .vdados{padding:50px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.vperfil .vdados b{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;line-height:1.2}
+.vperfil .vdados small{color:var(--txt2);font-size:.8125rem}
+.vdica{font-size:.8125rem;color:var(--txt3);line-height:1.5;margin:0}
+.vsecpg{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:16px 20px;max-width:760px}
+.vsecpg>b:first-child{font-family:var(--cond,'Barlow Condensed',sans-serif);font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase}
+.niveis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 4px}
+.nivel{text-align:start;padding:14px;border-radius:12px;background:var(--bg2);border:2px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.nivel b{font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.15rem;letter-spacing:.04em;text-transform:uppercase}
+.nivel small{color:var(--txt2);font-size:.8125rem;line-height:1.4}
+.nivel.on{border-color:var(--accent);background:rgba(var(--a),.08)}
+.vopc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.vopc b{font-weight:600}
+.vopc small{display:block;color:var(--txt3);font-size:.8125rem;line-height:1.4;margin-top:2px}
+.chave{width:44px;height:26px;border-radius:999px;background:var(--bg4);position:relative;transition:background .2s;flex:none}
+.chave::after{content:"";position:absolute;inset-block-start:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:translate .2s cubic-bezier(.23,1,.32,1)}
+.chave[aria-checked="true"]{background:var(--accent)}
+.chave[aria-checked="true"]::after{translate:18px 0}
+#visualView .vsec{border:0;padding:0;margin:0}
+.jogos{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.jogo{border-radius:16px;overflow:hidden;background:var(--bg1);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s cubic-bezier(.23,1,.32,1),border-color .2s,box-shadow .2s}
+.jogo:hover{transform:translateY(-3px);border-color:rgba(var(--a),.55);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.jogo .capa{aspect-ratio:16/8;display:grid;place-items:center;overflow:hidden;background:repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,rgba(0,0,0,.05) 23px 24px),linear-gradient(135deg,#f4efe6,#e5dccb)}
+.jogo .capa svg{width:70%;height:70%}
+.jogo .capa path{stroke-dasharray:900;stroke-dashoffset:900;animation:vrisca 3s ease-in-out infinite}
+@keyframes vrisca{50%,100%{stroke-dashoffset:0}}
+.jogo .capa.breve{background:repeating-linear-gradient(135deg,#15171c 0 14px,#191c22 14px 28px);color:var(--txt3);font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.jogo .q{padding:16px;display:flex;flex-direction:column;gap:8px}
+.jogo h3{margin:0;font-family:var(--cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:1.5rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.2}
+.jogo p{margin:0;color:var(--txt2);font-size:.875rem;line-height:1.5}
+.jogo .rod{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.jogo .rod small{color:var(--txt3);font-size:.8125rem}
+@media (max-width:1100px){.vcorpo{grid-template-columns:minmax(0,1fr)}.vlado{position:static;order:-1;max-width:320px}}
+@media (max-width:760px){.vwrap{padding:16px}.niveis{grid-template-columns:minmax(0,1fr)}.vgrade{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}}
+@media (prefers-reduced-motion:reduce){.vmold,.vmold::after,.vef,[class*="vn-"],.jogo .capa path{animation:none!important}}
+.who .vselo{align-self:flex-start;margin-inline-start:0;margin-block:2px}
+
 </style>
 </head>
 <body>
@@ -2249,12 +2411,15 @@ body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px
       <div class="title" id="topTitle"></div>
       <button class="ib" id="membersBtn" title="Membros"></button>
     </div>
+    <nav id="menuTop" aria-label="Páginas do clã"></nav>
 
     <section id="homeView" hidden></section>
     <section id="regrasView" hidden></section>
     <section id="vaqView" hidden></section>
     <section id="placarView" hidden></section>
     <section id="recView" hidden></section>
+    <section id="jogosView" hidden></section>
+    <section id="visualView" hidden></section>
     <section id="admView" hidden>
       <div class="admwrap">
         <header class="admhero">
@@ -2568,7 +2733,7 @@ body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px
     <label class="chk"><input type="checkbox" id="cdBrilho"> Borda brilhando</label>
     <label class="chk"><input type="checkbox" id="cdKd" checked> Mostrar minhas kills e mortes do Placar PvP</label>
     <label class="chk"><input type="checkbox" id="cdAfk" checked> Parado na sala: o tema da minha carta vira o tema do app inteiro</label>
-    <label class="chk"><input type="checkbox" id="cdAnim" checked> Animações nas cartas <small style="color:var(--txt3)">(só neste PC; desligue se travar)</small></label>
+    <label class="chk" hidden><input type="checkbox" id="cdAnim" checked> Animações nas cartas <small style="color:var(--txt3)">(só neste PC; desligue se travar)</small></label>
     <div class="cdprev" id="cdPrev"></div>
   </div>
   <div class="drow"><button class="btn ghost" type="button" id="visReset">Voltar ao padrão</button><button class="btn acc" type="button" id="visClose">Pronto</button></div>
@@ -2608,7 +2773,7 @@ body.afktema #stage .pcard.pc2{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px
   <div class="drow">
     <button class="btn red" id="logoutBtn">Sair da conta</button>
     <button class="btn ghost" id="openPerfil" type="button">Meu perfil</button>
-    <button class="btn ghost" id="openVisual" type="button">🎨 Aparência</button>
+    <button class="btn ghost" id="openVisual" type="button">🎨 Visual do perfil</button>
     <button class="btn ghost" id="setClose">Fechar</button>
   </div>
 </dialog>
@@ -2632,9 +2797,9 @@ const CONFIG = {
   supabaseUrl: 'https://baiydznqcfsvnqbfvjzz.supabase.co',
   supabaseAnonKey: 'sb_publishable_2v3nxuTUFy6i4ANV6BEl1w_Am12MSXr',
   desenvolvedor: 'Guilherme Azevedo',
-  versao: '1.67',
+  versao: '1.68',
   mapaPadrao: 'mapa-chernarus.jpg', // imagem que vai junto no zip; o admin pode trocar pelo site
-  dataVersao: '21/11/2026',
+  dataVersao: '23/11/2026',
   // Identificador único do app. Se mudar, todo mundo precisa usar a versão nova.
   idUnico: 'cla-dayz-comms-v1-9q4x',
   // Grupo do WhatsApp (botão na barra da esquerda, no Início e em #boas-vindas). Troque a imagem whatsapp-qr.png se quiser.
@@ -2724,7 +2889,8 @@ function meMarcou(m) {
 const fotoDe = uid => uid && (uid === S.uid ? S.eu?.avatar : S.cla?.[uid]?.avatar);
 const safeFoto = f => typeof f === 'string' && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(f) ? f : null;
 const avatar = (name, cls = '', id = '', uid = '', foto) => { const f = safeFoto(foto === undefined ? fotoDe(uid) : foto);
-  return `<div class="av ${cls}" ${id ? `data-speak="${esc(id)}"` : ''} style="background:${f ? '#000' : colorFor(name)}">${f ? `<img src="${f}" alt="">` : esc(initials(name))}</div>`; };
+  const mo = moldDe(uid);
+  return `<div class="av ${cls}${mo ? ' temmold' : ''}" ${id ? `data-speak="${esc(id)}"` : ''} style="background:${f ? '#000' : colorFor(name)}">${f ? `<img src="${f}" alt="">` : esc(initials(name))}${mo ? `<span class="vmold vm-${mo}" aria-hidden="true"></span>` : ''}</div>`; };
 const fmtTime = ts => new Date(ts).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 const fmtDay = ts => { const d = new Date(ts), t = new Date(); const y = new Date(); y.setDate(t.getDate() - 1);
   if (d.toDateString() === t.toDateString()) return 'Hoje'; if (d.toDateString() === y.toDateString()) return 'Ontem';
@@ -3297,11 +3463,11 @@ function cartaHtml(o) {
     <div class="pfx fx fx-${e}" style="--cf:${f}">${fxDe(o.uid || o.nome, e, 2.2)}</div><div class="pglare"></div>
     <div class="pcorpo"><div class="pav" style="--ob:${colorFor(o.nome)}">${orelhas}${avatar(o.nome, '', '', o.uid)}<i></i><i></i><i></i></div>
       ${um ? `<span class="coroa1" title="1º do clã no Placar PvP">${COROA1}</span>` : ''}
-      <div class="nm"><b>${esc(o.nome)}</b>${o.icones || ''}<span class="peq" aria-hidden="true"><span></span><span></span><span></span></span></div>
+      <div class="nm"><b class="${nickCls(o.uid, o.cd)}">${esc(o.nome)}</b>${o.icones || ''}<span class="peq" aria-hidden="true"><span></span><span></span><span></span></span></div>
       ${um ? '<span class="ptop1">1º do clã no Placar PvP</span>' : ''}${cargo || tagCargo(o.uid) ? `<span class="pcargo">${cargo}${o.uid ? tagCargo(o.uid) : ''}</span>` : ''}
       ${cd?.t ? `<div class="frase">“${esc(cd.t)}”</div>` : ''}${o.extra || ''}
       ${pv ? `<dl class="pkd"><div class="k"><dt>Kills</dt><dd>${pv.k}</dd></div><div class="m"><dt>Mortes</dt><dd>${pv.m}</dd></div><div><dt>K/D</dt><dd>${fmtKD(pv.k, pv.m)}</dd></div><span class="bar"><i style="width:${pct}%"></i></span></dl><div class="pfonte${pv.inf ? ' inf' : ''}">${pv.inf ? 'Informado pela pessoa' : `Placar PvP${pv.p ? ` · ${pv.p}º lugar` : ''}`}</div>` : ''}
-    </div>${o.fim || ''}</div>`;
+    </div>${o.cd?.ef ? `<span class="vef ve-${o.cd.ef}" aria-hidden="true"></span>` : ''}${o.fim || ''}</div>`;
 }
 // inclinação 3D seguindo o mouse
 (() => {
@@ -3453,6 +3619,26 @@ function aplicarTema(forcada) {
 }
 aplicarTema();
 semAnim();
+
+// 1.68: enfeites do perfil (grátis, todos veem). Vão no cartão 'cd' da presença: mo moldura, ef efeito, nk cor do nick, se selo.
+const VIS = {
+  mo: [{ id: 'brasa', nome: 'Brasa', d: 'Anel de fogo girando' }, { id: 'toxico', nome: 'Tóxico', d: 'Faixa de risco verde' }, { id: 'radar', nome: 'Radar', d: 'Varredura de radar' }, { id: 'arame', nome: 'Arame farpado', d: 'Cerca da base' }, { id: 'gelo', nome: 'Gelo', d: 'Brilho frio pulsando' }, { id: 'sangue', nome: 'Sangue', d: 'Anel vermelho' }, { id: 'coroa', nome: 'Coroa', d: 'Só dono e admins', lid: 1 }],
+  ef: [{ id: 'neve', nome: 'Neve', d: 'Neve caindo na carta' }, { id: 'brasas', nome: 'Brasas', d: 'Faíscas subindo' }, { id: 'gas', nome: 'Gás tóxico', d: 'Névoa verde' }, { id: 'scan', nome: 'Scanner', d: 'Linha de varredura' }],
+  nk: [{ id: 'fogo', nome: 'Fogo', d: 'Nick em degradê de fogo' }, { id: 'gelo', nome: 'Gelo', d: 'Nick azul-gelo' }, { id: 'ouro', nome: 'Ouro', d: 'Nick dourado' }, { id: 'toxico', nome: 'Tóxico', d: 'Nick verde brilhando' }],
+  se: [{ id: 'vet', nome: 'Veterano' }, { id: 'sniper', nome: 'Sniper' }, { id: 'medico', nome: 'Médico' }, { id: 'batedor', nome: 'Batedor' }, { id: 'construtor', nome: 'Construtor' }, { id: 'motorista', nome: 'Motorista' }],
+  prova: null, aba: 'perfil', cat: 'mo',
+};
+const ehLid = uid => !!uid && (uid === S.dono || S.cla?.[uid]?.cargo === 'admin');
+const CDC = { t: 0, m: new Map() };
+function cdDe(uid) {
+  if (!uid) return null;
+  if (uid === S.uid) return VIS.prova || meuCartao();
+  if (Date.now() - CDC.t > 400) { CDC.t = Date.now(); CDC.m = new Map(); try { for (const p of Object.values(S.peers || {})) if (p.uid && p.cd) CDC.m.set(p.uid, p.cd); for (const [u, r] of Object.entries(S.rt || {})) if (r.cd && !CDC.m.has(u)) CDC.m.set(u, r.cd); } catch (e) {} }
+  return CDC.m.get(uid) || null;
+}
+function moldDe(uid) { const mo = cdDe(uid)?.mo; return mo && (mo !== 'coroa' || ehLid(uid)) ? mo : ''; }
+function nickCls(uid, cd) { const nk = (cd || cdDe(uid))?.nk; return nk ? ' vn-' + nk : ''; }
+function seloDe(uid) { const se = VIS.se.find(x => x.id === cdDe(uid)?.se); return se ? `<span class="vselo vs-${se.id}">${se.nome}</span>` : ''; }
 // cartão: vem de cada pessoa pela presença; tudo validado antes de virar estilo
 function cartaoValido(c) {
   if (!c || typeof c !== 'object') return null;
@@ -3460,8 +3646,9 @@ function cartaoValido(c) {
   const cor = RE_COR.test(c.c || '') ? c.c : '';
   const t = typeof c.t === 'string' ? c.t.replace(/[\u0000-\u001f]/g, '').trim().slice(0, 40) : '';
   const n = c.n === false ? false : undefined;
-  if (e === 'padrao' && !cor && !t && !c.b && n === undefined) return null;
-  return { e, c: cor, t, b: !!c.b, ...(n === false ? { n } : {}) };
+  const ex = {}; for (const k of ['mo', 'ef', 'nk', 'se']) if (VIS[k].some(x => x.id === c[k])) ex[k] = c[k];
+  if (e === 'padrao' && !cor && !t && !c.b && n === undefined && !Object.keys(ex).length) return null;
+  return { e, c: cor, t, b: !!c.b, ...(n === false ? { n } : {}), ...ex };
 }
 const meuCartao = () => cartaoValido(LS.get('cartao', null));
 function estiloCartao(cd) {
@@ -3478,7 +3665,6 @@ function abrirVisual() {
   $('#cdCor').value = RE_COR.test(cd.c || '') ? cd.c : (RE_COR.test(t.cor || '') ? t.cor : '#ff8a24');
   $('#cdFrase').value = cd.t || ''; $('#cdBrilho').checked = !!cd.b;
   previaCartao();
-  if (!$('#dlgVisual').open) $('#dlgVisual').showModal();
 }
 function salvarTema(m) { LS.set('tema', { ...(LS.get('tema', {}) || {}), ...m }); aplicarTema(); abrirVisual(); }
 function salvarCartao(m) { LS.set('cartao', { ...(LS.get('cartao', {}) || {}), ...m }); previaCartao(); S.rtUlt = ''; broadcast(); renderStage(); }
@@ -3489,7 +3675,7 @@ function previaCartao() {
   $('#cdKd').checked = meuCartao()?.n !== false; $('#cdAnim').checked = !LS.get('semAnim', false);
   document.querySelectorAll('#cdEstilos button').forEach(b => b.classList.toggle('on', (meuCartao()?.e || 'padrao') === b.dataset.cd));
 }
-$('#openVisual').onclick = () => { $('#settings').close(); abrirVisual(); };
+$('#openVisual').onclick = () => { $('#settings').close(); showVisual('perfil'); };
 $('#visClose').onclick = () => $('#dlgVisual').close();
 $('#visReset').onclick = () => { LS.set('tema', {}); LS.set('cartao', {}); aplicarTema(); salvarCartao({}); abrirVisual(); };
 $('#temaCores').onclick = e => { const b = e.target.closest('[data-tema]'); if (b) salvarTema({ cor: b.dataset.tema }); };
@@ -4193,7 +4379,7 @@ function renderStatic() {
   $('#app').classList.toggle('nomembers', !S.showMembers);
   updateTitle();
 }
-function renderAll() { if (typeof R !== 'undefined') { marcarRail(); if (R.aberto && !R.g) renderLobbyRabisco(); } renderMesa(); renderEnquetesVoz(); renderChannels(); renderMe(); renderMembers(); renderVoicebar(); renderStage(); renderTop(); renderTyping(); if (S.view === 'home') renderHome(); }
+function renderAll() { if (typeof R !== 'undefined') { marcarRail(); if (R.aberto && !R.g) renderLobbyRabisco(); } renderMesa(); renderEnquetesVoz(); renderChannels(); renderMe(); renderMembers(); renderVoicebar(); renderStage(); renderTop(); renderTyping(); if (S.view === 'home') renderHome(); renderMenuTop(); }
 
 function everyone() {
   const list = [{ id: selfId, uid: S.uid, name: S.name, voice: S.v?.id || null, vozDesde: S.vozDesde, cd: meuCartao(), st: meuStatus(), rb: noRabisco(), rj: !!(R.g && R.g.fase !== 'fim'), muted: S.muted, deaf: S.deaf && !S.limpa, lp: !!S.limpa, sharing: !!S.v?.screen, me: true }];
@@ -4211,7 +4397,7 @@ function renderChannels() {
   const all = everyone();
   const adm = S.eu?.cargo === 'admin';
   const del = c => adm ? `<span class="edch" data-edch="${esc(c.id)}" title="Editar nome e ícone">✎</span><span class="delch" data-del="${esc(c.id)}" title="Excluir canal">×</span>` : '';
-  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button><button class="ch ${S.view === 'map' ? 'active' : ''}" data-map>${ICON.map}<span class="grow">Mapa</span></button><button class="ch" data-rabisco>${ICON_RABISCO}<span class="grow">Rabisco</span></button><button class="ch ${S.view === 'regras' ? 'active' : ''}" data-regras>${ICON_REGRAS}<span class="grow">Regras</span></button><button class="ch ${S.view === 'vaq' ? 'active' : ''}" data-vaq>${ICON_VAQ}<span class="grow">Vaquinha</span>${vaqFalta() ? '<span class="vqponto" aria-label="vaquinha aberta"></span>' : ''}</button><button class="ch ${S.view === 'placar' ? 'active' : ''}" data-placar>${ICON_PLACAR}<span class="grow">Placar PvP</span></button>${CONFIG.whatsapp ? `<button class="ch chzap" data-zap>${ICON.zap}<span class="grow">WhatsApp</span></button>` : ''}</div>`;
+  let h = `<div class="cla-mobile"><div class="cat">Clã</div><button class="ch ${S.view === 'home' ? 'active' : ''}" data-home>${ICON.home}<span class="grow">Início</span></button></div>`;
   $('#railHome').classList.toggle('on', S.view === 'home'); $('#railMapa').classList.toggle('on', S.view === 'map'); $('#railRegras')?.classList.toggle('on', S.view === 'regras'); $('#railRegras')?.classList.toggle('falta', S.assinou === false); $('#railVaq')?.classList.toggle('on', S.view === 'vaq'); $('#railPlacar')?.classList.toggle('on', S.view === 'placar'); { const d = $('#railVaq .vqponto'); if (d) d.hidden = !vaqFalta(); } admBolhas();
   h += `<div class="cat">Canais de texto${adm ? '<button class="addch" data-add="texto" title="Criar canal de texto">+</button>' : ''}</div>`;
   const itemTxt = (c, ico, extra = '') => {
@@ -4271,7 +4457,7 @@ function renderMembers() {
     const status = (p.voice ? `${ICON.vol}${esc(VOZ[p.voice]?.nome || '')}${p.sharing ? ' · <span class="live">AO VIVO</span>' : ''}` : STATUS[statusValido(p.st)]) + (p.longe ? ' · conectando…' : '');
     const st = statusValido(p.st);
     h += `<div class="mem${p.longe ? ' longe' : ''}" data-uid="${esc(p.uid || '')}" title="${p.uid ? 'Clique para ver opções' : ''}">${avatar(p.name, S.speaking[p.id] ? 'speaking' : '', p.id, p.uid).replace('</div>', `<span class="pres ${st}" title="${STATUS[st]}"></span></div>`)}
-      <div class="who"><b style="${corCargo(p.uid) ? 'color:' + corCargo(p.uid) : ''}">${esc(p.name)}${p.me ? ' <span style="color:var(--txt3);font-weight:500">(você)</span>' : ''}</b>${tagCargo(p.uid)}<small>${status}</small></div></div>`;
+      <div class="who"><b class="${nickCls(p.uid)}" style="${corCargo(p.uid) ? 'color:' + corCargo(p.uid) : ''}">${esc(p.name)}${p.me ? ' <span style="color:var(--txt3);font-weight:500">(você)</span>' : ''}</b>${tagCargo(p.uid)}<small>${status}</small></div></div>`;
   }
   if (offline.length) {
     h += `<div class="cat off">Offline — ${offline.length}</div>`;
@@ -4288,6 +4474,8 @@ function renderTop() {
   else if (S.view === 'rec') $('#topTitle').innerHTML = `${ICON_REC}<span>Recrutamento</span>`;
   else if (S.view === 'adm') $('#topTitle').innerHTML = `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg><span>Central do Admin</span>`;
   else if (S.view === 'placar') $('#topTitle').innerHTML = `${ICON_PLACAR}<span>Placar PvP do clã</span>`;
+  else if (S.view === 'jogos') $('#topTitle').innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 4 4v1a3 3 0 0 1-5.4 1.8L15 13H9l-1.6 1.8A3 3 0 0 1 2 13v-1a4 4 0 0 1 4-4z"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11" r=".8" fill="currentColor"/><circle cx="18" cy="13" r=".8" fill="currentColor"/></svg><span>Jogos</span>`;
+  else if (S.view === 'visual') $('#topTitle').innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><span>Visual do perfil</span>`;
   else if (TXT[S.ch]?.bot) $('#topTitle').innerHTML = `<span class="botmini"><img src="${LOGO}" alt=""></span><span>Bot U.C.B.R · mensagem privada</span>`;
   else if (TXT[S.ch]?.dm) $('#topTitle').innerHTML = `${avatar(TXT[S.ch].nome, 'mini', '', TXT[S.ch].dm)}<span>${esc(TXT[S.ch].nome)} · mensagem privada</span>`;
   else $('#topTitle').innerHTML = `${icoCanal(TXT[S.ch], TXT[S.ch]?.privado ? ICON.lock : ICON.hash)}<span>${esc(TXT[S.ch]?.nome || '')}</span>`;
@@ -4311,7 +4499,7 @@ function renderMessages() {
     const anx = (m.anexo ? `<div class="anexo" data-path="${esc(m.anexo.path)}" data-tipo="${m.anexo.tipo}"><div class="load">Carregando ${m.anexo.tipo === 'video' ? 'vídeo' : 'imagem'}…</div></div>` : '') + (m.enquete ? htmlEnquete(m, list) : '');
     const marc = meMarcou(m) ? ' marcado' : '', nome = S.cla[m.uid]?.nick || m.name;
     if (grouped) h += `<div class="msg${marc}"><div class="gut">${fmtTime(m.ts)}</div><div class="body">${m.text ? `<div class="text">${textoMsg(m.text)}</div>` : ''}${anx}</div></div>`;
-    else h += `<div class="msg first${marc}">${avatar(nome, '', '', m.uid)}<div class="body"><div class="meta"><b class="quem" data-uid="${esc(m.uid || '')}" style="color:${corCargo(m.uid) || colorFor(nome)}">${esc(nome)}</b>${tagCargo(m.uid)}<time>${fmtDay(m.ts) === 'Hoje' ? 'hoje às ' : ''}${fmtTime(m.ts)}</time></div>${m.text ? `<div class="text">${textoMsg(m.text)}</div>` : ''}${anx}</div></div>`;
+    else h += `<div class="msg first${marc}">${avatar(nome, '', '', m.uid)}<div class="body"><div class="meta"><b class="quem${nickCls(m.uid)}" data-uid="${esc(m.uid || '')}" style="color:${corCargo(m.uid) || colorFor(nome)}">${esc(nome)}</b>${tagCargo(m.uid)}<time>${fmtDay(m.ts) === 'Hoje' ? 'hoje às ' : ''}${fmtTime(m.ts)}</time></div>${m.text ? `<div class="text">${textoMsg(m.text)}</div>` : ''}${anx}</div></div>`;
     prev = m;
   }
   box.innerHTML = h;
@@ -4656,6 +4844,10 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-placar]')) return showPlacar();
   if (e.target.closest('[data-rec]')) return showRec();
   if (e.target.closest('[data-rabisco]')) return alternarRabisco();
+  if (e.target.closest('[data-jogos]')) return showJogos();
+  if (e.target.closest('[data-visual]')) return showVisual();
+  if (e.target.closest('#menuTop [data-map]')) return showMap();
+  if (e.target.closest('#menuTop [data-mtadm]')) return $('#admCentralBtn').click();
   const dm = e.target.closest('[data-dm]'); if (dm) return abrirDM(dm.dataset.dm);
   const q = e.target.closest('.quem[data-uid], .mem[data-uid]') || (!e.target.closest('button,input,a') && e.target.closest('.pcard.pc2[data-uid]')); if (q && q.dataset.uid && !q.closest('.cdprev')) return abrirPop(q.dataset.uid, q);
   if (!e.target.closest('#popMem')) fecharPop();
@@ -6023,7 +6215,7 @@ const CG_ANIMS = [['pulsa', 'Pulsar'], ['pula', 'Pular'], ['balanca', 'Balançar
 const CG_EMOJIS = ['👑', '🎯', '🩺', '🛡️', '⚔️', '🔥', '💀', '🧟', '📡', '🚗', '🔧', '💣', '🏹', '🎖️', '⭐', '🐺', '🦅', '🍖'];
 function emojiCargo(c) { if (!c?.emoji) return ''; const a = CG_ANIMS.some(x => x[0] === c.anim) ? c.anim : 'pulsa'; return `<i class="cemo ca-${a}" aria-hidden="true">${esc(String(c.emoji).slice(0, 8))}</i>`; }
 function tagCargoNome(t, extra = '') { if (!t) return ''; const c = S.cargos.find(x => x.nome === t); return `<span class="tcargo${extra}" style="--c:${corValida(c?.cor) || '#9299a5'}">${emojiCargo(c)}${esc(t)}</span>`; }
-function tagCargo(uid) { return tagCargoNome(S.cla?.[uid]?.titulo); }
+function tagCargo(uid) { return tagCargoNome(S.cla?.[uid]?.titulo) + seloDe(uid); }
 // Aceita e-mail ou nick. Pelo nick, o banco só devolve o e-mail se a senha estiver certa.
 async function emailDe(texto, senha) {
   texto = texto.trim();
@@ -8069,6 +8261,139 @@ $('#somNovo').addEventListener('submit', async e => {
   $('#somNovo').reset(); $('#somNovo').hidden = true; $('#somInfo').textContent = 'Até 6 segundos e 1 MB (mp3, ogg ou wav).';
   toast(`Som "${nome}" enviado! Todo mundo já pode usar.`, 'ok'); await carregarSons(true); renderSons(); avisarSons();
 });
+
+/* ===================== 1.68: menu de cima, Jogos, Visual do perfil, desempenho ===================== */
+const ICO_CTRL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 4 4v1a3 3 0 0 1-5.4 1.8L15 13H9l-1.6 1.8A3 3 0 0 1 2 13v-1a4 4 0 0 1 4-4z"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11" r=".8" fill="currentColor"/><circle cx="18" cy="13" r=".8" fill="currentColor"/></svg>', ICO_COR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>', ICO_ADM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8.2l1.2 2.5 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z"/></svg>';
+function renderMenuTop() {
+  const nav = $('#menuTop'); if (!nav) return;
+  $('#jogosView').hidden = S.view !== 'jogos'; $('#visualView').hidden = S.view !== 'visual';
+  const adm = S.eu?.cargo === 'admin', jogando = typeof R !== 'undefined' && everyone().some(p => p.rj);
+  const mi = (attr, v, ico, nome, pt = '') => `<button class="mi${S.view === v ? ' on' : ''}" type="button" ${attr}${S.view === v ? ' aria-current="page"' : ''}>${ico}<span>${nome}</span>${pt}</button>`;
+  const h = mi('data-map', 'map', ICON.map, 'Mapa') + mi('data-placar', 'placar', ICON_PLACAR, 'Placar PvP')
+    + mi('data-vaq', 'vaq', ICON_VAQ, 'Vaquinha', vaqFalta() ? '<i class="pt" aria-label="vaquinha aberta"></i>' : '')
+    + mi('data-regras', 'regras', ICON_REGRAS, 'Regras', S.assinou === false ? '<i class="pt red" aria-label="falta assinar"></i>' : '')
+    + mi('data-jogos', 'jogos', ICO_CTRL, 'Jogos', jogando ? '<i class="pt" aria-label="tem gente jogando"></i>' : '')
+    + '<span class="sep"></span>' + mi('data-visual', 'visual', ICO_COR, 'Visual')
+    + (adm ? `<button class="mib${S.view === 'adm' ? ' on' : ''}" type="button" data-mtadm title="Central do Admin" aria-label="Central do Admin">${ICO_ADM}</button>` : '');
+  if (nav.innerHTML !== h) nav.innerHTML = h;
+  if (S.view === 'jogos') renderJogos();
+  const cd = meuCartao(), ch = (cd?.mo || '') + '|' + (cd?.nk || '') + '|' + S.name;
+  if (renderMenuTop.eu !== ch && $('#meAv') && typeof selfId !== 'undefined') { renderMenuTop.eu = ch;
+    $('#meAv').outerHTML = avatar(S.name, '', selfId, S.uid).replace('class="av ', 'id="meAv" title="Meu perfil" class="av '); $('#meAv').onclick = abrirPerfil;
+    $('#meName').className = nickCls(S.uid).trim(); }
+}
+function mostrarSo(id) { document.querySelectorAll('main > section').forEach(x => x.hidden = x.id !== id); $('#app').classList.remove('menu'); }
+function showJogos() { S.view = 'jogos'; mostrarSo('jogosView'); renderAll(); }
+function renderJogos() {
+  const quem = typeof naSalaR === 'function' ? naSalaR().length : 0, aberto = typeof R !== 'undefined' && R.aberto;
+  const h = `<div class="vwrap"><div class="vtit"><span class="vqrot">Jogos do clã</span><h2>Jogos</h2></div>
+  <div class="jogos">
+    <article class="jogo"><div class="capa" aria-hidden="true"><svg viewBox="0 0 200 100" fill="none" stroke="#1a1410" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 75 L60 35 L85 60 L110 25 L140 70 M120 80 Q150 20 175 55 M40 30 q10 -12 22 0"/></svg></div>
+      <div class="q"><h3>Rabisco</h3><p>Um desenha, o resto adivinha. Dá para jogar com quem está online, até sem estar na call.</p>
+      <div class="rod"><button class="btn acc" type="button" data-rabisco>${aberto ? 'Fechar o Rabisco' : 'Jogar agora'}</button><small>${quem ? quem + (quem === 1 ? ' pessoa' : ' pessoas') + ' no Rabisco' : 'Ninguém jogando agora'}</small></div></div></article>
+    <article class="jogo"><div class="capa breve">Em breve</div><div class="q"><h3>Próximo jogo</h3><p>Espaço reservado para o próximo jogo do clã.</p></div></article>
+  </div></div>`;
+  const box = $('#jogosView'); if (box.dataset.h !== h) { box.dataset.h = h; box.innerHTML = h; }
+}
+
+/* ---------- Visual do perfil ---------- */
+const VCATS = [{ k: 'mo', nome: 'Molduras' }, { k: 'ef', nome: 'Efeitos' }, { k: 'nk', nome: 'Cor do nick' }, { k: 'se', nome: 'Selos' }, { k: 'e', nome: 'Fundos' }];
+function showVisual(aba) { if (typeof aba === 'string') VIS.aba = aba; S.view = 'visual'; mostrarSo('visualView'); renderVisual(); renderAll(); $('#visualView').scrollTop = 0; }
+function itensCat(k) { return k === 'e' ? CARTOES.map(x => ({ id: x.id, nome: x.nome, d: 'Fundo do perfil e da carta', f: x.f })) : VIS[k]; }
+function visVis(k, it, cd) {
+  const nome = S.name || 'Você';
+  if (k === 'mo') { VIS.prova = { ...(cd || {}), mo: it.id }; const h = avatar(nome, '', '', S.uid); VIS.prova = null; return it.lid && !ehLid(S.uid) ? h.replace(' temmold', ' temmold').replace('<span class="vmold', '<span class="vmold') : h; }
+  if (k === 'ef') return `<div class="vmini"><span class="vef ve-${it.id}"></span>${avatar(nome, '', '', S.uid)}</div>`;
+  if (k === 'nk') return `<span class="vnome vn-${it.id}">${esc(nome)}</span>`;
+  if (k === 'se') return `<span class="vselo vs-${it.id}" style="font-size:14px;padding:4px 10px">${esc(it.nome)}</span>`;
+  return `<span class="vfundo" style="--cf:${it.f}"></span>`;
+}
+function perfilHtml(cd) {
+  const f = CARTOES.find(x => x.id === (cd?.e || 'padrao'))?.f || CARTOES[0].f, nome = S.name || 'Você';
+  VIS.prova = cd || {}; const av = avatar(nome, '', '', S.uid); VIS.prova = null;
+  const se = VIS.se.find(x => x.id === cd?.se);
+  return `<div class="vperfil">${cd?.ef ? `<span class="vef ve-${cd.ef}"></span>` : ''}<div class="vban" style="--cf:${f}"></div><div class="vfoto">${av}</div>
+    <div class="vdados"><b class="${(cd?.nk ? 'vn-' + cd.nk : '')}">${esc(nome)}</b><span>${tagCargoNome(S.cla?.[S.uid]?.titulo)}${se ? `<span class="vselo vs-${se.id}" style="margin:0">${se.nome}</span>` : ''}</span><small>${cd?.t ? '“' + esc(cd.t) + '”' : 'Membro do U.C.B.R'}</small></div></div>`;
+}
+function renderVisual() {
+  const box = $('#visualView'); if (!box) return;
+  if (!box.dataset.ok) {
+    box.dataset.ok = 1;
+    box.innerHTML = `<div class="vwrap"><div class="vtit"><span class="vqrot">Tudo de aparência num lugar só</span><h2>Visual do perfil</h2></div>
+      <div class="vabas" role="tablist">${[['perfil', 'Perfil'], ['cor', 'Cor do app'], ['carta', 'Carta da sala'], ['desemp', 'Desempenho']].map(([k, n]) => `<button class="vaba" type="button" role="tab" data-vaba="${k}">${n}</button>`).join('')}</div>
+      <div id="vPerfil"></div>
+      <div id="vCor" class="vsecpg"></div>
+      <div id="vCarta" class="vsecpg"></div>
+      <div id="vDesemp"></div></div>`;
+    const secs = document.querySelectorAll('#dlgVisual .vsec');
+    if (secs[0]) { $('#vCor').appendChild(secs[0]); $('#vCor').insertAdjacentHTML('beforeend', '<div class="vopc"><div><b>Voltar ao padrão</b><small>Tira a cor, o fundo, a carta e os enfeites do perfil.</small></div><button class="btn ghost" type="button" data-visreset>Voltar ao padrão</button></div>'); }
+    if (secs[1]) $('#vCarta').appendChild(secs[1]);
+    box.addEventListener('click', visClique);
+    box.addEventListener('pointerover', e => { const it = e.target.closest('[data-vis]'); if (it) provar(it.dataset.vis); });
+    box.addEventListener('pointerout', e => { const it = e.target.closest('[data-vis]'); if (it && !it.contains(e.relatedTarget)) provar(''); });
+  }
+  document.querySelectorAll('#visualView [data-vaba]').forEach(b => { b.classList.toggle('on', b.dataset.vaba === VIS.aba); b.setAttribute('aria-selected', b.dataset.vaba === VIS.aba); });
+  $('#vPerfil').hidden = VIS.aba !== 'perfil'; $('#vCor').hidden = VIS.aba !== 'cor'; $('#vCarta').hidden = VIS.aba !== 'carta'; $('#vDesemp').hidden = VIS.aba !== 'desemp';
+  if (VIS.aba === 'cor' || VIS.aba === 'carta') abrirVisual();
+  if (VIS.aba === 'perfil') renderVisPerfil();
+  if (VIS.aba === 'desemp') renderDesemp();
+}
+function renderVisPerfil() {
+  const cd = meuCartao() || {}, k = VIS.cat;
+  const itens = itensCat(k);
+  const nenhum = k === 'e' ? '' : `<button class="vitem${!cd[k] ? ' usando' : ''}" type="button" data-vis="${k}|"><div class="vvis"><span class="vnome" style="color:var(--txt3)">—</span></div><div class="vinfo"><b>Nenhum</b><small>Sem ${VCATS.find(x => x.k === k).nome.toLowerCase()}</small><span class="vest${!cd[k] ? ' on' : ''}">${!cd[k] ? 'Usando' : 'Tirar'}</span></div></button>`;
+  const grade = nenhum + itens.map(it => { const on = (cd[k] || (k === 'e' ? 'padrao' : '')) === it.id, bloq = it.lid && !ehLid(S.uid);
+    return `<button class="vitem${on ? ' usando' : ''}" type="button" data-vis="${k}|${it.id}"${bloq ? ' aria-disabled="true"' : ''}><div class="vvis">${visVis(k, it, cd)}</div>${it.lid ? '<span class="vtag lid">Liderança</span>' : ''}<div class="vinfo"><b>${esc(it.nome)}</b><small>${esc(it.d || 'Selo ao lado do nick')}</small><span class="vest${on ? ' on' : ''}">${on ? 'Usando' : bloq ? 'Só dono e admins' : 'Grátis'}</span></div></button>`; }).join('');
+  $('#vPerfil').innerHTML = `<div class="vcorpo"><div class="vlista"><div class="vfiltro" role="tablist">${VCATS.map(c => `<button type="button" data-vcat="${c.k}" class="${c.k === k ? 'on' : ''}">${c.nome}</button>`).join('')}</div>
+    <div class="vgrade">${grade}</div></div>
+    <aside class="vlado" id="vLado"><span class="vqrot">Seu perfil</span>${perfilHtml(cd)}<p class="vdica">Todos do clã veem estes enfeites no seu nick, na sua foto e na sua carta da sala. Passe o mouse num item para provar. É tudo grátis.</p></aside></div>`;
+}
+function provar(v) {
+  const lado = $('#vLado'); if (!lado) return;
+  const cd = meuCartao() || {};
+  if (!v) { lado.classList.remove('provando'); lado.innerHTML = `<span class="vqrot">Seu perfil</span>${perfilHtml(cd)}<p class="vdica">Todos do clã veem estes enfeites no seu nick, na sua foto e na sua carta da sala. Passe o mouse num item para provar. É tudo grátis.</p>`; return; }
+  const [k, id] = v.split('|'), it = itensCat(k).find(x => x.id === id);
+  lado.classList.add('provando');
+  lado.innerHTML = `<span class="vqrot">Provando: <em>${esc(it?.nome || 'Nenhum')}</em></span>${perfilHtml({ ...cd, [k]: id || undefined })}<p class="vdica">Clique para usar. Clique de novo para tirar.</p>`;
+}
+function visClique(e) {
+  const ab = e.target.closest('[data-vaba]'); if (ab) { VIS.aba = ab.dataset.vaba; return renderVisual(); }
+  const c = e.target.closest('[data-vcat]'); if (c) { VIS.cat = c.dataset.vcat; return renderVisPerfil(); }
+  if (e.target.closest('[data-visreset]')) { $('#visReset').click(); return; }
+  const n = e.target.closest('[data-nivel]'); if (n) { LS.set('nivelAnim', n.dataset.nivel); aplicarNivel(); return renderDesemp(); }
+  const op = e.target.closest('[data-opc]'); if (op) { LS.set(op.dataset.opc, !LS.get(op.dataset.opc, true)); if (!LS.get('pausarFundo', true)) document.body.classList.remove('parado'); return renderDesemp(); }
+  const it = e.target.closest('[data-vis]'); if (!it) return;
+  const [k, id] = it.dataset.vis.split('|'), item = itensCat(k).find(x => x.id === id);
+  if (item?.lid && !ehLid(S.uid)) return toast('A coroa é só para o dono e os admins.');
+  const cd = { ...(LS.get('cartao', {}) || {}) }, atual = cd[k] || (k === 'e' ? 'padrao' : '');
+  if (!id || atual === id) { if (k === 'e') cd.e = 'padrao'; else delete cd[k]; } else cd[k] = id;
+  LS.set('cartao', cd); CDC.t = 0; salvarCartao({}); renderVisPerfil(); renderAll(); if (S.view === 'text') renderMessages();
+}
+/* ---------- desempenho ---------- */
+const nivelPadrao = () => ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4) ? 'leve' : 'completo';
+const nivelAnim = () => { const n = LS.get('nivelAnim', ''); return ['completo', 'equilibrado', 'leve'].includes(n) ? n : nivelPadrao(); };
+function aplicarNivel() {
+  const n = nivelAnim();
+  document.body.classList.toggle('anim-equi', n === 'equilibrado'); document.body.classList.toggle('anim-leve', n === 'leve');
+  LS.set('semAnim', n === 'leve'); semAnim();
+  if (typeof renderStage === 'function' && S.main) renderStage();
+}
+function renderDesemp() {
+  const n = nivelAnim(), pf = LS.get('pausarFundo', true);
+  const NV = [['completo', 'Completo', 'Tudo animado: cartas, molduras, efeitos e nicks.'], ['equilibrado', 'Equilibrado', 'Enfeites só se mexem com o mouse em cima. Sem desfoque.'], ['leve', 'Leve', 'Nada se mexe. O melhor para PC fraco e para o FPS do jogo.']];
+  $('#vDesemp').innerHTML = `<div class="vsecpg"><b>Animações</b><p class="vdica">Vale só para este PC. Os outros continuam vendo os seus enfeites.</p>
+    <div class="niveis" role="radiogroup" aria-label="Animações">${NV.map(([k, t, d]) => `<button type="button" class="nivel${n === k ? ' on' : ''}" role="radio" aria-checked="${n === k}" data-nivel="${k}"><b>${t}</b><small>${d}</small></button>`).join('')}</div>
+    <div class="vopc"><div><b>Pausar quando o app não está na frente</b><small>Com o DayZ aberto ou o app minimizado, nada se mexe. A voz continua normal.</small></div><button type="button" class="chave" role="switch" aria-checked="${!!pf}" aria-label="Pausar quando o app não está na frente" data-opc="pausarFundo"></button></div>
+    <p class="vdica">Este PC: ${navigator.hardwareConcurrency || '?'} núcleos${navigator.deviceMemory ? ', ' + navigator.deviceMemory + ' GB de memória (aprox.)' : ''}. ${LS.get('nivelAnim', '') ? '' : 'Escolhemos "' + NV.find(x => x[0] === n)[1] + '" sozinhos para este PC.'}</p></div>`;
+}
+aplicarNivel();
+// app sem foco ou minimizado: para as animações (clicar no mapa ou no vídeo, que são do próprio app, não conta)
+(() => {
+  const liga = v => document.body.classList.toggle('parado', v && LS.get('pausarFundo', true));
+  window.addEventListener('blur', () => setTimeout(() => { if (document.activeElement?.tagName !== 'IFRAME') liga(true); }, 0));
+  window.addEventListener('focus', () => liga(false));
+  document.addEventListener('visibilitychange', () => liga(document.hidden));
+})();
 
 boot();
 </script>
